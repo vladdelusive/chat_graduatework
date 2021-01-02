@@ -1,5 +1,5 @@
 {
-  "name": "react-redux-test",
+  "name": "graduate-chat-app",
   "version": "0.1.0",
   "private": true,
   "main": "public/electron.js",
