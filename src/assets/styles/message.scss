@@ -1,0 +1,55 @@
+.messages-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    .simplebar-content {
+        display: flex;
+        flex-direction: column;
+        padding: 10px !important;
+    }
+    .message {
+        margin: 5px;
+        max-width: 70%;
+        min-width: 50px;
+        &__content {
+            min-height: 20px;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+                transition: transform 0.4s ease;
+                &:hover {
+                    transform: scale(1.02);
+                    transition: transform 0.4s ease;
+                }
+            }
+        }
+    }
+
+    .from-me--message {
+        background: white;
+        border-radius: 5px;
+        padding: 6px;
+        font-size: 16px;
+        font-family: cursive;
+        display: flex;
+        align-self: flex-end;
+    }
+    .to-me--message {
+        background: white;
+        border-radius: 5px;
+        padding: 6px;
+        font-size: 16px;
+        font-family: cursive;
+        display: flex;
+        align-self: flex-start;
+    }
+
+    .from-me--message ~ .from-me--message {
+        margin-top: 0px;
+    }
+    .to-me--message ~ .to-me--message {
+        margin-top: 0px;
+    }
+}

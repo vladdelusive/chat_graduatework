@@ -1,0 +1,21 @@
+.show-popup {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7) !important;
+    z-index: 10000;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 50%;
+    position: relative;
+    transition: all 5s ease-in-out;
+    text-align: center;
+}

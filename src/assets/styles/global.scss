@@ -1,0 +1,25 @@
+body {
+	overflow-x: hidden;
+}
+
+.ant-form-item {
+	width: 100%;
+	margin-bottom: 14px;
+	.ant-form-item-extra {
+		font-size: 12px;
+	}
+	.ant-form-item-explain ~ .ant-form-item-extra {
+		display: none;
+	}
+}
+
+.control--cancel {
+	color: red !important;
+}
+
+.ant-dropdown-link {
+	color: black !important;
+	&:hover {
+		color: #1890ff !important;
+	}
+}
