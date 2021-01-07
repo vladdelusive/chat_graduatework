@@ -23,3 +23,28 @@ body {
 		color: #1890ff !important;
 	}
 }
+
+.ant-notification-notice {
+	padding: unset;
+	.ant-notification-notice-content {
+		padding: 5px 4px 10px;
+		.ant-notification-notice-with-icon {
+			height: 70px;
+			.ant-notification-notice {
+				&-message {
+					margin-left: 70px;
+				}
+				&-description {
+					margin-left: 70px;
+				}
+			}
+			.ant-notification-notice-icon {
+				width: 60px;
+				margin-top: 5px;
+				img {
+					width: 100%;
+				}
+			}
+		}
+	}
+}

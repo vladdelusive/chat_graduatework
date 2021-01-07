@@ -6,7 +6,7 @@ import { getAuthProfileUid } from 'store/auth/selectors';
 import { getChatsList } from './selectors';
 import { parseChatsList, parseNewMessage } from 'services/api/parse';
 import { noty } from 'utils';
-
+import React from 'react';
 
 function* createNewChatSaga(action) {
     try {
@@ -55,13 +55,13 @@ function* setUpdateChatMessageSaga(action) {
         const updatedMessagesChatBefore = chats.find(e => e["id"] === chatUid)
         const updatedMessagesChatAfter = parsedUpdatedChats.find(e => e["id"] === chatUid)
         if (updatedMessagesChatBefore?.messages?.length < updatedMessagesChatAfter?.messages?.length) {
-            const newMessage = updatedMessagesChatAfter.messages[updatedMessagesChatAfter.messages.length - 1]
+            const newMessage = updatedMessagesChatAfter.messages[updatedMessagesChatAfter.messages.length - 1];
             if (!newMessage.me) {
-                noty("success", (`${newMessage.isImage
+                noty("icon", (`${newMessage.isImage
                     ? "Отправлена картинка"
                     : `${newMessage.message.length > 20 ? `${newMessage.message.slice(0, 15)}...` : newMessage.message}`}`),
-                    (`Новое сообщение от ${updatedMessagesChatAfter.userInfo.name}`),
-                    { placement: "bottomRight" }
+                    (<div>Новое сообщение от <b>{updatedMessagesChatAfter.userInfo.name}</b></div>),
+                    { placement: "bottomRight", icon: <img alt="userImage" src={updatedMessagesChatAfter.userInfo.photo} /> },
                 )
             }
         }
