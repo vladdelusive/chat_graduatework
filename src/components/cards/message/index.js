@@ -1,14 +1,17 @@
 import React from 'react'
+import moment from 'moment'
+import { CLIENT_TIME_FORMAT } from 'constants/time-format';
 
-export function MessageCard(props) {
+export const MessageCard = (props) => {
     const { item, onShowImage } = props;
     const {
         message,
         me,
-        // time, 
+        timestamp,
         // id,
         isImage,
     } = item;
+
     return (
         <div className={`message ${me ? "from-me--message" : "to-me--message"}`} style={{ opacity: message?.length === 0 ? 0 : 1, maxWidth: isImage ? "40%" : "70%" }}>
             <div className="message__content">
@@ -18,6 +21,7 @@ export function MessageCard(props) {
                         : message
                 }
             </div>
+            <span className="message__time">{moment(+timestamp).format(CLIENT_TIME_FORMAT)}</span>
         </div>
     )
 }
