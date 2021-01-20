@@ -21,7 +21,7 @@ export const MessageCard = (props) => {
                         : message
                 }
             </div>
-            <span className="message__time">{moment(+timestamp).format(CLIENT_TIME_FORMAT)}</span>
+            <span className="message__time">{moment(timestamp).format(CLIENT_TIME_FORMAT)}</span>
         </div>
     )
 }

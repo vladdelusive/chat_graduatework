@@ -7,6 +7,17 @@
         flex-direction: column;
         padding: 10px !important;
     }
+    .date-messages {
+        text-align: center;
+        font-size: 14px;
+        font-family: monospace;
+        font-weight: 800;
+        color: #00044b;
+        margin: 20px;
+    }
+    .today-date {
+        margin: 50px !important;
+    }
     .message {
         margin: 5px;
         max-width: 70%;
