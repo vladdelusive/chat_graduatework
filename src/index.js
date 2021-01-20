@@ -6,7 +6,9 @@ import { Root } from 'components';
 import { history } from 'routes/history';
 import { store } from 'store';
 import moment from "moment"
-window.moment = moment
+
+window.moment = moment;
+
 const root = document.getElementById('root');
 const render = (Component, root, done = () => { }) => {
 	ReactDOM.render(
