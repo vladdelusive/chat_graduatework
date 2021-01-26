@@ -8,9 +8,9 @@ Icon,
     PlusOutlined, UploadOutlined, UserOutlined,
 } from '@ant-design/icons';
 import { MessageCard } from 'components/cards/message'
-import { setActiveChatId, setUpdatedChatMessages, sendNewMessage } from 'store/chats/actions';
+import { setActiveChatId, setUpdatedChatMessages, sendNewMessage, toggleCollapseSiderChat } from 'store/chats/actions';
 import { setUpdateProfile } from 'store/auth/actions';
-import { getActiveChatId, getChatsList } from 'store/chats/selectors';
+import { getActiveChatId, getChatsList, getIsCollapsedSider } from 'store/chats/selectors';
 import { getAuthProfile } from 'store/auth/selectors';
 import { SearchChatModal } from 'components/modals';
 import { api } from 'services';
@@ -44,9 +44,10 @@ function Chats(props) {
         profileChats,
         setUpdatedChatMessages,
         sendNewMessage,
+        toggleCollapseSiderChat,
+        isCollapsed,
     } = props;
 
-    const [isCollapsed, setIsCollapsed] = useState(false)
     const [searchValue, setSearchValue] = useState("")
     const [isShowNewChatModal, setIsShowNewChatModal] = useState(false)
     const [messageValue, setMessageValue] = useState("")
@@ -83,9 +84,9 @@ function Chats(props) {
         return userInfo.name?.toString().toLowerCase().trim().includes(searchValue.toString().toLowerCase().trim())
     })) || chats;
 
-    useEffect(() => {
-        return () => setActiveChatId(null)
-    }, [setActiveChatId])
+    // useEffect(() => {
+    //     return () => setActiveChatId(null)
+    // }, [setActiveChatId])
 
     const submitMessage = (e) => {
         if (!messageValue.trim()) {
@@ -188,7 +189,7 @@ function Chats(props) {
                         theme={'light'}
                         collapsible={true}
                         collapsed={isCollapsed}
-                        onCollapse={() => setIsCollapsed(!isCollapsed)}
+                        onCollapse={toggleCollapseSiderChat}
                     >
                         <Menu mode="inline" selectedKeys={[activeChatId]}>
                             {filteredChats.map((chat) => {
@@ -209,7 +210,7 @@ function Chats(props) {
                     <Layout className="chat-content">
                         <Content>
                             {
-                                activeChatId ?
+                                isSetActiveChat ?
                                     <>
                                         <div className="messages-container">
                                             <Scrollbars style={{ width: "100%", height: "100%" }}
@@ -324,11 +325,12 @@ const mapStateToProps = (state) => {
         profile,
         profileUid: profile && profile.uid ? profile.uid : null,
         profileChats: profile && profile.chats?.length ? profile.chats : null,
+        isCollapsed: getIsCollapsedSider(state),
     };
 };
 
 const mapDispatchToProps = {
-    setActiveChatId, setUpdateProfile, setUpdatedChatMessages, sendNewMessage
+    setActiveChatId, setUpdateProfile, setUpdatedChatMessages, sendNewMessage, toggleCollapseSiderChat
 };
 
 const PageChats = compose(

@@ -4,12 +4,12 @@ import { compose } from 'redux';
 import { Modal, List, Skeleton, Avatar, Row, Col, Input, Button, Tag } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { getIsLoadingUsersChats, getUsersChats } from 'store/chats/selectors';
-import { createNewChat, fetchUsersForChat } from 'store/chats/actions';
+import { createNewChat, fetchUsersForChat, setActiveChatId } from 'store/chats/actions';
 import { Link } from 'react-router-dom';
 import { routes } from 'routes';
 
 function SearchChatModal(props) {
-    const { setIsShowNewChatModal, chatList, fetchUsersForChat, loading, createNewChat } = props;
+    const { setIsShowNewChatModal, chatList, fetchUsersForChat, loading, createNewChat, setActiveChatId } = props;
 
     const [isShow, setIsShow] = useState(true)
     const [searchValue, setSearchValue] = useState("")
@@ -51,12 +51,18 @@ function SearchChatModal(props) {
                 itemLayout="horizontal"
                 loadMore={false}
                 dataSource={filteredChatsList}
+                locale={{ emptyText: "Нету новых пользователей" }}
                 renderItem={item => (
                     <List.Item
                         actions={[
                             <Button
                                 size="small"
-                                onClick={() => createNewChat({ chatWithUserUid: item.uid, callback: clodeModal })}
+                                onClick={() => createNewChat({
+                                    chatWithUserUid: item.uid, callback: (chatId) => {
+                                        clodeModal()
+                                        setActiveChatId(chatId)
+                                    }
+                                })}
                             >Начать чат</Button>
                         ]}
                     >
@@ -86,7 +92,7 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = { fetchUsersForChat, createNewChat };
+const mapDispatchToProps = { fetchUsersForChat, createNewChat, setActiveChatId };
 
 const EnhancedSearchChatModal = compose(
     connect(mapStateToProps, mapDispatchToProps),

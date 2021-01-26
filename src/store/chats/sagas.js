@@ -17,9 +17,9 @@ function* createNewChatSaga(action) {
             messages: [],
             users: [userUid, chatWithUserUid]
         }
-        yield call(api.chats.createNewChat, chat);
+        const newChatId = yield call(api.chats.createNewChat, chat);
         if (typeof callback === "function") {
-            callback()
+            callback(newChatId)
         }
     } catch (error) {
         console.warn(error);
@@ -61,7 +61,7 @@ function* setUpdateChatMessageSaga(action) {
                     ? "Отправлена картинка"
                     : `${newMessage.message.length > 20 ? `${newMessage.message.slice(0, 15)}...` : newMessage.message}`}`),
                     (<div>Новое сообщение от <b>{updatedMessagesChatAfter.userInfo.name}</b></div>),
-                    { placement: "bottomRight", icon: <img alt="userImage" src={updatedMessagesChatAfter.userInfo.photo} /> },
+                    { placement: "bottomRight", icon: <img alt="userImage" src={updatedMessagesChatAfter.userInfo.photo} />, className: "message-noty" },
                 )
             }
         }

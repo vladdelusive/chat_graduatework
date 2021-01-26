@@ -14,13 +14,16 @@ export const chats = {
         })
     },
     createNewChat: async (payload) => {
-        return db.collection('chats').add(payload).then((docRef) => {
+        let chatId = null;
+        await db.collection('chats').add(payload).then((docRef) => {
+            chatId = docRef.id;
             payload.users.forEach((user) => {
                 return db.collection(`profiles`).doc(user).update({
                     chats: firebase.firestore.FieldValue.arrayUnion(docRef.id)
                 })
             })
         })
+        return chatId;
     },
     sendMessage: async (payload) => {
         const { chatUid, message } = payload;

@@ -6,6 +6,7 @@ const initialState = {
     activeChatId: null,
     usersChats: [],
     isLoadingUsersChats: false,
+    isCollapsedSider: false,
 };
 
 export const chatsReducer = createReducer(initialState, {
@@ -38,6 +39,13 @@ export const chatsReducer = createReducer(initialState, {
             ...state,
             usersChats: payload,
             isLoadingUsersChats: false,
+        };
+    },
+
+    [chats.TOGGLE_COLLAPSE_SIDER_CHAT](state) {
+        return {
+            ...state,
+            isCollapsedSider: !state.isCollapsedSider,
         };
     },
 

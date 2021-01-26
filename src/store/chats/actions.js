@@ -13,5 +13,7 @@ export const setUpdatedChatMessages = (payload) => ({ type: chats.SET_UPDATED_CH
 
 export const sendNewMessage = (payload) => ({ type: chats.SEND_MESSAGE, payload });
 
+export const toggleCollapseSiderChat = () => ({ type: chats.TOGGLE_COLLAPSE_SIDER_CHAT });
+
 
 

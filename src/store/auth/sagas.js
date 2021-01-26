@@ -48,7 +48,6 @@ function* logInByMailAndPasswordSaga(action) {
 
         const response = yield call(api.auth.logInByMailAndPassword, payload);
         if (!response) return;
-        debugger
         const { chats, profile } = response;
         yield put(saveLogInAuth(profile))
         yield put(saveChats(chats))

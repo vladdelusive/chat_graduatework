@@ -33,3 +33,8 @@ export const getIsLoadingUsersChats = createSelector(
     [_getChats],
     (chats) => chats.isLoadingUsersChats
 );
+
+export const getIsCollapsedSider = createSelector(
+    [_getChats],
+    (chats) => chats.isCollapsedSider
+);
