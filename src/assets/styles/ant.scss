@@ -35,6 +35,8 @@
         }
     }
     .layout__footer {
+        font-family: cursive;
+        font-size: 16px;
         min-height: 70px;
         background: linear-gradient(
             302deg,
@@ -45,6 +47,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        a {
+            color: black;
+        }
     }
 }
 
