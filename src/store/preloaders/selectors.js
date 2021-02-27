@@ -1,12 +1,18 @@
 import { createSelector } from 'reselect';
+import { isFunction } from 'utils/is-function';
 
 const _getPreloadersState = (state) => state.preloaders;
 
 const _preloaderNames = (state, preloaderNames) => {
-    if (!Array.isArray(preloaderNames)) {
-        preloaderNames = [preloaderNames];
+    let preloaderName = preloaderNames;
+    if(isFunction(preloaderName)) {
+        const funcRes = preloaderName();
+        preloaderName = funcRes?.type ? funcRes.type : preloaderName;
     }
-    return preloaderNames;
+    if (!Array.isArray(preloaderName)) {
+        preloaderName = [preloaderName];
+    }
+    return preloaderName;
 };
 
 const _getPreloaderState = createSelector(

@@ -8,7 +8,6 @@ import { checkForm } from 'utils/validation';
 import { AInput } from 'components';
 import { AInputPassword } from 'components/controls';
 import { fetchLogInByMailAndPassword } from 'store/auth/actions';
-import * as authTypes from 'store/auth/types';
 import { hasPreloader } from 'store/preloaders/selectors';
 
 function LoginForm(props) {
@@ -79,7 +78,7 @@ const validate = (values) => {
 
 const mapStateToProps = (state) => {
     return {
-        pending: hasPreloader(state, authTypes.FETCH_LOGIN_BY_MAIL_AND_PASSWORD)
+        pending: hasPreloader(state, fetchLogInByMailAndPassword)
     }
 };
 
