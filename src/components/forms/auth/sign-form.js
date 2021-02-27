@@ -9,6 +9,7 @@ import { AInput } from 'components';
 import { AInputPassword } from 'components/controls';
 import { noty } from 'utils';
 import { fetchRegisterByMailAndPassword } from 'store/auth/actions';
+import { hasPreloader } from 'store/preloaders/selectors';
 
 function SignUpForm(props) {
     const {
@@ -70,6 +71,7 @@ function SignUpForm(props) {
                         placeholder={'Имя/никнейм'}
                         size="large"
                         hint="Введите свое имя или никнейм"
+                        disabled={pending}
                     />
                 </Row>
                 <Row>
@@ -81,6 +83,7 @@ function SignUpForm(props) {
                         placeholder={'Почта'}
                         size="large"
                         hint="Введите любую свою почту"
+                        disabled={pending}
                     />
                 </Row>
                 <Row>
@@ -93,11 +96,12 @@ function SignUpForm(props) {
                         size="large"
                         iconRender={visible => visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
                         hint="Введите корректный пароль"
+                        disabled={pending}
                     />
                 </Row>
                 <Row style={{ marginBottom: 20 }}>
                     <Upload {...propsUpload}>
-                        <Button icon={<UploadOutlined />}>Загрузите аватарку</Button>
+                        <Button icon={<UploadOutlined />} loading={pending}>Загрузите аватарку</Button>
                     </Upload>
                 </Row>
             </div>
@@ -132,7 +136,7 @@ const validate = (values) => {
 
 const mapStateToProps = (state) => {
     return {
-
+        pending: hasPreloader(state, fetchRegisterByMailAndPassword)
     }
 };
 

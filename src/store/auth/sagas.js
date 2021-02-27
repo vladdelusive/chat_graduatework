@@ -78,7 +78,7 @@ function* clearAuthSaga() {
 
 export function* authSaga() {
     yield takeEvery(auth.FETCH_LOGIN_BY_GOOGLE, fetchLogInByGoogleSaga);
-    yield takeEvery(auth.FETCH_REGISTER_BY_MAIL_AND_PASSWORD, registerByMailAndPasswordSaga);
+    yield takeEvery(auth.FETCH_REGISTER_BY_MAIL_AND_PASSWORD, workerMiddleware, { worker: registerByMailAndPasswordSaga });
     yield takeEvery(auth.FETCH_LOGIN_BY_MAIL_AND_PASSWORD, workerMiddleware, { worker: logInByMailAndPasswordSaga });
 
     yield takeEvery(auth.SET_UPDATE_PROFILE, setUpdateProfileAndChatsSaga);
