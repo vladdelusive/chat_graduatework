@@ -8,6 +8,8 @@ import { checkForm } from 'utils/validation';
 import { AInput } from 'components';
 import { AInputPassword } from 'components/controls';
 import { fetchLogInByMailAndPassword } from 'store/auth/actions';
+import * as authTypes from 'store/auth/types';
+import { hasPreloader } from 'store/preloaders/selectors';
 
 function LoginForm(props) {
     const {
@@ -29,6 +31,7 @@ function LoginForm(props) {
                             placeholder={'Почта'}
                             size="large"
                             hint="Введите свою почту"
+                            disabled={pending}
                         />
                     </Row>
                     <Row>
@@ -41,6 +44,7 @@ function LoginForm(props) {
                             size="large"
                             iconRender={visible => visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
                             hint="Введите корректный пароль"
+                            disabled={pending}
                         />
                     </Row>
                 </div>
@@ -56,24 +60,11 @@ function LoginForm(props) {
                             size="large"
                             style={{ width: "100%" }}
                             loading={pending}
-                            onClick={() => { }}
                         >
                             Авторизоватся
-                            </Button>
+                        </Button>
                     </Col>
                 </Row>
-                {/* <Row style={{ marginTop: 20 }} typeof="flex" justify="center">
-                        <Col>
-                            <Button
-                                className={'control'}
-                                type={'text'}
-                                size="small"
-                                onClick={() => { }}
-                            >
-                                I don`t have an account
-                            </Button>
-                        </Col>
-                    </Row> */}
             </div>
         </Form>
     )
@@ -87,7 +78,9 @@ const validate = (values) => {
 };
 
 const mapStateToProps = (state) => {
-    return {}
+    return {
+        pending: hasPreloader(state, authTypes.FETCH_LOGIN_BY_MAIL_AND_PASSWORD)
+    }
 };
 
 const mapDispatchToProps = {

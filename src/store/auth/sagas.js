@@ -9,6 +9,7 @@ import { api } from 'services';
 import { push } from 'connected-react-router';
 import { routes } from 'routes';
 import { saveChats } from 'store/chats/actions';
+import { workerMiddleware } from 'store/worker-middleware';
 
 function* fetchLogInByGoogleSaga() {
     try {
@@ -78,7 +79,7 @@ function* clearAuthSaga() {
 export function* authSaga() {
     yield takeEvery(auth.FETCH_LOGIN_BY_GOOGLE, fetchLogInByGoogleSaga);
     yield takeEvery(auth.FETCH_REGISTER_BY_MAIL_AND_PASSWORD, registerByMailAndPasswordSaga);
-    yield takeEvery(auth.FETCH_LOGIN_BY_MAIL_AND_PASSWORD, logInByMailAndPasswordSaga);
+    yield takeEvery(auth.FETCH_LOGIN_BY_MAIL_AND_PASSWORD, workerMiddleware, { worker: logInByMailAndPasswordSaga });
 
     yield takeEvery(auth.SET_UPDATE_PROFILE, setUpdateProfileAndChatsSaga);
     yield takeEvery(auth.CLEAR_AUTH, clearAuthSaga);
