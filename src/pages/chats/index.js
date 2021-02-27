@@ -216,27 +216,31 @@ function Chats(props) {
                                             <Scrollbars style={{ width: "100%", height: "100%" }}
                                                 renderView={props => <div {...props} className="simplebar-content" />}
                                             >
-                                                {Object.entries(
-                                                    activeChat.messages
-                                                        .reduce((a, m) => {
-                                                            const timeDate = moment(m.timestamp).format(CLIENT_DATE_FORMAT)
-                                                            if (a.hasOwnProperty(timeDate)) {
-                                                                a[timeDate].push(m);
-                                                            } else {
-                                                                a[timeDate] = [m];
-                                                            }
-                                                            return a;
-                                                        }, {})
-                                                ).map(([k, e]) => {
-                                                    const isToday = moment(k, CLIENT_DATE_FORMAT).isSame(moment(), 'day');
-                                                    const date = isToday ? `Сегодня (${moment(k, CLIENT_DATE_FORMAT).format("LLLL").split(",").slice(0, -1).join()})` : k;
-                                                    return (
-                                                        <React.Fragment key={k}>
-                                                            <div className={`date-messages ${isToday ? "today-date" : ""}`}>{date}</div>
-                                                            {e.map((item, index) => <MessageCard key={index} item={item} onShowImage={onShowImage} />)}
-                                                        </React.Fragment>
-                                                    )
-                                                })}
+                                                {activeChat.messages.length
+                                                    ?
+                                                    Object.entries(
+                                                        activeChat.messages
+                                                            .reduce((a, m) => {
+                                                                const timeDate = moment(m.timestamp).format(CLIENT_DATE_FORMAT)
+                                                                if (a.hasOwnProperty(timeDate)) {
+                                                                    a[timeDate].push(m);
+                                                                } else {
+                                                                    a[timeDate] = [m];
+                                                                }
+                                                                return a;
+                                                            }, {})
+                                                    ).map(([k, e]) => {
+                                                        const isToday = moment(k, CLIENT_DATE_FORMAT).isSame(moment(), 'day');
+                                                        const date = isToday ? `Сегодня (${moment(k, CLIENT_DATE_FORMAT).format("LLLL").split(",").slice(0, -1).join()})` : k;
+                                                        return (
+                                                            <React.Fragment key={k}>
+                                                                <div className={`date-messages ${isToday ? "today-date" : ""}`}>{date}</div>
+                                                                {e.map((item, index) => <MessageCard key={index} item={item} onShowImage={onShowImage} />)}
+                                                            </React.Fragment>
+                                                        )
+                                                    })
+                                                    : <div className="chat-empty">Нет сообщений в чате</div>
+                                                }
                                             </Scrollbars>
                                         </div>
                                         <div className="input-container">

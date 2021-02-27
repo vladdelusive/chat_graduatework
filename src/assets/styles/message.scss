@@ -7,6 +7,21 @@
         flex-direction: column;
         padding: 10px !important;
     }
+    .chat-empty {
+        height: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        color: #d0ffe6;
+        user-select: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
     .date-messages {
         text-align: center;
         font-size: 14px;
