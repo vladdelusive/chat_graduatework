@@ -75,5 +75,12 @@
                 margin: 20px 0 0px;
             }
         }
+        #webcam-local {
+            max-width: 360px;
+            max-height: 230px;
+            background: #606060;
+            border-radius: 10px;
+            margin: 8px;
+        }
     }
 }

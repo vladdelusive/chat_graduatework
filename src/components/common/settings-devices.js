@@ -19,6 +19,17 @@ const SettingsDevices = (props) => {
         setMicDevice,
     } = props;
 
+    const go = () => {
+        const webcam = document.getElementById('webcam-local');
+        navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+        }).then(
+            stream => webcam.srcObject = stream,
+            err => console.log(err)
+        );
+    }
+
     return (
         <Row className="settings">
             <Divider />
@@ -68,6 +79,7 @@ const SettingsDevices = (props) => {
                         style={{ borderRadius: 10 }}
                         size="large"
                         icon={<StepForwardOutlined />}
+                        onClick={go}
                     >
                         Проверить динамик
 					</Button>
@@ -78,9 +90,9 @@ const SettingsDevices = (props) => {
                 <Row>
                     <Text type="secondary" className={'device-text'}>Камера</Text>
                 </Row>
-                <Row>
+                <Row typeof="flex" justify={'center'}>
                     <Col span={24}>
-
+                        <video id="webcam-local" autoPlay></video>
                     </Col>
                 </Row>
             </Col>

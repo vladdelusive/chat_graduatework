@@ -3,4 +3,18 @@ import * as call from './types';
 export const toggleIsShowCallModal = () => ({ type: call.TOGGLE_IS_SHOW_CALL_MODAL });
 export const setIsShowCallModal = (payload) => ({ type: call.SET_IS_SHOW_CALL_MODAL, payload });
 
+// calls settings
 
+export const fetchDevicesList = () => ({ type: call.FETCH_DEVICES_LIST });
+
+export const saveSpeakersList = (payload) => ({ type: call.SAVE_SPEAKERS_LIST, payload });
+export const saveMicsList = (payload) => ({ type: call.SAVE_MICS_LIST, payload });
+export const saveCamsList = (payload) => ({ type: call.SAVE_CAMS_LIST, payload });
+
+export const setMicDevice = (payload) => ({ type: call.SET_MIC_DEVICE, payload });
+export const setCallSpeaker = (payload) => ({ type: call.SET_CALL_SPEAKER, payload });
+export const setCamDevice = (payload) => ({ type: call.SET_CAM_DEVICE, payload });
+
+export const checkCurrentSpeaker = (payload) => ({ type: call.CHECK_CURRENT_SPEAKER, payload });
+
+export const saveIsPlayingSpeaker = (payload) => ({ type: call.SAVE_IS_PLAYING_SPEAKER, payload });
