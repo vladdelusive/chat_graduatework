@@ -10,6 +10,7 @@ import { push } from 'connected-react-router';
 import { routes } from 'routes';
 import { saveChats } from 'store/chats/actions';
 import { workerMiddleware } from 'store/worker-middleware';
+import { setIsShowCallModal } from 'store/call/actions';
 
 function* fetchLogInByGoogleSaga() {
     try {
@@ -73,6 +74,7 @@ function* setUpdateProfileAndChatsSaga(action) {
 }
 
 function* clearAuthSaga() {
+    yield put(setIsShowCallModal(false));
     // yield removeProfileToLocalStorage();
 }
 

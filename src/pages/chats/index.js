@@ -52,6 +52,7 @@ function Chats(props) {
     const [isShowNewChatModal, setIsShowNewChatModal] = useState(false)
     const [messageValue, setMessageValue] = useState("")
     const [showImage, onShowImage] = useState({ show: false, src: null })
+
     useEffect(() => {
         setMessageValue("")
     }, [activeChatId])
@@ -239,7 +240,7 @@ function Chats(props) {
                                                             </React.Fragment>
                                                         )
                                                     })
-                                                    : <div className="chat-empty">Нет сообщений в чате</div>
+                                                    : <div className="chat_info">Сообщений в чате пока нет...</div>
                                                 }
                                             </Scrollbars>
                                         </div>
@@ -287,7 +288,7 @@ function Chats(props) {
                                         </div>
                                     </>
                                     // : <img src={ChatBack} alt="back img" className="fit-template"></img>
-                                    : null
+                                    : <div className="chat_info">Пожалуйста, выберите чат, чтобы начать обмен сообщениями</div>
                             }
                             <>
                             </>

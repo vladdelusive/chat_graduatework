@@ -32,8 +32,8 @@ const state = {
         },
     ],
 };
-const UploadImage = () => {
 
+const UploadImage = () => {
     const [stateSettings, setStateSettings] = useState(state)
 
     const handleCancel = () => setStateSettings((prev) => ({ ...prev, previewVisible: false }));

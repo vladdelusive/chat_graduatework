@@ -4,16 +4,28 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View } from './view';
 import { getAuthIsAuthenticated } from 'store/auth/selectors';
-import { fetchLogInByGoogle } from 'store/auth/actions';
 import { NavBar } from '../navbar';
-import { Col, Row } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { Logo } from '../logo';
 import { Profile } from '../profile';
+import { WhatsAppOutlined } from '@ant-design/icons';
+import { toggleIsShowCallModal } from 'store/call/actions';
+
+const CallBtn = (toggleIsShowCallModal) => (
+	<Col>
+		<Button
+			type={'link'}
+			onClick={toggleIsShowCallModal}
+		>
+			<WhatsAppOutlined size={6} style={{ fontSize: 26, color: '#7822f6' }} />
+		</Button>
+	</Col>
+)
 
 const HeaderContainer = (props) => {
-	const { isAuth, fetchLogInByGoogle } = props;
+	const { isAuth, toggleIsShowCallModal } = props;
 
-	const correctNavbar = isAuth ? <Profile /> : <View logInByGoogle={fetchLogInByGoogle} />
+	const correctNavbar = isAuth ? <Profile /> : <View isAuth={isAuth} />
 
 	return <div className={'header'}>
 		<Row type={'flex'} gutter={36} align={'middle'}>
@@ -25,6 +37,7 @@ const HeaderContainer = (props) => {
 					<Col className={'_flex-grow'}>
 						<NavBar />
 					</Col>
+					{isAuth ? CallBtn(toggleIsShowCallModal) : null}
 					{correctNavbar}
 				</Row>
 			</Col>
@@ -40,7 +53,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-	fetchLogInByGoogle,
+	toggleIsShowCallModal
 };
 
 const Header = compose(

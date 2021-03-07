@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import { Button, Col, Modal } from 'antd';
 import { GoogleOutlined, LoginOutlined } from '@ant-design/icons';
 import { AuthForm } from 'components/forms'
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { fetchLogInByGoogle } from 'store/auth/actions';
 
-const View = ({ logInByGoogle }) => {
+const HeaderView = ({ logInByGoogle }) => {
 	const [showModal, setShowModal] = useState()
 	return (
 		<>
@@ -16,7 +19,7 @@ const View = ({ logInByGoogle }) => {
 					style={{ fontSize: 16 }}
 				>
 					Войти
-			</Button>
+				</Button>
 			</Col>
 			<Modal
 				visible={showModal}
@@ -38,5 +41,18 @@ const View = ({ logInByGoogle }) => {
 		</>
 	);
 };
+
+const mapStateToProps = (state) => {
+	return {
+	};
+};
+
+const mapDispatchToProps = {
+	fetchLogInByGoogle,
+};
+
+const View = compose(
+	connect(mapStateToProps, mapDispatchToProps),
+)(HeaderView);
 
 export { View };

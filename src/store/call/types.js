@@ -1,0 +1,4 @@
+const PRFX = '@call/';
+
+export const TOGGLE_IS_SHOW_CALL_MODAL = `${PRFX}TOGGLE_IS_SHOW_CALL_MODAL`;
+export const SET_IS_SHOW_CALL_MODAL = `${PRFX}SET_IS_SHOW_CALL_MODAL`;

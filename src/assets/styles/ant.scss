@@ -27,6 +27,7 @@
 }
 
 .layout {
+    position: relative;
     .layout__header {
         background: linear-gradient(302deg, #fefeff 0%, #63cd91 13%, #ffffff 100%) !important;
         min-height: 80px;

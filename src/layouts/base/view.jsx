@@ -4,6 +4,7 @@ import { Layout } from 'antd';
 import { APP_NAME, CREATER_GITHUB, CREATER_NICKNAME } from 'constants/env';
 import { Header } from 'components';
 import { style } from './style';
+import { CallModal } from 'components/modals';
 
 const View = React.memo((props) => {
 	const { children } = props;
@@ -18,6 +19,7 @@ const View = React.memo((props) => {
 				{currentYear} &copy; {APP_NAME}&nbsp;-&nbsp;
 				<a href={CREATER_GITHUB} target="_blank" rel="noopener noreferrer">{CREATER_NICKNAME}</a>
 			</Layout.Footer>
+			<CallModal />
 		</Layout>
 	);
 });
