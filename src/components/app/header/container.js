@@ -37,7 +37,7 @@ const HeaderContainer = (props) => {
 					<Col className={'_flex-grow'}>
 						<NavBar />
 					</Col>
-					{isAuth ? CallBtn(toggleIsShowCallModal) : null}
+					{!isAuth ? CallBtn(toggleIsShowCallModal) : null}
 					{correctNavbar}
 				</Row>
 			</Col>

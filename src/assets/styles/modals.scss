@@ -29,9 +29,51 @@
     z-index: 10000;
     background-color: #ffffff;
     box-shadow: 3px 3px 20px 0 #868686;
-    display: block;
-
+    transition: -webkit-transform 0.5s;
+    transition: transform 0.5s;
+    transition: transform 0.5s, -webkit-transform 0.5s;
+    -webkit-transform: translateX(110%);
+    transform: translateX(110%);
+    &--transform {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
     &__container {
-
+        .ant-tabs {
+            &-nav-list {
+                width: 100%;
+                .ant-tabs-tab {
+                    width: 50%;
+                    font-size: 24px;
+                    &-btn {
+                        text-align: center;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    .settings {
+        margin: 0px 10px;
+        .ant-select-selector {
+            border-radius: 10px;
+        }
+        .device-text {
+            font-size: 24px;
+            color: #969696;
+            margin: 5px;
+        }
+        .device-select {
+            font-size: 20px;
+            width: 100%;
+        }
+        .check-speaker {
+            margin-top: 10px;
+        }
+        .ant-divider {
+            &-horizontal {
+                margin: 20px 0 0px;
+            }
+        }
     }
 }
