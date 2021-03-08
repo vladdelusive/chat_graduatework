@@ -5,8 +5,8 @@ import { Row, Col, Select, Divider, Typography, Button } from 'antd';
 import { StepForwardOutlined } from '@ant-design/icons';
 import { obj2options } from 'utils/obj-to-options';
 import { getAccessToAudio } from 'store/call/sagas';
-import { getCurrentCallDevice, getMicDevice, getMicsList, getSpeakersList, getSpeakersIsTestPlaying } from 'store/call/selectors';
-import { setMicDevice, setCallSpeaker, checkCurrentSpeaker } from 'store/call/actions';
+import { getCurrentCallDevice, getMicDevice, getMicsList, getSpeakersList, getSpeakersIsTestPlaying, getCamDevice, getCamsList } from 'store/call/selectors';
+import { setMicDevice, setCallSpeaker, checkCurrentSpeaker, setCamDevice } from 'store/call/actions';
 const { Text } = Typography;
 
 const SettingsDevices = (props) => {
@@ -20,7 +20,11 @@ const SettingsDevices = (props) => {
         setCallSpeaker,
 
         isPlayingState,
-        checkCurrentSpeaker
+        checkCurrentSpeaker,
+
+        currentCamDevice,
+        camsList,
+        setCamDevice,
     } = props;
 
     useEffect(() => {
@@ -29,7 +33,6 @@ const SettingsDevices = (props) => {
 
     return (
         <Row className="settings">
-            <Divider />
             <Col span={24}>
                 <Row>
                     <Text type="secondary" className={'device-text'}>Микрофон</Text>
@@ -96,6 +99,23 @@ const SettingsDevices = (props) => {
                         <video id="webcam-local" autoPlay></video>
                     </Col>
                 </Row>
+                <Row>
+                    <Col span={24}>
+                        <Select
+                            className="device-select"
+                            placeholder={'Выберите камеру'}
+                            size={'large'}
+                            onChange={(value) => {
+                                setCamDevice(camsList.find(device => device.deviceId === value))
+                                if (value) getAccessToAudio({ deviceId: { exact: value } }); // videoConstraints
+                            }}
+                            value={currentCamDevice?.deviceId}
+                            disabled={!camsList.length}
+                        >
+                            {obj2options(camsList, { value: 'deviceId', text: 'label' })}
+                        </Select>
+                    </Col>
+                </Row>
             </Col>
         </Row>
     )
@@ -108,6 +128,8 @@ const mapStateToProps = (state) => {
         speakersList: getSpeakersList(state),
         currentSpeakerDevice: getCurrentCallDevice(state),
         isPlayingState: getSpeakersIsTestPlaying(state),
+        currentCamDevice: getCamDevice(state),
+        camsList: getCamsList(state),
     }
 };
 
@@ -115,6 +137,7 @@ const mapDispatchToProps = {
     setCallSpeaker,
     checkCurrentSpeaker,
     setMicDevice,
+    setCamDevice,
 };
 
 const EnhancedSettingsDevices = compose(
