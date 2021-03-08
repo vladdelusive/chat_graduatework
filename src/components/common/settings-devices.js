@@ -1,34 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col, Select, Divider, Typography, Button } from 'antd';
 import { StepForwardOutlined } from '@ant-design/icons';
+import { obj2options } from 'utils/obj-to-options';
+import { getAccessToAudio } from 'store/call/sagas';
+import { getCurrentCallDevice, getMicDevice, getMicsList, getSpeakersList, getSpeakersIsTestPlaying } from 'store/call/selectors';
+import { setMicDevice, setCallSpeaker, checkCurrentSpeaker } from 'store/call/actions';
 const { Text } = Typography;
 
 const SettingsDevices = (props) => {
     const {
-        // setBellSpeaker,
-        // setCallSpeaker,
-        // speakersList,
-        // currentCallDevice,
-        // currentBellDevice,
-        // checkCurrentSpeaker,
-        // isPlayingState,
         micsList,
         currentMicDevice,
         setMicDevice,
+
+        speakersList,
+        currentSpeakerDevice,
+        setCallSpeaker,
+
+        isPlayingState,
+        checkCurrentSpeaker
     } = props;
 
-    const go = () => {
-        const webcam = document.getElementById('webcam-local');
-        navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true
-        }).then(
-            stream => webcam.srcObject = stream,
-            err => console.log(err)
-        );
-    }
+    useEffect(() => {
+        getAccessToAudio()
+    }, [])
 
     return (
         <Row className="settings">
@@ -43,11 +40,11 @@ const SettingsDevices = (props) => {
                             className="device-select"
                             placeholder={'Выберите микрофон'}
                             size={'large'}
-                        // onChange={(value) => setMicDevice(micsList.find(device => device.deviceId === value))}
-                        // value={currentMicDevice?.deviceId}
-                        // disabled={!micsList.length}
+                            onChange={(value) => setMicDevice(micsList.find(device => device.deviceId === value))}
+                            value={currentMicDevice?.deviceId}
+                            disabled={!micsList.length}
                         >
-                            {/* {obj2options(micsList, { value: 'deviceId', text: 'label' })} */}
+                            {obj2options(micsList, { value: 'deviceId', text: 'label' })}
                         </Select>
                     </Col>
                 </Row>
@@ -63,7 +60,12 @@ const SettingsDevices = (props) => {
                             className="device-select"
                             placeholder={'Выберите динамик'}
                             size={'large'}
+                            onChange={(value) => setCallSpeaker(speakersList.find(device => device.deviceId === value))}
+                            value={currentSpeakerDevice?.deviceId}
+                            disabled={isPlayingState || !speakersList.length}
+                            loading={isPlayingState}
                         >
+                            {obj2options(speakersList, { value: 'deviceId', text: 'label' })}
                         </Select>
                     </Col>
                 </Row>
@@ -73,13 +75,12 @@ const SettingsDevices = (props) => {
                     <Button
                         type={'primary'}
                         block={true}
-                        // onClick={() => checkCurrentSpeaker("bell")}
-                        // loading={isPlayingState.device === "bell" && isPlayingState.isPlaying}
-                        // disabled={(isPlayingState.device === "call" && isPlayingState.isPlaying) || !speakersList.length}
+                        onClick={checkCurrentSpeaker}
+                        loading={isPlayingState}
+                        disabled={isPlayingState || !speakersList.length}
                         style={{ borderRadius: 10 }}
                         size="large"
                         icon={<StepForwardOutlined />}
-                        onClick={go}
                     >
                         Проверить динамик
 					</Button>
@@ -102,20 +103,18 @@ const SettingsDevices = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        // speakersList: getSpeakersList(state),
-        // currentCallDevice: getCurrentCallDevice(state),
-        // currentBellDevice: getCurrentBellDevice(state),
-        // isPlayingState: getIsPlayingSpeaker(state),
-        // micsList: getMicsList(state),
-        // currentMicDevice: getMicDevice(state),
+        micsList: getMicsList(state),
+        currentMicDevice: getMicDevice(state),
+        speakersList: getSpeakersList(state),
+        currentSpeakerDevice: getCurrentCallDevice(state),
+        isPlayingState: getSpeakersIsTestPlaying(state),
     }
 };
 
 const mapDispatchToProps = {
-    // setCallSpeaker,
-    // setBellSpeaker,
-    // checkCurrentSpeaker,
-    // setMicDevice,
+    setCallSpeaker,
+    checkCurrentSpeaker,
+    setMicDevice,
 };
 
 const EnhancedSettingsDevices = compose(
