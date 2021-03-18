@@ -11,13 +11,15 @@ import { Profile } from '../profile';
 import { WhatsAppOutlined } from '@ant-design/icons';
 import { toggleIsShowCallModal } from 'store/call/actions';
 
+const changeColor = true
+
 const CallBtn = (toggleIsShowCallModal) => (
 	<Col>
 		<Button
 			type={'link'}
 			onClick={toggleIsShowCallModal}
 		>
-			<WhatsAppOutlined size={6} style={{ fontSize: 26, color: '#7822f6' }} />
+			<WhatsAppOutlined className={changeColor ? "ant-icon--call-active" : "ant-icon--call-unactive"} size={6} />
 		</Button>
 	</Col>
 )

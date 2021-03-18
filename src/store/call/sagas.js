@@ -20,7 +20,7 @@ const fetchDevices = () => {
     store.dispatch(fetchDevicesList());
 };
 
-export function getAccessToAudio(videoConstraints = true) {
+export function getAccessToAudio() {
     if (!navigator.getUserMedia) {
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia;
         if (navigator.mozGetUserMedia) {
@@ -29,11 +29,22 @@ export function getAccessToAudio(videoConstraints = true) {
         }
     }
     if (navigator.getUserMedia) {
-        navigator.getUserMedia({ audio: true, video: videoConstraints }, (stream) => {
-            const webcam = document.getElementById('webcam-local');
-            webcam.srcObject = stream;
+        navigator.getUserMedia({ audio: true, video: true }, (stream) => {
             fetchDevices();
         }, () => { })
+    }
+}
+
+function getStreamWithNewCam(deviceId) {
+    // without additional check becouse we did it before
+    if (navigator.getUserMedia) {
+        const webcam = document.getElementById('webcam-local');
+        navigator.getUserMedia({ audio: true, video: { deviceId: { exact: deviceId } } }, (stream) => {
+            webcam.srcObject = stream;
+        }, (error) => {
+            webcam.srcObject = null;
+            noty("error", `${error}`)
+        })
     }
 }
 
@@ -75,6 +86,12 @@ function* fetchDevicesListSaga() {
 //     yield changeMicDevice()
 // }
 
+function* setCamDeviceSaga(action) {
+    const { payload } = action;
+    const { deviceId } = payload
+    yield getStreamWithNewCam(deviceId)
+}
+
 function* checkCurrentSpeakerSaga() {
     const audio = document.getElementById('speaker-test');
     if (audio.src) audio.src = null;
@@ -98,7 +115,7 @@ export function* callSaga() {
 
     // yield takeLatest(callTypes.SET_CALL_SPEAKER, setCallSpeakerSaga);
     // yield takeLatest(callTypes.SET_MIC_DEVICE, setMicDeviceSaga);
-    // yield takeLatest(callTypes.SET_CAM_DEVICE, setCamDeviceSaga);
+    yield takeLatest(callTypes.SET_CAM_DEVICE, setCamDeviceSaga);
 
     yield takeLatest(callTypes.CHECK_CURRENT_SPEAKER, checkCurrentSpeakerSaga);
 }

@@ -107,7 +107,7 @@ const SettingsDevices = (props) => {
                             size={'large'}
                             onChange={(value) => {
                                 setCamDevice(camsList.find(device => device.deviceId === value))
-                                if (value) getAccessToAudio({ deviceId: { exact: value } }); // videoConstraints
+                                // if (value) getAccessToAudio({ deviceId: { exact: value } }); // videoConstraints
                             }}
                             value={currentCamDevice?.deviceId}
                             disabled={!camsList.length}

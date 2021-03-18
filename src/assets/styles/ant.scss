@@ -2,9 +2,21 @@
     &-divider-horizontal {
         margin: 10px 0;
     }
-    // &-modal-body {
-    //     pad: ;
-    // }
+    &-icon {
+        &--call-active {
+            font-size: 26px;
+            color: #7822f6;
+            -webkit-animation: activeCall 1s infinite;
+            animation: activeCall 1s infinite;
+            -webkit-animation-direction: alternate;
+            animation-direction: alternate;
+            animation-timing-function: ease;
+        }
+        &--call-unactive {
+            font-size: 26px;
+            color: #7822f6;
+        }
+    }
 }
 
 .ant-table {

@@ -7,3 +7,24 @@
 		transform: rotate(360deg);
 	}
 }
+
+@keyframes activeCall {
+	0% {
+		color: rgb(255, 255, 255);
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(-10px);
+	}
+
+	60% {
+		transform: translateY(0);
+		color: rgb(255, 255, 255);
+	}
+
+	100% {
+		transform: translateY(0);
+		color: #00860b;
+	}
+}
