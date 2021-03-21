@@ -11,7 +11,7 @@ import { Profile } from '../profile';
 import { WhatsAppOutlined } from '@ant-design/icons';
 import { toggleIsShowCallModal } from 'store/call/actions';
 
-const changeColor = true
+const changeColor = false;
 
 const CallBtn = (toggleIsShowCallModal) => (
 	<Col>
@@ -39,7 +39,7 @@ const HeaderContainer = (props) => {
 					<Col className={'_flex-grow'}>
 						<NavBar />
 					</Col>
-					{!isAuth ? CallBtn(toggleIsShowCallModal) : null}
+					{isAuth ? CallBtn(toggleIsShowCallModal) : null}
 					{correctNavbar}
 				</Row>
 			</Col>

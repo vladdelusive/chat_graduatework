@@ -15,7 +15,19 @@ const initialState = {
     cams: {
         camDevice: {},
         list: [],
-    }
+    },
+    // incoming: {
+    //     user: null,
+    //     // status: null,
+    //     active: false
+    // },
+    outgoing: {
+        user: null,
+        // status: null,
+        active: false
+    },
+    activeCall: false,
+    // history: { items: [], ....}, online: false,
 };
 
 export const callReducer = createReducer(initialState, {
@@ -25,6 +37,37 @@ export const callReducer = createReducer(initialState, {
             isShowModal: !state.isShowModal
         };
     },
+
+    /*
+    ** INCOMING-OUTGOING - CALL BLOCK
+    */
+
+    [call.SAVE_OUTGOING_CALL](state, action) {
+        const { payload } = action
+        return {
+            ...state,
+            outgoing: {
+                ...state.outgoing,
+                active: payload,
+            }
+        };
+    },
+
+    // [call.CHANGE_OUTGOING_CALL](state, action) {
+    //     const { payload } = action
+    //     return {
+    //         ...state,
+    //         outgoing: {
+    //             ...state.outgoing,
+    //             ...payload
+    //         }
+    //     };
+    // },
+
+    /*
+    ** SETTINGS DEVICES
+    */
+
     [call.SET_IS_SHOW_CALL_MODAL](state, action) {
         const { payload } = action;
         return {
@@ -32,7 +75,6 @@ export const callReducer = createReducer(initialState, {
             isShowModal: payload
         };
     },
-
 
     [call.SET_CALL_SPEAKER](state, action) {
         const { payload } = action

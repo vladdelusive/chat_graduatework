@@ -5,7 +5,7 @@ import { Button, Col, Input, Layout, Menu, Row, Tooltip, Typography, Avatar, Upl
 import
 Icon,
 {
-    PlusOutlined, UploadOutlined, UserOutlined,
+    PlusOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined,
 } from '@ant-design/icons';
 import { MessageCard } from 'components/cards/message'
 import { setActiveChatId, setUpdatedChatMessages, sendNewMessage, toggleCollapseSiderChat } from 'store/chats/actions';
@@ -119,7 +119,6 @@ function Chats(props) {
 
     useEffect(() => {
         let timeout;
-
         const scrollBlockContainer = document.querySelector(".simplebar-content")
         if (scrollBlockContainer) {
             scrollBlockContainer.scrollTo({
@@ -181,6 +180,13 @@ function Chats(props) {
                                     </Col>
                                 </Row>
                             </Col>
+                            {isSetActiveChat ? <Col>
+                                <Row>
+                                    <Tooltip title="Видео звонок">
+                                        <VideoCameraOutlined className="video-call" onClick={() => { }} />
+                                    </Tooltip>
+                                </Row>
+                            </Col> : null}
                         </Row>
                     </div>
                 </div>

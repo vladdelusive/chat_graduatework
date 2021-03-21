@@ -108,14 +108,23 @@ function* checkCurrentSpeakerSaga() {
     yield put(saveIsPlayingSpeaker(false))
 }
 
+function* fetchOutgoingCallSaga(action) {
+    // const { payload } = action;
+}
+
 export function* callSaga() {
+
+    // call settings state
+
     yield takeEvery(callTypes.TOGGLE_IS_SHOW_CALL_MODAL, () => { });
-
     yield takeEvery(callTypes.FETCH_DEVICES_LIST, fetchDevicesListSaga);
-
     // yield takeLatest(callTypes.SET_CALL_SPEAKER, setCallSpeakerSaga);
     // yield takeLatest(callTypes.SET_MIC_DEVICE, setMicDeviceSaga);
     yield takeLatest(callTypes.SET_CAM_DEVICE, setCamDeviceSaga);
-
     yield takeLatest(callTypes.CHECK_CURRENT_SPEAKER, checkCurrentSpeakerSaga);
+
+
+    // outgoing/incoming state
+    yield takeEvery(callTypes.FETCH_OUTGOING_CALL, fetchOutgoingCallSaga);
+
 }

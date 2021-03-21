@@ -18,3 +18,10 @@ export const setCamDevice = (payload) => ({ type: call.SET_CAM_DEVICE, payload }
 export const checkCurrentSpeaker = (payload) => ({ type: call.CHECK_CURRENT_SPEAKER, payload });
 
 export const saveIsPlayingSpeaker = (payload) => ({ type: call.SAVE_IS_PLAYING_SPEAKER, payload });
+
+// outgoing - incoming call
+
+export const fetchOutgoingCall = (payload) => ({ type: call.FETCH_OUTGOING_CALL, payload });
+export const saveOutgoingCall = (payload) => ({ type: call.SAVE_OUTGOING_CALL, payload });
+
+// export const changeOutgoingCall = (payload) => ({ type: call.CHANGE_OUTGOING_CALL, payload });

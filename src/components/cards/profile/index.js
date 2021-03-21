@@ -29,9 +29,7 @@ export const ProfileCard = React.memo((props) => {
                         <img alt="avatar" src={img} />
                     </Col>
                     <Col>
-                        <Title level={3}>{nameTitle}&nbsp;
-                            {/* <Text type="secondary" style={{ fontSize: 16 }}>{`(${age} years)`}</Text> */}
-                        </Title>
+                        <Title level={3}>{nameTitle}&nbsp;</Title>
                         <Divider dashed />
                         <Row typeof="flex" gutter={4}>
                             <Col><Paragraph copyable={{ text: email }} /></Col>
@@ -40,16 +38,6 @@ export const ProfileCard = React.memo((props) => {
                         <Divider dashed />
                     </Col>
                 </Spin>
-                {/* <Row typeof="flex" gutter={4}>
-                        <Col><Paragraph copyable={{ text: number }} /></Col>
-                        <Col><a href={`tel:${number}`}>{number}</a></Col>
-                    </Row>
-                    <Row typeof="flex" gutter={4}>
-                        <Col><Paragraph copyable={{ text: `${country} ${street}` }} /></Col>
-                        <Col><Text strong>/{country}/</Text><br /><span style={{ marginLeft: 5 }}>{street}</span></Col>
-                    </Row>
-                    <Divider dashed />
-                    <Tag color={nation.color}>{nation.name}</Tag> */}
             </Row>
             {returnBtn ? <Row type={"flex"} justify="center">
                 <Col>
