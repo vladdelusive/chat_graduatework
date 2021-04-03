@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/database'
 
 const config = {
     apiKey: "AIzaSyDh8jwIC1dr8cznmteS3jGgrCW-pmuQAKE",
@@ -14,7 +15,10 @@ const config = {
 
 export const { Timestamp } = firebase.firestore
 
-export const db = firebase.initializeApp(config).firestore();
+const FB = firebase.initializeApp(config)
+
+export const db = FB.firestore();
+export const database = FB.database();
 
 export const createStorageRef = async (file, fileName, callback) => {
     const fullPath = 'photos/' + fileName;

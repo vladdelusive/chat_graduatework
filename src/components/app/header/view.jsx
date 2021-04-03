@@ -7,7 +7,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { fetchLogInByGoogle } from 'store/auth/actions';
 
-const HeaderView = ({ logInByGoogle }) => {
+const HeaderView = ({ fetchLogInByGoogle }) => {
 	const [showModal, setShowModal] = useState()
 	return (
 		<>
@@ -27,7 +27,7 @@ const HeaderView = ({ logInByGoogle }) => {
 					<Button
 						style={{ display: "flex", alignItems: "center" }}
 						onClick={() => {
-							logInByGoogle()
+							fetchLogInByGoogle()
 							setShowModal(false)
 						}}
 						icon={<GoogleOutlined style={{ color: "#00a7b7", fontSize: 24 }} />}

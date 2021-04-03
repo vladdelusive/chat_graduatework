@@ -1,0 +1,38 @@
+.history-calls {
+    background: #e3e3e3;
+    margin: 5px;
+    overflow-y: scroll;
+    max-height: 600px;
+    .history-list {
+        width: 100%;
+        .ant-list-items {
+            .ant-list-item {
+                background: #f2f2f2;
+                margin: 5px;
+                .ant-list-item-meta-avatar {
+                    margin-right: 10px;
+                    margin-left: 10px;
+                    .ant-avatar {
+                        width: 45px;
+                        height: 45px;
+                    }
+                }
+                .ant-list-item-meta-content {
+                    .ant-list-item-meta-title {
+                        margin-bottom: 0px;
+                    }
+                    .ant-list-item-meta-description {
+                    }
+                }
+                .ant-btn {
+                    padding: 0;
+                    color: #00893c;
+                    font-weight: 500;
+                }
+                .ant-list-item-action-split {
+                    background-color: #00893c;
+                }
+            }
+        }
+    }
+}
