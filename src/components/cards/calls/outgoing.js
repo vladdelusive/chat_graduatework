@@ -2,7 +2,7 @@ import { Card, Col, Row, Typography, Button, Spin } from 'antd';
 import React from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import CallDisconnect from 'assets/images/disconnect.jpg';
+import CallCancel from 'assets/images/call-cancel.jpg';
 import ToChats from 'assets/images/to-chats.png';
 
 const OutgoingCall = (props) => {
@@ -37,7 +37,7 @@ const OutgoingCall = (props) => {
                             <Row justify="end" typeof="flex">
                                 <Col>
                                     <Typography.Title level={4} className="call-description">
-                                        <Button type="primary" className="call-disconnect" shape="round" icon={<img src={CallDisconnect} alt={'call-disconnect'} />}>
+                                        <Button type="primary" className="call-disconnect" shape="round" icon={<img src={CallCancel} alt={'call-disconnect'} />}>
                                             <span style={{ marginLeft: 10 }}>Завершить</span>
                                         </Button>
                                     </Typography.Title>

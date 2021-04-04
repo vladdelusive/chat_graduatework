@@ -105,3 +105,78 @@
         }
     }
 }
+
+.incoming-call {
+    margin: 15px;
+    position: relative;
+    .ant-card {
+        background: #f8f9ff;
+        &-head-title {
+            text-align: center;
+        }
+        &-body {
+            padding: 10px 16px;
+        }
+    }
+    .incoming-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+    }
+    .call-description {
+        .to-chats {
+            padding: 0px 10px;
+            background: #edf7ff;
+            span {
+                font-weight: 400;
+                margin-left: 5px;
+            }
+        }
+        .call {
+            &-cancel {
+                font-weight: 300;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            &-answer {
+                background: #009a00;
+                border-color: #5a9e00;
+                font-weight: 400;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                &:hover {
+                    background: #017501;
+                    border-color: #017501;
+                }
+            }
+        }
+
+        img {
+            width: 24px;
+        }
+    }
+
+    #incoming-call-video {
+        max-width: 224px;
+        max-height: 230px;
+        background: #606060;
+        border-radius: 10px;
+        margin: 8px;
+    }
+    .incoming-spin {
+        &--left {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 1;
+        }
+        &--right {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1;
+        }
+    }
+}
