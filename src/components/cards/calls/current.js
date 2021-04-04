@@ -3,16 +3,15 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import CallCancel from 'assets/images/call-cancel.jpg';
-import CallAnswer from 'assets/images/call-answer.jpg';
-import ToChats from 'assets/images/to-chats.png';
+import { OpenChatButton } from 'components/common';
 
 const CurrentCall = (props) => {
     const { profile } = props;
     const { name, email, id, image, duration } = profile;
     return (
         <Row className="current-call">
-            <div className="current-spin--left"><Spin /></div>
-            <div className="current-spin--right"><Spin /></div>
+            {/* <div className="current-spin--left"><Spin /></div> */}
+            {/* <div className="current-spin--right"><Spin /></div> */}
             <div className="call-duration">
                 <Typography.Text type="secondary">Продолжительность: {duration}</Typography.Text>
             </div>
@@ -34,8 +33,8 @@ const CurrentCall = (props) => {
                                 </Typography.Title>
                             </Row>
                             <Row>
-                                <Typography.Title level={4} className="call-description">
-                                    <Button className="to-chats" icon={<img src={ToChats} alt={'to-chats'} />}>Открыть чат</Button>
+                                <Typography.Title level={4}>
+                                    <OpenChatButton />
                                 </Typography.Title>
                             </Row>
                             <Row justify="end" typeof="flex" gutter={12} style={{ marginTop: 20 }}>

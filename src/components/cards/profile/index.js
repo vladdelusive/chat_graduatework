@@ -1,6 +1,6 @@
 import { DoubleLeftOutlined } from '@ant-design/icons';
 import { Button, Col, Divider, Row, Typography } from 'antd'
-import { Spin } from 'components/common';
+import { OpenChatButton, Spin } from 'components/common';
 import React from 'react'
 import { Link } from 'react-router-dom';
 
@@ -14,6 +14,8 @@ export const ProfileCard = React.memo((props) => {
         title,
         returnBtn,
         isDataExist,
+        isToChat,
+        id,
     } = props
 
     return (
@@ -35,6 +37,14 @@ export const ProfileCard = React.memo((props) => {
                             <Col><Paragraph copyable={{ text: email }} /></Col>
                             <Col><a href={`mailto:${email}`}>{email}</a></Col>
                         </Row>
+                        {isToChat &&
+                            (
+                                <Row typeof="flex" gutter={4}>
+                                    <Divider dashed />
+                                    <OpenChatButton userId={id} />
+                                </Row>
+                            )
+                        }
                         <Divider dashed />
                     </Col>
                 </Spin>

@@ -1,4 +1,3 @@
-import { Col, Row } from 'antd';
 import { CurrentCall, IncomingCall, OutgoingCall } from 'components/cards/calls';
 import React from 'react'
 import { connect } from 'react-redux';

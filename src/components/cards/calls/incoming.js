@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import CallCancel from 'assets/images/call-cancel.jpg';
 import CallAnswer from 'assets/images/call-answer.jpg';
-import ToChats from 'assets/images/to-chats.png';
+import { OpenChatButton } from 'components/common';
 
 const IncomingCall = (props) => {
     const { profile } = props;
@@ -31,8 +31,8 @@ const IncomingCall = (props) => {
                                 </Typography.Title>
                             </Row>
                             <Row>
-                                <Typography.Title level={4} className="call-description">
-                                    <Button className="to-chats" icon={<img src={ToChats} alt={'to-chats'} />}>Открыть чат</Button>
+                                <Typography.Title level={4}>
+                                    <OpenChatButton />
                                 </Typography.Title>
                             </Row>
                             <Row justify="end" typeof="flex" gutter={12} style={{ marginTop: 20 }}>

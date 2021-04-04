@@ -29,6 +29,8 @@ function PageProfileContainer(props) {
             title={"Контакт"}
             isDataExist={isDataExist}
             returnBtn={true}
+            isToChat={true}
+            id={id}
         />
     )
 }

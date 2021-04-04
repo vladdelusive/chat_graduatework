@@ -63,15 +63,6 @@
         border-radius: 100%;
     }
     .call-description {
-        .to-chats {
-            padding: 0px 10px;
-            background: #edf7ff;
-            span {
-                font-weight: 400;
-                margin-left: 5px;
-            }
-        }
-
         .call-disconnect {
             font-weight: 300;
             display: flex;
@@ -124,14 +115,6 @@
         border-radius: 100%;
     }
     .call-description {
-        .to-chats {
-            padding: 0px 10px;
-            background: #edf7ff;
-            span {
-                font-weight: 400;
-                margin-left: 5px;
-            }
-        }
         .call {
             &-cancel {
                 font-weight: 300;
@@ -199,14 +182,6 @@
         border-radius: 100%;
     }
     .call-description {
-        .to-chats {
-            padding: 0px 10px;
-            background: #edf7ff;
-            span {
-                font-weight: 400;
-                margin-left: 5px;
-            }
-        }
         .call {
             &-cancel {
                 font-weight: 300;
