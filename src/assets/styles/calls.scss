@@ -1,10 +1,18 @@
 .history-calls {
-    background: #e3e3e3;
+    // background: #e3e3e3;
     margin: 5px;
-    overflow-y: scroll;
+    // overflow-y: scroll;
     max-height: 600px;
     .history-list {
         width: 100%;
+        .ant-list-empty-text {
+            padding: 28px;
+            font-size: 16px;
+            text-align: center;
+            color: black;
+            font-weight: 500;
+            background: #fcfcfd;
+        }
         .ant-list-items {
             .ant-list-item {
                 background: #f2f2f2;
@@ -33,6 +41,67 @@
                     background-color: #00893c;
                 }
             }
+        }
+    }
+}
+
+.outgoing-call {
+    margin: 15px;
+    position: relative;
+    .ant-card {
+        background: #f8f9ff;
+        &-head-title {
+            text-align: center;
+        }
+        &-body {
+            padding: 10px 16px;
+        }
+    }
+    .outgoing-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+    }
+    .call-description {
+        .to-chats {
+            padding: 0px 10px;
+            background: #edf7ff;
+            span {
+                font-weight: 400;
+                margin-left: 5px;
+            }
+        }
+
+        .call-disconnect {
+            font-weight: 300;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        img {
+            width: 24px;
+        }
+    }
+
+    #outgoing-call-video {
+        max-width: 224px;
+        max-height: 230px;
+        background: #606060;
+        border-radius: 10px;
+        margin: 8px;
+    }
+    .outgoing-spin {
+        &--left {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 1;
+        }
+        &--right {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1;
         }
     }
 }

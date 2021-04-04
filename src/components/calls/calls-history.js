@@ -31,12 +31,13 @@ const CallsHistoryContainer = (props) => {
     return (
         <>
             <Typography.Title level={2} style={{ textAlign: "center" }}>История звонков</Typography.Title>
-            <Row className="history-calls">
+            <Row className="history-calls" style={list.length > 4 ? { overflowY: "scroll" } : {}}>
                 <List
                     className="history-list"
                     loading={false}
                     itemLayout="horizontal"
                     // loadMore={loadMore}
+                    locale={{ emptyText: "История звонков пуста" }}
                     dataSource={list}
                     renderItem={item => (
                         <List.Item

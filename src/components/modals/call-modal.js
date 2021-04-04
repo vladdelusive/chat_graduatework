@@ -1,5 +1,6 @@
 import { Tabs } from 'antd';
-import { Calls } from 'components/calls';
+import { ActiveCall } from 'components/calls/active-call';
+import { CallsHistory } from 'components/calls/calls-history';
 import { SettingsDevices } from 'components/common';
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
@@ -17,10 +18,13 @@ const CallModal = (props) => {
         <div className={`call-modal ${!isShow ? 'call-modal--transform' : ''}`}>
             <div className="call-modal__container">
                 <Tabs animated activeKey={tab || 1} onChange={setTab} centered>
-                    <Tabs.TabPane key={'1'} tab={'Звонки'}>
-                        <Calls />
+                    <Tabs.TabPane key={'1'} tab={'Активный'}>
+                        <ActiveCall />
                     </Tabs.TabPane>
-                    <Tabs.TabPane key={'2'} tab={'Настройки'}>
+                    <Tabs.TabPane key={'2'} tab={'История'}>
+                        <CallsHistory />
+                    </Tabs.TabPane>
+                    <Tabs.TabPane key={'3'} tab={'Настройки'}>
                         <SettingsDevices />
                     </Tabs.TabPane>
                 </Tabs>

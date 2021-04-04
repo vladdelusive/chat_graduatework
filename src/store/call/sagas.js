@@ -31,7 +31,12 @@ export function getAccessToAudio() {
     if (navigator.getUserMedia) {
         navigator.getUserMedia({ audio: true, video: true }, (stream) => {
             fetchDevices();
-        }, () => { })
+        }, (err) => {
+            noty("error", err?.message)
+            navigator.getUserMedia({ audio: true }, (stream) => fetchDevices(), (err) => { 
+                noty("error", err)
+            })
+        })
     }
 }
 

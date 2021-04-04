@@ -1,22 +1,19 @@
 import { Col, Row } from 'antd';
+import { OutgoingCall } from 'components/cards/calls';
 import React from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 const ActiveCallContainer = (props) => {
-    // const { activeCall } = props;
+    const { activeCall } = props;
     // const { } = activeCall;
-    return (
-        <Row>
-            <Col>
-            </Col>
-        </Row>
-    )
+    // return <OutgoingCall />
+    return <OutgoingCall />
 }
 
 const mapStateToProps = (state) => {
     return {
-
+        activeCall: false
     }
 };
 
