@@ -16,17 +16,11 @@ const initialState = {
         camDevice: {},
         list: [],
     },
-    // incoming: {
-    //     user: null,
-    //     // status: null,
-    //     active: false
-    // },
-    outgoing: {
-        user: null,
-        // status: null,
-        active: false
+    callState: {
+        type: null,
+        activeCall: false,
+        subscriber: null,
     },
-    activeCall: false,
     // history: { items: [], ....}, online: false,
 };
 
@@ -39,30 +33,19 @@ export const callReducer = createReducer(initialState, {
     },
 
     /*
-    ** INCOMING-OUTGOING - CALL BLOCK
+    ** CHANGE_CALL_STATE
     */
 
-    [call.SAVE_OUTGOING_CALL](state, action) {
+    [call.CHANGE_CALL_STATE](state, action) {
         const { payload } = action
         return {
             ...state,
-            outgoing: {
-                ...state.outgoing,
-                active: payload,
+            callState: {
+                ...state.callState,
+                ...payload,
             }
         };
     },
-
-    // [call.CHANGE_OUTGOING_CALL](state, action) {
-    //     const { payload } = action
-    //     return {
-    //         ...state,
-    //         outgoing: {
-    //             ...state.outgoing,
-    //             ...payload
-    //         }
-    //     };
-    // },
 
     /*
     ** SETTINGS DEVICES

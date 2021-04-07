@@ -21,7 +21,16 @@ export const saveIsPlayingSpeaker = (payload) => ({ type: call.SAVE_IS_PLAYING_S
 
 // outgoing - incoming call
 
-export const fetchOutgoingCall = (payload) => ({ type: call.FETCH_OUTGOING_CALL, payload });
-export const saveOutgoingCall = (payload) => ({ type: call.SAVE_OUTGOING_CALL, payload });
+
+
+export const onMakeCall = (payload) => ({ type: call.ON_MAKE_CALL, payload });
+export const onAnswerCall = (payload) => ({ type: call.ON_ANSWER_CALL, payload });
+export const onCancelCall = (payload) => ({ type: call.ON_CANCEL_CALL, payload });
+
+export const changeCallState = (payload) => ({ type: call.CHANGE_CALL_STATE, payload });
+// export const saveOutgoingCall = (payload) => ({ type: call.SAVE_OUTGOING_CALL, payload });
+
+// export const fetchOutgoingCall = (payload) => ({ type: call.FETCH_OUTGOING_CALL, payload });
+// export const saveOutgoingCall = (payload) => ({ type: call.SAVE_OUTGOING_CALL, payload });
 
 // export const changeOutgoingCall = (payload) => ({ type: call.CHANGE_OUTGOING_CALL, payload });

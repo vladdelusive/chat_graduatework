@@ -33,7 +33,7 @@ export function getAccessToAudio() {
             fetchDevices();
         }, (err) => {
             noty("error", err?.message)
-            navigator.getUserMedia({ audio: true }, (stream) => fetchDevices(), (err) => { 
+            navigator.getUserMedia({ audio: true }, (stream) => fetchDevices(), (err) => {
                 noty("error", err)
             })
         })
@@ -113,8 +113,13 @@ function* checkCurrentSpeakerSaga() {
     yield put(saveIsPlayingSpeaker(false))
 }
 
-function* fetchOutgoingCallSaga(action) {
-    // const { payload } = action;
+// function* fetchOutgoingCallSaga(action) {
+//     // const { payload } = action;
+// }
+
+function* makeCallSaga(action) {
+    const { payload } = action;
+    yield 
 }
 
 export function* callSaga() {
@@ -130,6 +135,7 @@ export function* callSaga() {
 
 
     // outgoing/incoming state
-    yield takeEvery(callTypes.FETCH_OUTGOING_CALL, fetchOutgoingCallSaga);
+    // yield takeEvery(callTypes.FETCH_OUTGOING_CALL, fetchOutgoingCallSaga);
+    yield takeEvery(callTypes.ON_MAKE_CALL, makeCallSaga);
 
 }

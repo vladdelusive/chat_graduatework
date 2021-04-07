@@ -10,6 +10,7 @@ import { getAuthProfile } from 'store/auth/selectors';
 import { Link } from 'react-router-dom';
 import { routes } from 'routes';
 import { SearchChatModal } from 'components/modals';
+import { onMakeCall } from 'store/call/actions';
 
 const { Search } = Input;
 const { Title } = Typography;
@@ -22,6 +23,7 @@ function HeaderChats(props) {
         isCollapsed,
         setSearchValue,
         searchValue,
+        onMakeCall,
     } = props;
 
     const [isShowNewChatModal, setIsShowNewChatModal] = useState(false)
@@ -74,7 +76,9 @@ function HeaderChats(props) {
                         {isSetActiveChat ? <Col>
                             <Row>
                                 <Tooltip title="Видео звонок">
-                                    <VideoCameraOutlined className="video-call" onClick={() => { }} />
+                                    <VideoCameraOutlined className="video-call" onClick={() => {
+                                        onMakeCall(activeChat.userInfo.uid)
+                                    }} />
                                 </Tooltip>
                             </Row>
                         </Col> : null}
@@ -93,7 +97,7 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { onMakeCall };
 
 const EnchancedHeaderChats = compose(
     connect(mapStateToProps, mapDispatchToProps),

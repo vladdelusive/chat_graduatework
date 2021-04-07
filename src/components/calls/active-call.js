@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 const ActiveCallContainer = (props) => {
-    const { activeCall } = props;
+    return <OutgoingCall />
+    // const { activeCall } = props;
     // const { } = activeCall;
-    // return <OutgoingCall />
-    return <CurrentCall />
+    // return <IncomingCall />
+    // return <CurrentCall />
 }
 
 const mapStateToProps = (state) => {
