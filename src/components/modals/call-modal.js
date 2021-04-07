@@ -15,7 +15,7 @@ const CallModal = (props) => {
     const [tab, setTab] = useState('1');
 
     return (
-        <div className={`call-modal ${!isShow ? 'call-modal--transform' : ''}`}>
+        <div className={`call-modal ${isShow ? 'call-modal--transform' : ''}`}>
             <div className="call-modal__container">
                 <Tabs animated activeKey={tab || 1} onChange={setTab} centered>
                     <Tabs.TabPane key={'1'} tab={'Звонки'}>

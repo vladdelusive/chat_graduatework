@@ -1,6 +1,7 @@
 import { DoubleLeftOutlined } from '@ant-design/icons';
 import { Button, Col, Divider, Row, Typography } from 'antd'
 import { OpenChatButton, Spin } from 'components/common';
+import { VideoCallButton } from 'components/common/video-call';
 import React from 'react'
 import { Link } from 'react-router-dom';
 
@@ -42,6 +43,8 @@ export const ProfileCard = React.memo((props) => {
                                 <Row typeof="flex" gutter={4}>
                                     <Divider dashed />
                                     <OpenChatButton userId={id} />
+                                    {/* isDataExist -> profile user info (TS, I need you) */}
+                                    <VideoCallButton profile={isDataExist} />
                                 </Row>
                             )
                         }

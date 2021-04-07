@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Button, Col, Input, Row, Tooltip, Typography, Avatar } from 'antd';
 import {
-    PlusOutlined, UserOutlined, VideoCameraOutlined,
+    PlusOutlined, UserOutlined,
 } from '@ant-design/icons';
 import { getIsCollapsedSider } from 'store/chats/selectors';
 import { getAuthProfile } from 'store/auth/selectors';
 import { Link } from 'react-router-dom';
 import { routes } from 'routes';
 import { SearchChatModal } from 'components/modals';
-import { onMakeCall } from 'store/call/actions';
+import { VideoCallButton } from 'components/common/video-call';
 
 const { Search } = Input;
 const { Title } = Typography;
@@ -23,7 +23,6 @@ function HeaderChats(props) {
         isCollapsed,
         setSearchValue,
         searchValue,
-        onMakeCall,
     } = props;
 
     const [isShowNewChatModal, setIsShowNewChatModal] = useState(false)
@@ -75,11 +74,7 @@ function HeaderChats(props) {
                         </Col>
                         {isSetActiveChat ? <Col>
                             <Row>
-                                <Tooltip title="Видео звонок">
-                                    <VideoCameraOutlined className="video-call" onClick={() => {
-                                        onMakeCall(activeChat.userInfo.uid)
-                                    }} />
-                                </Tooltip>
+                                <VideoCallButton profile={activeChat.userInfo} />
                             </Row>
                         </Col> : null}
                     </Row>
@@ -97,7 +92,7 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = { onMakeCall };
+const mapDispatchToProps = {};
 
 const EnchancedHeaderChats = compose(
     connect(mapStateToProps, mapDispatchToProps),

@@ -1,6 +1,17 @@
 import { delay, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import { noty } from 'utils';
-import { saveCamsList, saveMicsList, saveSpeakersList, setCallSpeaker, setMicDevice, fetchDevicesList, setCamDevice, saveIsPlayingSpeaker } from './actions';
+import {
+    saveCamsList,
+    saveMicsList,
+    saveSpeakersList,
+    setCallSpeaker,
+    setMicDevice,
+    fetchDevicesList,
+    setCamDevice,
+    saveIsPlayingSpeaker,
+    changeCallState,
+    setIsShowCallModal
+} from './actions';
 import * as callTypes from './types';
 import { testAudios } from 'audio'
 
@@ -119,7 +130,27 @@ function* checkCurrentSpeakerSaga() {
 
 function* makeCallSaga(action) {
     const { payload } = action;
-    yield 
+    // const { name, photo, email, uid } = payload;
+
+    const callState = {
+        type: "offer",
+        subscriber: payload,
+        isActiveCall: false,
+    }
+    yield put(changeCallState(callState))
+    yield put(setIsShowCallModal(true))
+}
+
+function* cancelCallSaga(action) {
+    // const { payload } = action;
+    // const { name, photo, email, uid } = payload;
+
+    const callState = {
+        type: null,
+        subscriber: null,
+        isActiveCall: false,
+    }
+    yield put(changeCallState(callState))
 }
 
 export function* callSaga() {
@@ -137,5 +168,5 @@ export function* callSaga() {
     // outgoing/incoming state
     // yield takeEvery(callTypes.FETCH_OUTGOING_CALL, fetchOutgoingCallSaga);
     yield takeEvery(callTypes.ON_MAKE_CALL, makeCallSaga);
-
+    yield takeEvery(callTypes.ON_CANCEL_CALL, cancelCallSaga);
 }

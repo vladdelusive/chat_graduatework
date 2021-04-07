@@ -86,3 +86,29 @@ export const getCamsList = createSelector(
     [_getCams],
     cams => cams.list || []
 );
+
+/*
+|--------------------------------------------------------------------------
+| Selectors calls state
+|--------------------------------------------------------------------------
+*/
+
+export const _getCallState = createSelector(
+    [_getCall],
+    call => call.callState
+);
+
+export const getCallStateType = createSelector(
+    [_getCallState],
+    callState => callState.type
+);
+
+export const getCallStateIsActiveCall = createSelector(
+    [_getCallState],
+    callState => callState.isActiveCall
+);
+
+export const getCallStateSubscriber = createSelector(
+    [_getCallState],
+    callState => callState.subscriber
+);

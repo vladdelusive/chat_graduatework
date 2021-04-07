@@ -2,18 +2,29 @@ import { CurrentCall, IncomingCall, OutgoingCall } from 'components/cards/calls'
 import React from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { getCallStateType } from 'store/call/selectors';
+import { NoCalls } from './no-calls';
 
 const ActiveCallContainer = (props) => {
-    return <OutgoingCall />
-    // const { activeCall } = props;
-    // const { } = activeCall;
-    // return <IncomingCall />
-    // return <CurrentCall />
+    const { type } = props;
+    switch (type) {
+        case "offer":
+            return <OutgoingCall />
+
+        case "answer":
+            return <IncomingCall />
+
+        case "active":
+            return <CurrentCall />
+
+        default:
+            return <NoCalls />
+    }
 }
 
 const mapStateToProps = (state) => {
     return {
-        activeCall: false
+        type: getCallStateType(state),
     }
 };
 
