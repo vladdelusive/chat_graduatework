@@ -29,7 +29,6 @@ export const auth = {
 		try {
 			const chatsWithRefs = await Promise.all(profile.chats.map(chatUid => db.doc(`chats/${chatUid}`).get()))
 			const chats = await Promise.all(chatsWithRefs.map(e => e.data()))
-
 			const usersInfoRefs = await Promise.all(chats.map(({ users }) => {
 				const chatWithPersonUid = users.find(userUid => profile.uid !== userUid)
 				return db.doc(`profiles/${chatWithPersonUid}`).get()
@@ -44,7 +43,7 @@ export const auth = {
 
 			return { profile: profile, chats: parseChatsList(preparedChats, profile.uid) }
 		} catch (e) {
-			return Promise.reject()
+			return Promise.reject(e)
 		}
 	},
 
@@ -68,7 +67,7 @@ export const auth = {
 			if (error.message) {
 				noty('error', error.message);
 			}
-			return null
+			return Promise.reject(error)
 		});
 	},
 
@@ -91,7 +90,7 @@ export const auth = {
 			if (error.message) {
 				noty('error', error.message);
 			}
-			return Promise.reject()
+			return Promise.reject(error)
 		}
 	},
 
@@ -106,7 +105,7 @@ export const auth = {
 			if (error.message) {
 				noty('error', error.message);
 			}
-			return Promise.reject()
+			return Promise.reject(error)
 		}
 	}
 };

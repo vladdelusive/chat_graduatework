@@ -5,10 +5,12 @@ import { compose } from 'redux';
 import CallCancel from 'assets/images/call-cancel.jpg';
 import CallAnswer from 'assets/images/call-answer.jpg';
 import { OpenChatButton } from 'components/common';
+import { getCallStateSubscriber } from 'store/call/selectors';
+import { onAnswerCall, onCancelCall } from 'store/call/actions';
 
 const IncomingCall = (props) => {
-    const { profile } = props;
-    const { name, email, id, image } = profile;
+    const { profile, onCancelCall, onAnswerCall } = props;
+    const { name, email, uid, photo } = profile;
     return (
         <Row className="incoming-call">
             <div className="incoming-spin--left"><Spin /></div>
@@ -22,7 +24,7 @@ const IncomingCall = (props) => {
                     </Row>
                     <Row typeof="flex" justify="space-between" gutter={12}>
                         <Col span={6}>
-                            <img className={'incoming-img'} src={image} alt={'profile_image'} />
+                            <img className={'incoming-img'} src={photo} alt={'profile_image'} />
                         </Col>
                         <Col span={18}>
                             <Row>
@@ -32,20 +34,36 @@ const IncomingCall = (props) => {
                             </Row>
                             <Row>
                                 <Typography.Title level={4}>
-                                    <OpenChatButton />
+                                    <OpenChatButton userId={uid} />
                                 </Typography.Title>
                             </Row>
                             <Row justify="end" typeof="flex" gutter={12} style={{ marginTop: 20 }}>
                                 <Col>
                                     <Typography.Title level={4} className="call-description">
-                                        <Button type="primary" className="call-answer" shape="round" icon={<img src={CallAnswer} alt={'call-answer'} />}>
+                                        <Button
+                                            type="primary"
+                                            className="call-answer"
+                                            shape="round"
+                                            icon={<img src={CallAnswer} alt={'call-answer'} />}
+                                            onClick={() => {
+                                                onAnswerCall(profile)
+                                            }}
+                                        >
                                             <span style={{ marginLeft: 10 }}>Ответить</span>
                                         </Button>
                                     </Typography.Title>
                                 </Col>
                                 <Col>
                                     <Typography.Title level={4} className="call-description">
-                                        <Button type="primary" className="call-cancel" shape="round" icon={<img src={CallCancel} alt={'call-cancel'} />}>
+                                        <Button
+                                            type="primary"
+                                            className="call-cancel"
+                                            shape="round"
+                                            icon={<img src={CallCancel} alt={'call-cancel'} />}
+                                            onClick={() => {
+                                                onCancelCall(profile)
+                                            }}
+                                        >
                                             <span style={{ marginLeft: 10 }}>Завершить</span>
                                         </Button>
                                     </Typography.Title>
@@ -61,16 +79,11 @@ const IncomingCall = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        profile: {
-            id: 1,
-            name: "Vladik Tovstiochub",
-            image: "https://firebasestorage.googleapis.com/v0/b/electron-chat-test-47c35.appspot.com/o/photos%2Fkmtmza83uft6ocx24chqdefault.jpg?alt=media&token=7d639e60-0006-412a-b2f5-b849bc766cb9",
-            email: "mr.tovstochub@mail.ru",
-        }
+        profile: getCallStateSubscriber(state)
     }
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { onCancelCall, onAnswerCall };
 
 const EnchancedIncomingCall = compose(
     connect(mapStateToProps, mapDispatchToProps),

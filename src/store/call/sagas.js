@@ -133,7 +133,7 @@ function* makeCallSaga(action) {
     // const { name, photo, email, uid } = payload;
 
     const callState = {
-        type: "offer",
+        type: "answer",
         subscriber: payload,
         isActiveCall: false,
     }
@@ -149,6 +149,18 @@ function* cancelCallSaga(action) {
         type: null,
         subscriber: null,
         isActiveCall: false,
+    }
+    yield put(changeCallState(callState))
+}
+
+function* answerCallSaga(action) {
+    const { payload } = action;
+    // const { name, photo, email, uid } = payload;
+
+    const callState = {
+        type: "active",
+        subscriber: payload,
+        isActiveCall: true,
     }
     yield put(changeCallState(callState))
 }
@@ -169,4 +181,5 @@ export function* callSaga() {
     // yield takeEvery(callTypes.FETCH_OUTGOING_CALL, fetchOutgoingCallSaga);
     yield takeEvery(callTypes.ON_MAKE_CALL, makeCallSaga);
     yield takeEvery(callTypes.ON_CANCEL_CALL, cancelCallSaga);
+    yield takeEvery(callTypes.ON_ANSWER_CALL, answerCallSaga);
 }

@@ -9,10 +9,10 @@ const ActiveCallContainer = (props) => {
     const { type } = props;
     switch (type) {
         case "offer":
-            return <OutgoingCall />
+            return <IncomingCall />
 
         case "answer":
-            return <IncomingCall />
+            return <OutgoingCall />
 
         case "active":
             return <CurrentCall />

@@ -1,21 +1,29 @@
 import { Card, Col, Row, Typography, Button } from 'antd';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import CallCancel from 'assets/images/call-cancel.jpg';
 import { OpenChatButton } from 'components/common';
 import { onCancelCall } from 'store/call/actions';
 import { getCallStateSubscriber } from 'store/call/selectors';
+import moment from 'moment';
 
 const CurrentCall = (props) => {
     const { profile, onCancelCall } = props;
-    const { name, email, uid, photo, duration } = profile;
+    const { name, email, uid, photo } = profile;
+    const [duration, setDuration] = useState(moment().startOf("day"))
+    useEffect(() => {
+        let intervalId = setInterval(function () {
+            setDuration(time => moment(time).add(1, 'second'))
+        }, 1000);
+        return () => { clearInterval(intervalId) }
+    }, [])
     return (
         <Row className="current-call">
             {/* <div className="current-spin--left"><Spin /></div> */}
             {/* <div className="current-spin--right"><Spin /></div> */}
             <div className="call-duration">
-                <Typography.Text type="secondary">Продолжительность: {duration}</Typography.Text>
+                <Typography.Text type="secondary">Продолжительность: {duration.format('HH:mm:ss')}</Typography.Text>
             </div>
             <Col span={24}>
                 <Card title="АКТИВНЫЙ ЗВОНОК">
