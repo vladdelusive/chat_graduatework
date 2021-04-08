@@ -51,15 +51,14 @@ export function getAccessToAudio() {
     }
 }
 
-function getStreamWithNewCam(deviceId) {
+export function getStreamWithNewCam(deviceId, webcamRef, isShowNoty) {
     // without additional check becouse we did it before
-    if (navigator.getUserMedia) {
-        const webcam = document.getElementById('webcam-local');
-        navigator.getUserMedia({ audio: true, video: { deviceId: { exact: deviceId } } }, (stream) => {
-            webcam.srcObject = stream;
+    if (navigator.getUserMedia && webcamRef) {
+        navigator.getUserMedia({ audio: true, video: deviceId ? ({ deviceId: { exact: deviceId } }) : true }, (stream) => {
+            webcamRef.srcObject = stream;
         }, (error) => {
-            webcam.srcObject = null;
-            noty("error", `${error}`)
+            webcamRef.srcObject = null;
+            isShowNoty && noty("error", `${error}`)
         })
     }
 }
@@ -133,7 +132,7 @@ function* makeCallSaga(action) {
     // const { name, photo, email, uid } = payload;
 
     const callState = {
-        type: "answer",
+        type: "outgoing",
         subscriber: payload,
         isActiveCall: false,
     }

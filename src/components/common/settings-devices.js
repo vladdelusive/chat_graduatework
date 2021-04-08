@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Row, Col, Select, Divider, Typography, Button } from 'antd';
 import { StepForwardOutlined } from '@ant-design/icons';
 import { obj2options } from 'utils/obj-to-options';
-import { getAccessToAudio } from 'store/call/sagas';
 import { getCurrentCallDevice, getMicDevice, getMicsList, getSpeakersList, getSpeakersIsTestPlaying, getCamDevice, getCamsList } from 'store/call/selectors';
 import { setMicDevice, setCallSpeaker, checkCurrentSpeaker, setCamDevice } from 'store/call/actions';
+import { getStreamWithNewCam } from 'store/call/sagas';
 const { Text } = Typography;
 
 const SettingsDevices = (props) => {
@@ -28,8 +28,9 @@ const SettingsDevices = (props) => {
     } = props;
 
     useEffect(() => {
-        getAccessToAudio()
-    }, [])
+        const localVideo = document.getElementById("webcam-local");
+        getStreamWithNewCam(currentCamDevice?.deviceId, localVideo, true)
+    }, [currentCamDevice])
 
     return (
         <Row className="settings">

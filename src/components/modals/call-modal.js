@@ -2,9 +2,10 @@ import { Tabs } from 'antd';
 import { ActiveCall } from 'components/calls/active-call';
 import { CallsHistory } from 'components/calls/calls-history';
 import { SettingsDevices } from 'components/common';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { getAccessToAudio } from 'store/call/sagas';
 import { getIsShowCallModal } from 'store/call/selectors';
 
 const CallModal = (props) => {
@@ -13,6 +14,10 @@ const CallModal = (props) => {
     } = props;
 
     const [tab, setTab] = useState('1');
+
+    useEffect(() => {
+        getAccessToAudio()
+    }, [])
 
     return (
         <div className={`call-modal ${isShow ? 'call-modal--transform' : ''}`}>

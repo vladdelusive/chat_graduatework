@@ -1,15 +1,21 @@
 import { Card, Col, Row, Typography, Button, Spin } from 'antd';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import CallCancel from 'assets/images/call-cancel.jpg';
 import { OpenChatButton } from 'components/common';
-import { getCallStateSubscriber } from 'store/call/selectors';
+import { getCallStateSubscriber, getCamDevice } from 'store/call/selectors';
 import { onCancelCall } from 'store/call/actions';
+import { getStreamWithNewCam } from 'store/call/sagas';
 
 const OutgoingCall = (props) => {
-    const { profile, onCancelCall } = props;
+    const { profile, onCancelCall, deviceCamId } = props;
     const { name, email, photo, uid } = profile;
+
+    useEffect(() => {
+        const localVideo = document.getElementById("outgoing-call-video");
+        getStreamWithNewCam(deviceCamId, localVideo)
+    }, [deviceCamId])
     return (
         <Row className="outgoing-call">
             <div className="outgoing-spin--left"><Spin /></div>
@@ -57,7 +63,7 @@ const OutgoingCall = (props) => {
                     </Row>
                     <Row typeof="flex">
                         <Col>
-                            <video id="outgoing-call-video" autoPlay></video>
+                            <video id="outgoing-call-video" muted={true} autoPlay></video>
                         </Col>
                     </Row>
                 </Card>
@@ -68,7 +74,8 @@ const OutgoingCall = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        profile: getCallStateSubscriber(state)
+        profile: getCallStateSubscriber(state),
+        deviceCamId: getCamDevice(state)?.deviceId,
     }
 };
 
