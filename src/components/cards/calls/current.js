@@ -82,7 +82,7 @@ const CurrentCall = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        profile: getCallStateSubscriber(state)
+        profile: getCallStateSubscriber(state) || {}
     }
 };
 

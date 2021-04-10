@@ -44,7 +44,9 @@ export const ProfileCard = React.memo((props) => {
                                     <Divider dashed />
                                     <OpenChatButton userId={id} />
                                     {/* isDataExist -> profile user info (TS, I need you) */}
-                                    <VideoCallButton profile={isDataExist} />
+                                    <div style={{ marginLeft: 10 }}>
+                                        <VideoCallButton profile={isDataExist} />
+                                    </div>
                                 </Row>
                             )
                         }

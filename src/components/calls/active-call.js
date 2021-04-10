@@ -7,6 +7,7 @@ import { NoCalls } from './no-calls';
 
 const ActiveCallContainer = (props) => {
     const { type } = props;
+    return <CurrentCall />
     switch (type) {
         case "outgoing":
             return <OutgoingCall />

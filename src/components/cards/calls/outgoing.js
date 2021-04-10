@@ -16,6 +16,7 @@ const OutgoingCall = (props) => {
         const localVideo = document.getElementById("outgoing-call-video");
         getStreamWithNewCam(deviceCamId, localVideo)
     }, [deviceCamId])
+
     return (
         <Row className="outgoing-call">
             <div className="outgoing-spin--left"><Spin /></div>

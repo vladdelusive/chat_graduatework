@@ -7,9 +7,10 @@ import notification from 'utils/notifications'
 import { useDispatch, useSelector } from 'react-redux';
 import { getNotificationOnlineStatus } from 'store/notifications/selectors';
 import { changeOnlineStatus } from 'store/notifications/actions';
+import { CallModal } from 'components/modals';
 
 const View = React.memo(() => {
-	const statusOnline = useSelector(state => getNotificationOnlineStatus(state))
+	const statusOnline = useSelector(getNotificationOnlineStatus)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
@@ -29,6 +30,7 @@ const View = React.memo(() => {
 	return (
 		<>
 			{!statusOnline && <OfflineModal />}
+			<CallModal />
 			<RoutesSwitch />
 		</>
 	);

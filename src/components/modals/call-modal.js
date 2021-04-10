@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getAccessToAudio } from 'store/call/sagas';
 import { getIsShowCallModal } from 'store/call/selectors';
+import { registerPeerConnectionForOffers } from 'utils/webrtc';
 
 const CallModal = (props) => {
     const {
@@ -17,6 +18,7 @@ const CallModal = (props) => {
 
     useEffect(() => {
         getAccessToAudio()
+        registerPeerConnectionForOffers()
     }, [])
 
     return (

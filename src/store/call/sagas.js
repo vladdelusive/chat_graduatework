@@ -25,6 +25,7 @@ import { testAudios } from 'audio'
 
 import { store } from 'store';
 import { getCurrentCallDevice } from './selectors';
+import { createOffer } from 'utils/webrtc';
 
 
 const fetchDevices = () => {
@@ -52,7 +53,7 @@ export function getAccessToAudio() {
 }
 
 export function getStreamWithNewCam(deviceId, webcamRef, isShowNoty) {
-    // without additional check becouse we did it before
+    // without additional check because we did it before
     if (navigator.getUserMedia && webcamRef) {
         navigator.getUserMedia({ audio: true, video: deviceId ? ({ deviceId: { exact: deviceId } }) : true }, (stream) => {
             webcamRef.srcObject = stream;
@@ -117,7 +118,7 @@ function* checkCurrentSpeakerSaga() {
     yield put(saveIsPlayingSpeaker(true))
     yield audio.setSinkId(currentCheckDevice.deviceId);
 
-    // the check device sound goes duration * 1000
+    // the check device sound goes -> duration * 1000
     yield delay(duration * 1000)
     audio.src = null
     yield put(saveIsPlayingSpeaker(false))
@@ -138,6 +139,9 @@ function* makeCallSaga(action) {
     }
     yield put(changeCallState(callState))
     yield put(setIsShowCallModal(true))
+
+    const localVideo = document.getElementById("current-call-local");
+    yield createOffer(localVideo)
 }
 
 function* cancelCallSaga(action) {
