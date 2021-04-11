@@ -168,6 +168,12 @@ function* answerCallSaga(action) {
     yield put(changeCallState(callState))
 }
 
+function* onSnapshotCallUpdateSaga(action) {
+    const { payload } = action;
+    debugger
+
+}
+
 export function* callSaga() {
 
     // call settings state
@@ -185,4 +191,5 @@ export function* callSaga() {
     yield takeEvery(callTypes.ON_MAKE_CALL, makeCallSaga);
     yield takeEvery(callTypes.ON_CANCEL_CALL, cancelCallSaga);
     yield takeEvery(callTypes.ON_ANSWER_CALL, answerCallSaga);
+    yield takeEvery(callTypes.ON_SNAPSHOT_CALL_UPDATE, onSnapshotCallUpdateSaga);
 }

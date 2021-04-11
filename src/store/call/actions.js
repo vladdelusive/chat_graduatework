@@ -28,6 +28,8 @@ export const onAnswerCall = (payload) => ({ type: call.ON_ANSWER_CALL, payload }
 export const onCancelCall = (payload) => ({ type: call.ON_CANCEL_CALL, payload });
 
 export const changeCallState = (payload) => ({ type: call.CHANGE_CALL_STATE, payload });
+
+export const onSnapshotCallUpdate = (payload) => ({ type: call.ON_SNAPSHOT_CALL_UPDATE, payload });
 // export const saveOutgoingCall = (payload) => ({ type: call.SAVE_OUTGOING_CALL, payload });
 
 // export const fetchOutgoingCall = (payload) => ({ type: call.FETCH_OUTGOING_CALL, payload });

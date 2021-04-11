@@ -28,12 +28,14 @@ export const auth = {
 	preparedUpdatedProfileData: async (profile) => {
 		try {
 			const chatsWithRefs = await Promise.all(profile.chats.map(chatUid => db.doc(`chats/${chatUid}`).get()))
-			const chats = await Promise.all(chatsWithRefs.map(e => e.data()))
+			// remove promise -> e.data() is not async
+			const chats = chatsWithRefs.map(e => e.data())
 			const usersInfoRefs = await Promise.all(chats.map(({ users }) => {
 				const chatWithPersonUid = users.find(userUid => profile.uid !== userUid)
 				return db.doc(`profiles/${chatWithPersonUid}`).get()
 			}))
-			const usersInfo = await Promise.all(usersInfoRefs.map(e => e.data()))
+			// remove promise -> e.data() is not async
+			const usersInfo = usersInfoRefs.map(e => e.data())
 
 			const preparedChats = chats.reduce((acc, chat, index) => {
 				const userValues = usersInfo[index];
@@ -56,8 +58,8 @@ export const auth = {
 			profile.photo = result.additionalUserInfo.profile.picture;
 			profile.uid = result.user.uid;
 			if (result.additionalUserInfo.isNewUser) {
-				createUserProfile({ ...profile, chats: [] })
-				return { profile, chats: [] }
+				createUserProfile({ ...profile, chats: [], calls: [] })
+				return { profile, chats: [], calls: [] }
 			} else {
 				const existedProfile = (await db.doc(`profiles/${profile.uid}`).get()).data()
 				const data = await auth.preparedUpdatedProfileData(existedProfile)

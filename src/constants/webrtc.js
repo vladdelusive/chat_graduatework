@@ -11,3 +11,7 @@ export const configuration = {
 };
 
 export const peer = new RTCPeerConnection(configuration);
+
+export const createPeerConnection = () => {
+    return new RTCPeerConnection(configuration);
+}
