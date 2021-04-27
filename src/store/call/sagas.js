@@ -1,4 +1,4 @@
-import { delay, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
+import { call, delay, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import { noty } from 'utils';
 import {
     saveCamsList,
@@ -26,6 +26,8 @@ import { testAudios } from 'audio'
 import { store } from 'store';
 import { getCurrentCallDevice } from './selectors';
 import { createOffer } from 'utils/webrtc';
+import { api } from 'services';
+import { getAuthProfileUid, getAuthProfile } from 'store/auth/selectors';
 
 
 const fetchDevices = () => {
@@ -132,27 +134,75 @@ function* makeCallSaga(action) {
     const { payload } = action;
     // const { name, photo, email, uid } = payload;
 
+    // const callState = {
+    //     type: "outgoing",
+    //     isActiveCall: false,
+    // }
+
+    debugger
+
     const callState = {
+        outgoing: {
+            ...payload
+        },
         type: "outgoing",
-        subscriber: payload,
         isActiveCall: false,
     }
-    yield put(changeCallState(callState))
-    yield put(setIsShowCallModal(true))
-
-    const localVideo = document.getElementById("current-call-local");
-    yield createOffer(localVideo)
+    // yield put(changeCallState(callState))
+    // yield put(setIsShowCallModal(true))
+    // const localVideo = document.getElementById("current-call-local");
+    // yield createOffer(localVideo)
+    const { name, photo, email, uid } = yield select(getAuthProfile);
+    yield call(
+        api.calls.createOffer,
+        {
+            myUid: uid,
+            userUid: payload.uid,
+            incoming: { name, photo, email, uid },
+            outgoing: { ...payload }
+        }
+    )
 }
 
 function* cancelCallSaga(action) {
-    // const { payload } = action;
-    // const { name, photo, email, uid } = payload;
+    const { payload } = action;
+    const { profile, statusCall } = payload;
+
+    let myState = {}
+    let userState = {}
+
+    switch (statusCall) {
+        case "outgoing":
+            myState = { outgoing: {} }
+            userState = { incoming: {} }
+            break;
+        case "incoming":
+            myState = { incoming: {} }
+            userState = { outgoing: {} }
+            break;
+        case "active":
+            myState = { active: {} }
+            userState = { active: {} }
+            break;
+        default:
+            break;
+    }
 
     const callState = {
         type: null,
-        subscriber: null,
         isActiveCall: false,
     }
+
+    const { uid } = yield select(getAuthProfile);
+    yield call(
+        api.calls.cancelCall,
+        {
+            myUid: uid,
+            userUid: profile.uid,
+            myState,
+            userState,
+        }
+    )
     yield put(changeCallState(callState))
 }
 
@@ -162,7 +212,7 @@ function* answerCallSaga(action) {
 
     const callState = {
         type: "active",
-        subscriber: payload,
+        // subscriber: payload,
         isActiveCall: true,
     }
     yield put(changeCallState(callState))
@@ -170,8 +220,21 @@ function* answerCallSaga(action) {
 
 function* onSnapshotCallUpdateSaga(action) {
     const { payload } = action;
-    debugger
-
+    const { data } = yield payload;
+    let type = ""
+    if (data.active && Object.keys(data.active).length) {
+        type = "active";
+    } else if (data.outgoing && Object.keys(data.outgoing).length) {
+        type = "outgoing";
+    } else if (data.incoming && Object.keys(data.incoming).length) {
+        type = "incoming";
+    }
+    const callState = {
+        ...data,
+        type,
+        isActiveCall: type === "active",
+    }
+    yield put(changeCallState(callState))
 }
 
 export function* callSaga() {

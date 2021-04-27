@@ -10,16 +10,19 @@ import { push } from 'connected-react-router';
 import { routes } from 'routes';
 import { saveChats } from 'store/chats/actions';
 import { workerMiddleware } from 'store/worker-middleware';
-import { setIsShowCallModal } from 'store/call/actions';
+import { changeCallState, setIsShowCallModal } from 'store/call/actions';
 
 function* fetchLogInByGoogleSaga() {
     try {
         const response = yield call(api.auth.googleLogin);
         if (!response) return;
+        // const { chats, profile, calls } = response;
         const { chats, profile } = response;
+        
         yield put(saveLogInAuth(profile))
         yield put(saveChats(chats))
 
+        // yield put(changeCallState(calls))
         yield put(push(routes.profile.link()))
     } catch (error) {
         console.log(error);
@@ -33,10 +36,13 @@ function* registerByMailAndPasswordSaga(action) {
         const response = yield call(api.auth.registerByMailAndPassword, payload);
         if (!response) return;
 
-        const { chats } = response;
-        yield put(saveLogInAuth(response))
-        yield put(saveChats(chats))
+        // const { profile, calls } = response;
+        const { profile } = response;
 
+        yield put(saveLogInAuth(profile))
+        yield put(saveChats(profile.chats))
+
+        // yield put(changeCallState(calls))
         yield put(push(routes.profile.link()))
     } catch (error) {
         console.log(error);
@@ -50,10 +56,12 @@ function* logInByMailAndPasswordSaga(action) {
 
         const response = yield call(api.auth.logInByMailAndPassword, payload);
         if (!response) return;
+        // const { chats, profile, calls } = response;
         const { chats, profile } = response;
         yield put(saveLogInAuth(profile))
         yield put(saveChats(chats))
 
+        // yield put(changeCallState(calls))
         yield put(push(routes.profile.link()))
     } catch (error) {
         console.log(error);
@@ -65,9 +73,11 @@ function* setUpdateProfileAndChatsSaga(action) {
     try {
         const { payload } = action;
         const response = yield call(api.auth.preparedUpdatedProfileData, payload);
+        // const { chats, profile, calls } = response;
         const { chats, profile } = response;
         yield put(saveUpdateProfile(profile))
         yield put(saveChats(chats))
+        // yield put(changeCallState(calls))
     } catch (error) {
         console.log(error);
     }

@@ -19,7 +19,7 @@ const initialState = {
     callState: {
         type: null,
         isActiveCall: false,
-        subscriber: null,
+        // subscriber: null,
     },
     // history: { items: [], ....}, online: false,
 };

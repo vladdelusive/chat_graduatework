@@ -5,8 +5,8 @@ import { compose } from 'redux';
 import CallCancel from 'assets/images/call-cancel.jpg';
 import { OpenChatButton } from 'components/common';
 import { onCancelCall } from 'store/call/actions';
-import { getCallStateSubscriber } from 'store/call/selectors';
 import moment from 'moment';
+import { getCallStateActive } from 'store/call/selectors';
 
 const CurrentCall = (props) => {
     const { profile, onCancelCall } = props;
@@ -56,7 +56,7 @@ const CurrentCall = (props) => {
                                             shape="round"
                                             icon={<img src={CallCancel} alt={'call-cancel'} />}
                                             onClick={() => {
-                                                onCancelCall(profile)
+                                                onCancelCall({ profile, statusCall: "active" })
                                             }}
                                         >
                                             <span style={{ marginLeft: 10 }}>Завершить</span>
@@ -82,7 +82,7 @@ const CurrentCall = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        profile: getCallStateSubscriber(state) || {}
+        profile: getCallStateActive(state)
     }
 };
 

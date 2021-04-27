@@ -10,11 +10,12 @@ import { getAccessToAudio } from 'store/call/sagas';
 import { getIsShowCallModal } from 'store/call/selectors';
 import { onSnapshotCallUpdate } from 'store/call/actions';
 import { registerPeerConnectionForOffers } from 'utils/webrtc';
+import { getAuthProfileUid } from 'store/auth/selectors';
 
 const CallModal = (props) => {
     const {
         isShow,
-        profileCalls,
+        profileUid,
         onSnapshotCallUpdate
     } = props;
 
@@ -26,16 +27,16 @@ const CallModal = (props) => {
     }, [])
 
     useEffect(() => {
-        let unsubscribeCallsArray;
-        if (profileCalls) {
-            unsubscribeCallsArray = profileCalls.map(call => api.calls.subscribeToProfileCalls(call, onSnapshotCallUpdate))
+        let unsubscribeToProfileCalls;
+        if (profileUid) {
+            unsubscribeToProfileCalls = api.calls.subscribeToProfileCalls(profileUid, onSnapshotCallUpdate)
         }
         return () => {
-            if (typeof unsubscribeChatsMessagesArray === "object" && profileCalls) {
-                unsubscribeCallsArray.forEach(unsub => unsub())
+            if (typeof unsubscribeToProfileCalls === "function" && profileUid) {
+                unsubscribeToProfileCalls()
             }
         }
-    }, [profileCalls, onSnapshotCallUpdate])
+    }, [profileUid, onSnapshotCallUpdate])
 
     return (
         <div className={`call-modal ${isShow ? 'call-modal--transform' : ''}`}>
@@ -59,7 +60,7 @@ const CallModal = (props) => {
 const mapStateToProps = (state) => {
     return {
         isShow: getIsShowCallModal(state),
-        profileCalls: []
+        profileUid: getAuthProfileUid(state)
     }
 };
 

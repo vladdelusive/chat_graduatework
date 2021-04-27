@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import CallCancel from 'assets/images/call-cancel.jpg';
 import { OpenChatButton } from 'components/common';
-import { getCallStateSubscriber, getCamDevice } from 'store/call/selectors';
+import { getCallStateOutgoing, getCamDevice } from 'store/call/selectors';
 import { onCancelCall } from 'store/call/actions';
 import { getStreamWithNewCam } from 'store/call/sagas';
 
@@ -52,7 +52,7 @@ const OutgoingCall = (props) => {
                                             shape="round"
                                             icon={<img src={CallCancel} alt={'call-disconnect'} />}
                                             onClick={() => {
-                                                onCancelCall(profile)
+                                                onCancelCall({ profile, statusCall: "outgoing" })
                                             }}
                                         >
                                             <span style={{ marginLeft: 10 }}>Завершить</span>
@@ -75,7 +75,7 @@ const OutgoingCall = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        profile: getCallStateSubscriber(state),
+        profile: getCallStateOutgoing(state),
         deviceCamId: getCamDevice(state)?.deviceId,
     }
 };

@@ -8,9 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getNotificationOnlineStatus } from 'store/notifications/selectors';
 import { changeOnlineStatus } from 'store/notifications/actions';
 import { CallModal } from 'components/modals';
+import { getAuthIsAuthenticated } from 'store/auth/selectors';
 
 const View = React.memo(() => {
 	const statusOnline = useSelector(getNotificationOnlineStatus)
+	const isAuth = useSelector(getAuthIsAuthenticated)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
@@ -30,7 +32,7 @@ const View = React.memo(() => {
 	return (
 		<>
 			{!statusOnline && <OfflineModal />}
-			<CallModal />
+			{isAuth && <CallModal />}
 			<RoutesSwitch />
 		</>
 	);

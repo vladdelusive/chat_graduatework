@@ -32,7 +32,7 @@ export const getAuthProfile = createSelector(
 
 export const getAuthProfileUid = createSelector(
     [getAuthProfile],
-    (profile) => profile.uid
+    (profile) => profile?.uid
 );
 
 export const getAuthProfileChats = createSelector(

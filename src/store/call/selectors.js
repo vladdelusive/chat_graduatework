@@ -108,7 +108,22 @@ export const getCallStateIsActiveCall = createSelector(
     callState => callState.isActiveCall
 );
 
-export const getCallStateSubscriber = createSelector(
+export const getCallStateIncoming = createSelector(
     [_getCallState],
-    callState => callState.subscriber
+    callState => callState.incoming
 );
+
+export const getCallStateOutgoing = createSelector(
+    [_getCallState],
+    callState => callState.outgoing
+);
+
+export const getCallStateActive = createSelector(
+    [_getCallState],
+    callState => callState.active
+);
+
+// export const getCallStateSubscriber = createSelector(
+//     [_getCallState],
+//     callState => callState.subscriber
+// );

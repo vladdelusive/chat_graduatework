@@ -7,7 +7,15 @@ import { noty } from 'utils/noty'
 import { parseChatsList } from '../parse'
 import { generateUid } from 'utils/uid-generator'
 
-const createUserProfile = (profile) => db.collection("profiles").doc(profile.uid).set(profile)
+const emptyCallsState = {
+	active: {},
+	history: [],
+	incoming: {},
+	outgoing: {},
+}
+
+const createUserProfile = (profile) => db.collection("profiles").doc(profile.uid).set(profile);
+const createUserCalls = (profile) => db.collection("profiles").doc(`${profile.uid}/calls/${profile.uid}`).set(emptyCallsState);
 
 export const auth = {
 
@@ -43,6 +51,9 @@ export const auth = {
 				return [...acc, { userInfo: { name: userValues.name, photo: userValues.photo, email: userValues.email, uid: userValues.uid }, id: chatId, ...chat }]
 			}, [])
 
+			// const profileCalls = (await db.doc(`profiles/${profile.uid}/calls/${profile.uid}`).get()).data();
+
+			// return { profile: profile, chats: parseChatsList(preparedChats, profile.uid), calls: profileCalls }
 			return { profile: profile, chats: parseChatsList(preparedChats, profile.uid) }
 		} catch (e) {
 			return Promise.reject(e)
@@ -58,10 +69,12 @@ export const auth = {
 			profile.photo = result.additionalUserInfo.profile.picture;
 			profile.uid = result.user.uid;
 			if (result.additionalUserInfo.isNewUser) {
-				createUserProfile({ ...profile, chats: [], calls: [] })
-				return { profile, chats: [], calls: [] }
+				await createUserProfile({ ...profile, chats: [] })
+				await createUserCalls(profile)
+				// return { profile, chats: [], calls: emptyCallsState }
+				return { profile, chats: [] }
 			} else {
-				const existedProfile = (await db.doc(`profiles/${profile.uid}`).get()).data()
+				const existedProfile = (await db.doc(`profiles/${profile.uid}`).get()).data();
 				const data = await auth.preparedUpdatedProfileData(existedProfile)
 				return data
 			}
@@ -86,8 +99,10 @@ export const auth = {
 				uid: user.uid,
 				chats: []
 			}
-			createUserProfile(profile)
-			return profile
+			await createUserProfile(profile)
+			await createUserCalls(profile)
+			// return { profile, calls: emptyCallsState }
+			return { profile }
 		} catch (error) {
 			if (error.message) {
 				noty('error', error.message);

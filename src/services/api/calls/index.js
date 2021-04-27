@@ -4,10 +4,30 @@ import 'firebase'
 
 window.db = db;
 export const calls = {
-    subscribeToProfileCalls: (callUid, onSubsribe) => {
+	subscribeToProfileCalls: (profileUid, onSubsribe) => {
 		return db
-			.collection('calls')
-			.doc(callUid)
-			.onSnapshot(snapshot => onSubsribe({ callUid, data: snapshot.data() }))
+			.collection('profiles')
+			.doc(`${profileUid}/calls/${profileUid}`)
+			.onSnapshot(snapshot => onSubsribe({ data: snapshot.data() }))
+	},
+
+	createOffer: ({ myUid, outgoing, userUid, incoming }) => {
+		db.collection('profiles').doc(`${myUid}/calls/${myUid}`).update({
+			outgoing
+		})
+
+		db.collection('profiles').doc(`${userUid}/calls/${userUid}`).update({
+			incoming
+		});
+	},
+
+	cancelCall: ({ myUid, userUid, myState, userState }) => {
+		db.collection('profiles').doc(`${myUid}/calls/${myUid}`).update({
+			...myState
+		})
+
+		db.collection('profiles').doc(`${userUid}/calls/${userUid}`).update({
+			...userState
+		});
 	},
 };
