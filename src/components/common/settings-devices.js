@@ -97,7 +97,7 @@ const SettingsDevices = (props) => {
                 </Row>
                 <Row typeof="flex" justify={'center'}>
                     <Col span={24}>
-                        <video id="webcam-local" autoPlay></video>
+                        <video id="webcam-local" autoPlay muted></video>
                     </Col>
                 </Row>
                 <Row>
