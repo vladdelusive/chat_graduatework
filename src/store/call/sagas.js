@@ -146,10 +146,9 @@ function* makeCallSaga(action) {
             ...payload
         },
         type: "outgoing",
-        isActiveCall: false,
     }
-    // yield put(changeCallState(callState))
-    // yield put(setIsShowCallModal(true))
+    yield put(changeCallState(callState))
+    yield put(setIsShowCallModal(true))
     // const localVideo = document.getElementById("current-call-local");
     // yield createOffer(localVideo)
     const { name, photo, email, uid } = yield select(getAuthProfile);
