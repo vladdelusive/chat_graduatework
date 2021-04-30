@@ -18,7 +18,7 @@ const HeaderView = ({ fetchLogInByGoogle }) => {
 					onClick={() => setShowModal(true)}
 					style={{ fontSize: 16 }}
 				>
-					Войти
+					Увійти
 				</Button>
 			</Col>
 			<Modal

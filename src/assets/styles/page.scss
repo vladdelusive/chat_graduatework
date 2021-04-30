@@ -39,11 +39,12 @@
 
 		.react-logo {
 			width: 100%;
-			max-width: 300px;
+			max-width: 200px;
 
 			@media (prefers-reduced-motion: no-preference) {
 				animation: react-logo-spin infinite 20s linear;
 			}
+			margin-bottom: 50px;
 		}
 	}
 }

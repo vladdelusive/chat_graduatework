@@ -51,7 +51,7 @@ function InputChats(props) {
                     showUploadList={false}
                     multiple={true}
                 >
-                    <Tooltip placement="topRight" title="Загрузить картинку">
+                    <Tooltip placement="topRight" title="Завантажити картинку">
                         <Button className="btn-upload">
                             <UploadOutlined style={{ fontSize: 30 }} />
                         </Button>
@@ -61,7 +61,7 @@ function InputChats(props) {
             <Col span={22}>
                 <Input
                     className="input"
-                    placeholder={activeChat?.messages?.length ? "Напишите сообщение" : "Напишите сообщение первым"}
+                    placeholder={activeChat?.messages?.length ? "Напишіть повідомлення" : "Напишіть повідомлення першим"}
                     size="large"
                     onChange={(e) => setMessageValue(e.target.value)}
                     value={messageValue}

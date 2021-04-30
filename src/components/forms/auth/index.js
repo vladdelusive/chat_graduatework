@@ -10,10 +10,10 @@ const { TabPane } = Tabs;
 const AuthForm = () => {
     return (
         <Tabs defaultActiveKey="1" type="card" size={"large"}>
-            <TabPane tab="Авторизация" key="1">
+            <TabPane tab="Авторизація" key="1">
                 <LoginForm />
             </TabPane>
-            <TabPane tab="Регистрация" key="2">
+            <TabPane tab="Реєстрація" key="2">
                 <SignUpForm />
             </TabPane>
         </Tabs>

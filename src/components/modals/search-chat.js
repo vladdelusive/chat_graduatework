@@ -30,14 +30,14 @@ function SearchChatModal(props) {
     return (
         <Modal
             visible={isShow}
-            title="Начните чат с новым пользователем"
+            title="Почніть чат з новим користувачем"
             onCancel={clodeModal}
         >
             <Row typeof="flex" justify="center" style={{ marginBottom: 10 }} >
                 <Col span={24}>
                     <Input
                         className="input"
-                        placeholder="Поиск по имейл или имени..."
+                        placeholder="Пошук по імейл або імені..."
                         size="large"
                         value={searchValue}
                         onChange={(e) => setSearchValue(e.target.value)}
@@ -51,7 +51,7 @@ function SearchChatModal(props) {
                 itemLayout="horizontal"
                 loadMore={false}
                 dataSource={filteredChatsList}
-                locale={{ emptyText: "Нету новых пользователей" }}
+                locale={{ emptyText: "Нема нових користувачів" }}
                 renderItem={item => (
                     <List.Item
                         actions={[
@@ -63,7 +63,7 @@ function SearchChatModal(props) {
                                         setActiveChatId(chatId)
                                     }
                                 })}
-                            >Начать чат</Button>
+                            >Почати чат</Button>
                         ]}
                     >
                         <Skeleton avatar title={false} loading={item.loading} active>

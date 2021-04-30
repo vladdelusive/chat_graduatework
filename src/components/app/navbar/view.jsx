@@ -5,8 +5,8 @@ import { routes } from 'routes';
 
 const View = ({ isAuth }) => {
 	const navbarRoutes = useMemo(() => [
-		{ name: 'Главная', key: 'home', inAuth: false },
-		{ name: 'Чаты', key: 'chats', inAuth: true },
+		{ name: 'Головна', key: 'home', inAuth: false },
+		{ name: 'Чати', key: 'chats', inAuth: true },
 	], []);
 
 	const bars = []

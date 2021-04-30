@@ -37,11 +37,14 @@ const CallsHistoryContainer = (props) => {
                     loading={false}
                     itemLayout="horizontal"
                     // loadMore={loadMore}
-                    locale={{ emptyText: "История звонков пуста" }}
+                    locale={{ emptyText: "Історія дзвінків порожня" }}
                     dataSource={list}
                     renderItem={item => (
                         <List.Item
-                            actions={[<Button onClick={() => { }} type="link">Перезвонить</Button>, <Button onClick={() => { }} type="link">Написать</Button>]}
+                            actions={[
+                                <Button onClick={() => { }} type="link">Передзвонити</Button>,
+                                <Button onClick={() => { }} type="link">Написати</Button>
+                            ]}
                         >
                             <Skeleton avatar title={false} loading={item.loading} active>
                                 <List.Item.Meta
@@ -52,10 +55,10 @@ const CallsHistoryContainer = (props) => {
                                     description={(
                                         <Row>
                                             <Col>
-                                                {`${item.callType === "outgoing" ? "Исходящий" : "Входящий"} (${item.timeDate})`}
+                                                {`${item.callType === "outgoing" ? "Вихідний" : "Вхідний"} (${item.timeDate})`}
                                             </Col>
                                             <Col>
-                                                Продолжительность {item.duration}
+                                                Тривалість {item.duration}
                                             </Col>
                                         </Row>
                                     )}

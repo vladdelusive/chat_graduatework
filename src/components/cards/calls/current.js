@@ -23,7 +23,7 @@ const CurrentCall = (props) => {
             {/* <div className="current-spin--left"><Spin /></div> */}
             {/* <div className="current-spin--right"><Spin /></div> */}
             <div className="call-duration">
-                <Typography.Text type="secondary">Продолжительность: {duration.format('HH:mm:ss')}</Typography.Text>
+                <Typography.Text type="secondary">Тривалість: {duration.format('HH:mm:ss')}</Typography.Text>
             </div>
             <Col span={24}>
                 <Card title="АКТИВНЫЙ ЗВОНОК">
@@ -59,7 +59,7 @@ const CurrentCall = (props) => {
                                                 onCancelCall({ profile, statusCall: "active" })
                                             }}
                                         >
-                                            <span style={{ marginLeft: 10 }}>Завершить</span>
+                                            <span style={{ marginLeft: 10 }}>Завершити</span>
                                         </Button>
                                     </Typography.Title>
                                 </Col>

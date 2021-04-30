@@ -42,13 +42,13 @@ const CallModal = (props) => {
         <div className={`call-modal ${isShow ? 'call-modal--transform' : ''}`}>
             <div className="call-modal__container">
                 <Tabs animated activeKey={tab || 1} onChange={setTab} centered>
-                    <Tabs.TabPane key={'1'} tab={'Звонки'}>
+                    <Tabs.TabPane key={'1'} tab={'Дзвінки'}>
                         <ActiveCall />
                     </Tabs.TabPane>
-                    <Tabs.TabPane key={'2'} tab={'История'}>
+                    <Tabs.TabPane key={'2'} tab={'Історія'}>
                         <CallsHistory />
                     </Tabs.TabPane>
-                    <Tabs.TabPane key={'3'} tab={'Настройки'}>
+                    <Tabs.TabPane key={'3'} tab={'Налаштування'}>
                         <SettingsDevices />
                     </Tabs.TabPane>
                 </Tabs>

@@ -40,12 +40,12 @@ export const MessagesChats = React.memo((props) => {
                             </React.Fragment>
                         )
                     })
-                    : <div className="chat_info">Сообщений в чате пока нет...</div>
+                    : <div className="chat_info">Повідомлень в чаті поки немає...</div>
                 }
             </Scrollbars>
             <Modal
                 visible={showImage.show}
-                title={"Просмотр картинки"}
+                title={"Перегляд картинки"}
                 footer={null}
                 width={800}
                 onCancel={() => onShowImage({ src: null, show: false })}

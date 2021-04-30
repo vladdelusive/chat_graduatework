@@ -36,13 +36,13 @@ const SettingsDevices = (props) => {
         <Row className="settings">
             <Col span={24}>
                 <Row>
-                    <Text type="secondary" className={'device-text'}>Микрофон</Text>
+                    <Text type="secondary" className={'device-text'}>Мікрофон</Text>
                 </Row>
                 <Row>
                     <Col span={24}>
                         <Select
                             className="device-select"
-                            placeholder={'Выберите микрофон'}
+                            placeholder={'Виберіть мікрофон'}
                             size={'large'}
                             onChange={(value) => setMicDevice(micsList.find(device => device.deviceId === value))}
                             value={currentMicDevice?.deviceId}
@@ -56,13 +56,13 @@ const SettingsDevices = (props) => {
             <Divider />
             <Col span={24}>
                 <Row>
-                    <Text type="secondary" className={'device-text'}>Динамик</Text>
+                    <Text type="secondary" className={'device-text'}>Динамік</Text>
                 </Row>
                 <Row>
                     <Col span={24}>
                         <Select
                             className="device-select"
-                            placeholder={'Выберите динамик'}
+                            placeholder={'Виберіть динамік'}
                             size={'large'}
                             onChange={(value) => setCallSpeaker(speakersList.find(device => device.deviceId === value))}
                             value={currentSpeakerDevice?.deviceId}
@@ -86,7 +86,7 @@ const SettingsDevices = (props) => {
                         size="large"
                         icon={<StepForwardOutlined />}
                     >
-                        Проверить динамик
+                        Перевірити динамік
 					</Button>
                 </Row>
             </Col>
@@ -104,7 +104,7 @@ const SettingsDevices = (props) => {
                     <Col span={24}>
                         <Select
                             className="device-select"
-                            placeholder={'Выберите камеру'}
+                            placeholder={'Виберіть камеру'}
                             size={'large'}
                             onChange={(value) => {
                                 setCamDevice(camsList.find(device => device.deviceId === value))

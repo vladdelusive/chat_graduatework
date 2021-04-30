@@ -122,7 +122,7 @@ function Chats(props) {
                                     </div>
                                 </>
                                 // : <img src={ChatBack} alt="back img" className="fit-template"></img>
-                                : <div className="chat_info">Пожалуйста, выберите чат, чтобы начать обмен сообщениями</div>
+                                : <div className="chat_info">Будь ласка, виберіть чат, щоб почати обмін повідомленнями</div>
                         }
                     </Content>
                 </Layout>

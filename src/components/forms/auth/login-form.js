@@ -27,9 +27,9 @@ function LoginForm(props) {
                             prefix={<UserOutlined />}
                             name={'email'}
                             type={'text'}
-                            placeholder={'Почта'}
+                            placeholder={'Пошта'}
                             size="large"
-                            hint="Введите свою почту"
+                            hint="Введіть свою пошту"
                             disabled={pending}
                         />
                     </Row>
@@ -42,7 +42,7 @@ function LoginForm(props) {
                             placeholder={'Пароль'}
                             size="large"
                             iconRender={visible => visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
-                            hint="Введите корректный пароль"
+                            hint="Введіть коректний пароль"
                             disabled={pending}
                         />
                     </Row>
@@ -60,7 +60,7 @@ function LoginForm(props) {
                             style={{ width: "100%" }}
                             loading={pending}
                         >
-                            Авторизоватся
+                            Авторизуватись
                         </Button>
                     </Col>
                 </Row>

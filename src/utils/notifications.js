@@ -1,18 +1,18 @@
 export default {
     init() {
         if (!("Notification" in window)) {
-            console.log("Your browser environment doesn`t support notification");
+            console.log("Середовище вашого браузера не підтримує сповіщення");
         } else if (Notification.permission !== "denied") {
             Notification.requestPermission().then(permission => {
                 if (permission === "granted") {
-                    console.log("Permission has been granted!");
+                    console.log("Дозвіл надано!");
                 }
             })
         }
     },
 
     show(params) {
-        const { title = "NEW Notification!", body = "" } = params;
+        const { title = "НОВЕ Сповіщення!", body = "" } = params;
         new Notification(title, { body })
     }
 }

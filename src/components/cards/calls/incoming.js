@@ -49,7 +49,7 @@ const IncomingCall = (props) => {
                                                 onAnswerCall(profile)
                                             }}
                                         >
-                                            <span style={{ marginLeft: 10 }}>Ответить</span>
+                                            <span style={{ marginLeft: 10 }}>Відповісти</span>
                                         </Button>
                                     </Typography.Title>
                                 </Col>
@@ -64,7 +64,7 @@ const IncomingCall = (props) => {
                                                 onCancelCall({ profile, statusCall: "incoming" })
                                             }}
                                         >
-                                            <span style={{ marginLeft: 10 }}>Завершить</span>
+                                            <span style={{ marginLeft: 10 }}>Завершити</span>
                                         </Button>
                                     </Typography.Title>
                                 </Col>

@@ -55,7 +55,7 @@ const OutgoingCall = (props) => {
                                                 onCancelCall({ profile, statusCall: "outgoing" })
                                             }}
                                         >
-                                            <span style={{ marginLeft: 10 }}>Завершить</span>
+                                            <span style={{ marginLeft: 10 }}>Завершити</span>
                                         </Button>
                                     </Typography.Title>
                                 </Col>

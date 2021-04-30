@@ -11,22 +11,22 @@ function VideoCallBtn(props) {
     return isCurrentCall
         ? (
             <Popconfirm
-                title={'Позвонив, Вы завершите текущий звонок...'}
+                title={'Зателефонувавши, Ви завершите поточний дзвінок ...'}
                 icon={<QuestionCircleFilled />}
-                okText={'Понял, окей'}
-                cancelText={'Тогда нет'}
+                okText={'Зрозумів, окей'}
+                cancelText={'Тоді ні'}
                 placement={"left"}
                 onConfirm={() => {
                     onMakeCall(profile)
                 }}
             >
-                <Tooltip title="Видео звонок">
+                <Tooltip title="Відеодзвінок">
                     <VideoCameraOutlined className="video-call-btn" />
                 </Tooltip>
             </Popconfirm>
         )
         : (
-            <Tooltip title="Видео звонок">
+            <Tooltip title="Відеодзвінок">
                 <VideoCameraOutlined className="video-call-btn" onClick={() => {
                     onMakeCall(profile)
                 }} />

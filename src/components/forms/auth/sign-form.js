@@ -22,7 +22,7 @@ function SignUpForm(props) {
 
     const logIn = (values) => {
         if (!file.length) {
-            message.error(`Загрузите картинку для аватарки`);
+            message.error(`Завантажте картинку для аватарки`);
         } else {
             const valuesData = {
                 ...values,
@@ -68,9 +68,9 @@ function SignUpForm(props) {
                         prefix={<SmileOutlined />}
                         name={'name'}
                         type={'text'}
-                        placeholder={'Имя/никнейм'}
+                        placeholder={"Ім'я / нікнейм"}
                         size="large"
-                        hint="Введите свое имя или никнейм"
+                        hint="Введіть своє ім'я або нікнейм"
                         disabled={pending}
                     />
                 </Row>
@@ -80,9 +80,9 @@ function SignUpForm(props) {
                         prefix={<UserOutlined />}
                         name={'email'}
                         type={'text'}
-                        placeholder={'Почта'}
+                        placeholder={'Пошта'}
                         size="large"
-                        hint="Введите любую свою почту"
+                        hint="Введіть будь-яку свою пошту"
                         disabled={pending}
                     />
                 </Row>
@@ -95,13 +95,13 @@ function SignUpForm(props) {
                         placeholder={'Пароль'}
                         size="large"
                         iconRender={visible => visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
-                        hint="Введите корректный пароль"
+                        hint="Введіть коректний пароль"
                         disabled={pending}
                     />
                 </Row>
                 <Row style={{ marginBottom: 20 }}>
                     <Upload {...propsUpload}>
-                        <Button icon={<UploadOutlined />} loading={pending}>Загрузите аватарку</Button>
+                        <Button icon={<UploadOutlined />} loading={pending}>Завантажте аватарку</Button>
                     </Upload>
                 </Row>
             </div>
@@ -118,7 +118,7 @@ function SignUpForm(props) {
                         style={{ width: "100%" }}
                         loading={pending}
                     >
-                        Зарегистрироваться
+                        Зареєструватися
                     </Button>
                 </Col>
             </Row>

@@ -7,10 +7,10 @@ export function NotFound() {
         <Result
             status="404"
             title="404"
-            subTitle="Страница не была найдена"
+            subTitle="Сторінка не була знайдена"
             extra={
                 <Link to="/">
-                    <Button type="primary">Вернутся на главную</Button>
+                    <Button type="primary">Повернутися на головну</Button>
                 </Link>
             }
         />

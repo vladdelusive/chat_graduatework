@@ -32,12 +32,12 @@ function HeaderChats(props) {
             <div className="chats-header">
                 <div className={`header-line ${isCollapsed ? "collapsed" : ""}`}>
                     <div className="search-chat-btn">
-                        <Tooltip title="Чат с новым пользователем">
+                        <Tooltip title="Чат з новим користувачем">
                             <Button icon={<PlusOutlined />} size="large" onClick={() => setIsShowNewChatModal(true)} />
                         </Tooltip>
                     </div>
                     <Search
-                        placeholder="Найти чат..."
+                        placeholder="Знайти чат..."
                         className="search-chats"
                         allowClear
                         value={searchValue}

@@ -6,25 +6,25 @@ function isEmail(email) {
 export const rulesHandler = {
     required: (value, rule, /*fieldName*/) => {
         if (rule === true && ['', undefined, null].some(v => v === value)) {
-            return `Поле обязательное`;
+            return `Поле обов'язкове`;
         }
     },
 
     minLength: (value, length, /*fieldName*/) => {
         if (value && value.length < length) {
-            return `Должен быть как минимум ${length} символов.`;
+            return `Повинно бути як мінімум ${length} символів.`;
         }
     },
 
     maxLength: (value, length, /*fieldName*/) => {
         if (value && value.length > length) {
-            return `Должен быть как максимум ${length} символов.`;
+            return `Повинно бути як максимум ${length} символів.`;
         }
     },
 
     email: (value, rule) => {
         if (rule === true && !isEmail(String(value))) {
-            return 'Имейл не валидный';
+            return 'Імейл не валідний';
         }
     },
 
@@ -39,7 +39,7 @@ export const rulesHandler = {
             }
         }
         if (!flag) {
-            return `Объем файла не должен превышать ${max}kB`;
+            return `Обсяг файлу не повинен перевищувати ${max}kB`;
         }
     },
 
@@ -54,7 +54,7 @@ export const rulesHandler = {
             }
         }
         if (!flag) {
-            return `Допустимые расширения файлов: ${types}`;
+            return `Допустимі розширення файлів: ${types}`;
         }
     },
 };
