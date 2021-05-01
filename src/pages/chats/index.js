@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Layout } from 'antd';
 import { api } from 'services';
-import 'moment/locale/ru'
+import 'moment/locale/uk'
 import { HeaderChats, MessagesChats, SiderListChats, InputChats } from 'components/chats';
 import { setUpdateProfile } from 'store/auth/actions';
 import { getAuthProfile } from 'store/auth/selectors';

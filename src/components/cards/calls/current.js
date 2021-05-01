@@ -44,7 +44,7 @@ const CurrentCall = (props) => {
                             </Row>
                             <Row>
                                 <Typography.Title level={4}>
-                                    <OpenChatButton />
+                                    <OpenChatButton userId={uid} />
                                 </Typography.Title>
                             </Row>
                             <Row justify="end" typeof="flex" gutter={12} style={{ marginTop: 20 }}>

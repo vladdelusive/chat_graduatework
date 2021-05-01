@@ -32,7 +32,7 @@ export const MessagesChats = React.memo((props) => {
                             }, {})
                     ).map(([k, e]) => {
                         const isToday = moment(k, CLIENT_DATE_FORMAT).isSame(moment(), 'day');
-                        const date = isToday ? `Сегодня (${moment(k, CLIENT_DATE_FORMAT).format("LLLL").split(",").slice(0, -1).join()})` : k;
+                        const date = isToday ? `Сьогодні (${moment(k, CLIENT_DATE_FORMAT).format("LLLL").split(",").slice(0, -1).join()})` : k;
                         return (
                             <React.Fragment key={k}>
                                 <div className={`date-messages ${isToday ? "today-date" : ""}`}>{date}</div>

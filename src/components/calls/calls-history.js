@@ -30,7 +30,7 @@ const CallsHistoryContainer = (props) => {
     ]
     return (
         <>
-            <Typography.Title level={2} style={{ textAlign: "center" }}>История звонков</Typography.Title>
+            <Typography.Title level={2} style={{ textAlign: "center" }}>Історія дзвінків</Typography.Title>
             <Row className="history-calls" style={list.length > 4 ? { overflowY: "scroll" } : {}}>
                 <List
                     className="history-list"

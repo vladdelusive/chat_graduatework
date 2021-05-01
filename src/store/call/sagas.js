@@ -28,6 +28,7 @@ import { getCurrentCallDevice } from './selectors';
 import { createOffer } from 'utils/webrtc';
 import { api } from 'services';
 import { getAuthProfileUid, getAuthProfile } from 'store/auth/selectors';
+import { isEmpty } from 'utils/isEmptyObject';
 
 
 const fetchDevices = () => {
@@ -132,22 +133,7 @@ function* checkCurrentSpeakerSaga() {
 
 function* makeCallSaga(action) {
     const { payload } = action;
-    // const { name, photo, email, uid } = payload;
 
-    // const callState = {
-    //     type: "outgoing",
-    //     isActiveCall: false,
-    // }
-
-    debugger
-
-    const callState = {
-        outgoing: {
-            ...payload
-        },
-        type: "outgoing",
-    }
-    yield put(changeCallState(callState))
     yield put(setIsShowCallModal(true))
     // const localVideo = document.getElementById("current-call-local");
     // yield createOffer(localVideo)
@@ -208,24 +194,41 @@ function* cancelCallSaga(action) {
 function* answerCallSaga(action) {
     const { payload } = action;
     // const { name, photo, email, uid } = payload;
-
+    const { name, photo, email, uid } = yield select(getAuthProfile);
+    let myState = {
+        incoming: {},
+        active: { ...payload }
+    }
+    let userState = {
+        outgoing: {},
+        active: { name, photo, email, uid }
+    }
+    yield call(
+        api.calls.answerCall,
+        {
+            myUid: uid,
+            userUid: payload.uid,
+            myState,
+            userState,
+        }
+    )
     const callState = {
-        type: "active",
-        // subscriber: payload,
-        isActiveCall: true,
+        type: null,
+        isActiveCall: false,
     }
     yield put(changeCallState(callState))
+
 }
 
 function* onSnapshotCallUpdateSaga(action) {
     const { payload } = action;
     const { data } = yield payload;
     let type = ""
-    if (data.active && Object.keys(data.active).length) {
+    if (!isEmpty(data.active)) {
         type = "active";
-    } else if (data.outgoing && Object.keys(data.outgoing).length) {
+    } else if (!isEmpty(data.outgoing)) {
         type = "outgoing";
-    } else if (data.incoming && Object.keys(data.incoming).length) {
+    } else if (!isEmpty(data.incoming)) {
         type = "incoming";
     }
     const callState = {

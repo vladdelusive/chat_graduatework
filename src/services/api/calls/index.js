@@ -30,4 +30,14 @@ export const calls = {
 			...userState
 		});
 	},
+
+	answerCall: ({ myUid, userUid, myState, userState }) => {
+		db.collection('profiles').doc(`${myUid}/calls/${myUid}`).update({
+			...myState
+		})
+
+		db.collection('profiles').doc(`${userUid}/calls/${userUid}`).update({
+			...userState
+		});
+	},
 };

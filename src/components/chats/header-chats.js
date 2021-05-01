@@ -46,7 +46,7 @@ function HeaderChats(props) {
                 </div>
                 <div className="chat-information">
                     <Row typeof="flex" justify="space-between" align="middle" style={{ height: "100%", padding: "0px 10px" }}>
-                        <Col span={8}>
+                        <Col span={20}>
                             <Row align="middle" gutter={10}>
                                 <Col>
                                     <Avatar

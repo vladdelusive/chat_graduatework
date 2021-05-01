@@ -16,7 +16,7 @@ function PageProfileContainer(props) {
             img={img}
             nameTitle={name}
             email={email}
-            title={"Ваш профиль"}
+            title={"Ваш профіль"}
             isDataExist={true}
         />
     )

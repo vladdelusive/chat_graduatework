@@ -10,22 +10,21 @@ import { Logo } from '../logo';
 import { Profile } from '../profile';
 import { WhatsAppOutlined } from '@ant-design/icons';
 import { toggleIsShowCallModal } from 'store/call/actions';
+import { getCallStateType } from 'store/call/selectors';
 
-const changeColor = false;
-
-const CallBtn = (toggleIsShowCallModal) => (
+const CallBtn = (toggleIsShowCallModal, isActiveCallStatus) => (
 	<Col>
 		<Button
 			type={'link'}
 			onClick={toggleIsShowCallModal}
 		>
-			<WhatsAppOutlined className={changeColor ? "ant-icon--call-active" : "ant-icon--call-unactive"} size={6} />
+			<WhatsAppOutlined className={isActiveCallStatus ? "ant-icon--call-active" : "ant-icon--call-unactive"} size={6} />
 		</Button>
 	</Col>
 )
 
 const HeaderContainer = (props) => {
-	const { isAuth, toggleIsShowCallModal } = props;
+	const { isAuth, toggleIsShowCallModal, isActiveCallStatus } = props;
 
 	const correctNavbar = isAuth ? <Profile /> : <View isAuth={isAuth} />
 
@@ -39,7 +38,7 @@ const HeaderContainer = (props) => {
 					<Col className={'_flex-grow'}>
 						<NavBar />
 					</Col>
-					{isAuth ? CallBtn(toggleIsShowCallModal) : null}
+					{isAuth ? CallBtn(toggleIsShowCallModal, isActiveCallStatus) : null}
 					{correctNavbar}
 				</Row>
 			</Col>
@@ -50,7 +49,8 @@ const HeaderContainer = (props) => {
 const mapStateToProps = (state) => {
 	// const auth = window.localStorage.getItem("auth")
 	return {
-		isAuth: getAuthIsAuthenticated(state)
+		isAuth: getAuthIsAuthenticated(state),
+		isActiveCallStatus: !!getCallStateType(state)
 	};
 };
 
