@@ -1,6 +1,7 @@
 import { peer } from 'constants/webrtc'
 import { api } from 'services';
 import { store } from 'store';
+import { changeRemoteVideoSrc, changeLocalVideoSrc } from 'store/call/actions';
 import { getCallStateActive } from 'store/call/selectors';
 // ref = document.getElementById("current-call-remote")
 // ref.muted = true
@@ -24,9 +25,11 @@ export const registerPeerConnectionForOffers = () => {
                 );
             }
         );
+        store.dispatch(changeLocalVideoSrc(stream))
     }, (error) => { })
     peer.ontrack = (event) => {
         remoteRef.srcObject = event.streams[0];
+        store.dispatch(changeRemoteVideoSrc(event.streams[0]))
     };
     let candidates = [];
     peer.onicecandidate = (event) => {
@@ -50,6 +53,8 @@ export const createOffer = async ({ userUid }) => {
     })
     localRef.srcObject = stream;
     localRef.srcObject.getTracks().forEach(track => peer.addTrack(track, localRef.srcObject));
+    store.dispatch(changeLocalVideoSrc(stream))
+
     let candidates = [];
     peer.onicecandidate = (event) => {
         if (event.candidate) {

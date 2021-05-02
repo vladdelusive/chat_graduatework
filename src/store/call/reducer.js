@@ -21,6 +21,8 @@ const initialState = {
         isActiveCall: false,
         // subscriber: null,
     },
+    remoteVideo: null,
+    localVideo: null,
     // history: { items: [], ....}, online: false,
 };
 
@@ -44,6 +46,22 @@ export const callReducer = createReducer(initialState, {
                 ...state.callState,
                 ...payload,
             }
+        };
+    },
+
+    [call.SET_REMOTE_SRC_OBJECT](state, action) {
+        const { payload } = action
+        return {
+            ...state,
+            remoteVideo: payload
+        };
+    },
+
+    [call.SET_LOCAL_SRC_OBJECT](state, action) {
+        const { payload } = action
+        return {
+            ...state,
+            localVideo: payload
         };
     },
 

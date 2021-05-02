@@ -1,23 +1,35 @@
 import { Card, Col, Row, Typography, Button } from 'antd';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import CallCancel from 'assets/images/call-cancel.jpg';
 import { OpenChatButton } from 'components/common';
 import { onCancelCall } from 'store/call/actions';
 import moment from 'moment';
-import { getCallStateActive } from 'store/call/selectors';
+import { getCallStateActive, getLocalVideo, getRemoteVideo } from 'store/call/selectors';
 
 const CurrentCall = (props) => {
-    const { profile, onCancelCall } = props;
-    const { name, email, uid, photo } = profile;
+    const { activeCall, onCancelCall, remoteVideo, localVideo } = props;
+    const { name, email, uid, photo } = activeCall;
     const [duration, setDuration] = useState(moment().startOf("day"))
+    const refRemoteVideo = useRef(null)
+    const refLocalVideo = useRef(null)
     useEffect(() => {
         let intervalId = setInterval(function () {
             setDuration(time => moment(time).add(1, 'second'))
         }, 1000);
         return () => { clearInterval(intervalId) }
     }, [])
+
+    useEffect(() => {
+        if (!refRemoteVideo.current) return;
+        refRemoteVideo.current.srcObject = remoteVideo;
+    }, [remoteVideo])
+
+    useEffect(() => {
+        if (!refLocalVideo.current) return;
+        refLocalVideo.current.srcObject = localVideo;
+    }, [localVideo])
     return (
         <Row className="current-call">
             {/* <div className="current-spin--left"><Spin /></div> */}
@@ -56,7 +68,7 @@ const CurrentCall = (props) => {
                                             shape="round"
                                             icon={<img src={CallCancel} alt={'call-cancel'} />}
                                             onClick={() => {
-                                                onCancelCall({ profile, statusCall: "active" })
+                                                onCancelCall({ profile: activeCall, statusCall: "active" })
                                             }}
                                         >
                                             <span style={{ marginLeft: 10 }}>Завершити</span>
@@ -68,10 +80,10 @@ const CurrentCall = (props) => {
                     </Row>
                     <Row typeof="flex" gutter={24} justify="space-between">
                         <Col span={12}>
-                            <video id="current-call-local" className="current-call current-call__my-camera" autoPlay></video>
+                            <video id="current-call-local" className="current-call current-call__my-camera" autoPlay muted ref={refLocalVideo}></video>
                         </Col>
                         <Col span={12}>
-                            <video id="current-call-remote" className="current-call current-call__person-camera" autoPlay></video>
+                            <video id="current-call-remote" className="current-call current-call__person-camera" autoPlay ref={refRemoteVideo}></video>
                         </Col>
                     </Row>
                 </Card>
@@ -82,7 +94,9 @@ const CurrentCall = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        profile: getCallStateActive(state)
+        activeCall: getCallStateActive(state),
+        remoteVideo: getRemoteVideo(state),
+        localVideo: getLocalVideo(state),
     }
 };
 

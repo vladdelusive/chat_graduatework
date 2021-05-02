@@ -29,6 +29,7 @@ import { createAnswer, createOffer, setAnswerToPeer } from 'utils/webrtc';
 import { api } from 'services';
 import { getAuthProfileUid, getAuthProfile } from 'store/auth/selectors';
 import { isEmpty } from 'utils/isEmptyObject';
+import { peer } from 'constants/webrtc';
 
 
 const fetchDevices = () => {
@@ -172,6 +173,8 @@ function* cancelCallSaga(action) {
         default:
             break;
     }
+
+    peer.close()
 
     const callState = {
         type: null,

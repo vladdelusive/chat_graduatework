@@ -123,6 +123,17 @@ export const getCallStateActive = createSelector(
     callState => callState.active
 );
 
+export const getRemoteVideo = createSelector(
+    [_getCall],
+    call => call.remoteVideo
+);
+
+export const getLocalVideo = createSelector(
+    [_getCall],
+    call => call.localVideo
+);
+
+
 // export const getCallStateSubscriber = createSelector(
 //     [_getCallState],
 //     callState => callState.subscriber
