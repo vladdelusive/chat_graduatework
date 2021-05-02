@@ -40,4 +40,8 @@ export const calls = {
 			...userState
 		});
 	},
+
+	updateCallCandidates: ({ userUid, userCandidatesState }) => {
+		db.collection('profiles').doc(`${userUid}/calls/${userUid}`).set({ ...userCandidatesState }, { merge: true });
+	},
 };

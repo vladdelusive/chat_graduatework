@@ -24,8 +24,8 @@ import { testAudios } from 'audio'
 // export const getMicDeviceLS = () => JSON.parse(window.localStorage.getItem("micDevice"))
 
 import { store } from 'store';
-import { getCurrentCallDevice } from './selectors';
-import { createOffer } from 'utils/webrtc';
+import { getCallStateIncoming, getCurrentCallDevice } from './selectors';
+import { createAnswer, createOffer, setAnswerToPeer } from 'utils/webrtc';
 import { api } from 'services';
 import { getAuthProfileUid, getAuthProfile } from 'store/auth/selectors';
 import { isEmpty } from 'utils/isEmptyObject';
@@ -136,14 +136,14 @@ function* makeCallSaga(action) {
 
     yield put(setIsShowCallModal(true))
     // const localVideo = document.getElementById("current-call-local");
-    // yield createOffer(localVideo)
     const { name, photo, email, uid } = yield select(getAuthProfile);
+    const offer = yield createOffer({ userUid: payload.uid })
     yield call(
         api.calls.createOffer,
         {
             myUid: uid,
             userUid: payload.uid,
-            incoming: { name, photo, email, uid },
+            incoming: { name, photo, email, uid, offer },
             outgoing: { ...payload }
         }
     )
@@ -195,13 +195,17 @@ function* answerCallSaga(action) {
     const { payload } = action;
     // const { name, photo, email, uid } = payload;
     const { name, photo, email, uid } = yield select(getAuthProfile);
+    const { candidates, offer } = yield select(getCallStateIncoming);
+
+    const answer = yield createAnswer({ candidates: JSON.parse(candidates), offer: JSON.parse(offer) })
+
     let myState = {
         incoming: {},
-        active: { ...payload }
+        active: { name: payload.name, photo: payload.photo, email: payload.email, uid: payload.uid }
     }
     let userState = {
         outgoing: {},
-        active: { name, photo, email, uid }
+        active: { name, photo, email, uid, answer }
     }
     yield call(
         api.calls.answerCall,
@@ -226,13 +230,21 @@ function* onSnapshotCallUpdateSaga(action) {
     let type = ""
     if (!isEmpty(data.active)) {
         type = "active";
+        if (data.active?.answer && data.active?.candidates) {
+            const answer = JSON.parse(data.active.answer);
+            const candidates = JSON.parse(data.active.candidates);
+            setAnswerToPeer(answer, candidates);
+        }
     } else if (!isEmpty(data.outgoing)) {
         type = "outgoing";
     } else if (!isEmpty(data.incoming)) {
         type = "incoming";
     }
     const callState = {
-        ...data,
+        outgoing: data.outgoing,
+        incoming: data.incoming,
+        history: data.history,
+        active: data.active,
         type,
         isActiveCall: type === "active",
     }
@@ -240,16 +252,13 @@ function* onSnapshotCallUpdateSaga(action) {
 }
 
 export function* callSaga() {
-
     // call settings state
-
     yield takeEvery(callTypes.TOGGLE_IS_SHOW_CALL_MODAL, () => { });
     yield takeEvery(callTypes.FETCH_DEVICES_LIST, fetchDevicesListSaga);
     // yield takeLatest(callTypes.SET_CALL_SPEAKER, setCallSpeakerSaga);
     // yield takeLatest(callTypes.SET_MIC_DEVICE, setMicDeviceSaga);
     yield takeLatest(callTypes.SET_CAM_DEVICE, setCamDeviceSaga);
     yield takeLatest(callTypes.CHECK_CURRENT_SPEAKER, checkCurrentSpeakerSaga);
-
 
     // outgoing/incoming state
     // yield takeEvery(callTypes.FETCH_OUTGOING_CALL, fetchOutgoingCallSaga);
