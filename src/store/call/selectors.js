@@ -133,6 +133,11 @@ export const getLocalVideo = createSelector(
     call => call.localVideo
 );
 
+export const getPeerConnection = createSelector(
+    [_getCall],
+    call => call.peer
+);
+
 
 // export const getCallStateSubscriber = createSelector(
 //     [_getCallState],

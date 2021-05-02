@@ -1,5 +1,4 @@
 import { db } from 'db'
-import firebase from 'firebase'
 import 'firebase'
 
 window.db = db;

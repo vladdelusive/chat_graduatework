@@ -1,13 +1,8 @@
-import { peer } from 'constants/webrtc'
+import { createPeerConnection } from 'constants/webrtc';
 import { api } from 'services';
 import { store } from 'store';
-import { changeRemoteVideoSrc, changeLocalVideoSrc } from 'store/call/actions';
-import { getCallStateActive } from 'store/call/selectors';
-// ref = document.getElementById("current-call-remote")
-// ref.muted = true
-// remoteRef = document.getElementById("current-call-local")
-// remoteStream = new MediaStream();
-// remoteRef.srcObject = remoteStream;
+import { changeRemoteVideoSrc, changeLocalVideoSrc, setNewPeerConnection } from 'store/call/actions';
+import { getCallStateActive, getPeerConnection } from 'store/call/selectors';
 
 export const remoteRef = {};
 export const localRef = {};
@@ -16,17 +11,22 @@ window.remoteRef = remoteRef;
 window.localRef = localRef;
 
 export const registerPeerConnectionForOffers = () => {
+    const peer = createPeerConnection()
+    store.dispatch(setNewPeerConnection(peer))
     navigator.getUserMedia({ audio: true, video: true }, (stream) => {
-        stream.getTracks().forEach(
-            function (track) {
-                peer.addTrack(
-                    track,
-                    stream
-                );
-            }
-        );
-        store.dispatch(changeLocalVideoSrc(stream))
+        if (peer.signalingState !== "closed") {
+            stream.getTracks().forEach(
+                function (track) {
+                    peer.addTrack(
+                        track,
+                        stream
+                    );
+                }
+            );
+            store.dispatch(changeLocalVideoSrc(stream))
+        }
     }, (error) => { })
+
     peer.ontrack = (event) => {
         remoteRef.srcObject = event.streams[0];
         store.dispatch(changeRemoteVideoSrc(event.streams[0]))
@@ -51,6 +51,8 @@ export const createOffer = async ({ userUid }) => {
         video: true,
         audio: true
     })
+    const state = store.getState();
+    const peer = getPeerConnection(state);
     localRef.srcObject = stream;
     localRef.srcObject.getTracks().forEach(track => peer.addTrack(track, localRef.srcObject));
     store.dispatch(changeLocalVideoSrc(stream))
@@ -78,6 +80,9 @@ export const createOffer = async ({ userUid }) => {
 }
 
 export const createAnswer = async ({ offer, candidates }) => {
+    const state = store.getState();
+    const peer = getPeerConnection(state);
+
     await peer.setRemoteDescription(new RTCSessionDescription(offer));
 
     candidates.forEach((can) => {
@@ -92,6 +97,9 @@ export const createAnswer = async ({ offer, candidates }) => {
 }
 
 export const setAnswerToPeer = (answer, candidates) => {
+    const state = store.getState();
+    const peer = getPeerConnection(state);
+
     const answerDescription = new RTCSessionDescription(answer);
     peer.setRemoteDescription(answerDescription);
     candidates.forEach((can) => {

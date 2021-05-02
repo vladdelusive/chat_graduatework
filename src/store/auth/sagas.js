@@ -10,7 +10,7 @@ import { push } from 'connected-react-router';
 import { routes } from 'routes';
 import { saveChats } from 'store/chats/actions';
 import { workerMiddleware } from 'store/worker-middleware';
-import { changeCallState, setIsShowCallModal } from 'store/call/actions';
+import { setIsShowCallModal } from 'store/call/actions';
 
 function* fetchLogInByGoogleSaga() {
     try {

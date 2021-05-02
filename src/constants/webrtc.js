@@ -10,9 +10,6 @@ export const configuration = {
     iceCandidatePoolSize: 10,
 };
 
-export const peer = new RTCPeerConnection(configuration);
-
-window.peer = peer
 export const createPeerConnection = () => {
     return new RTCPeerConnection(configuration);
 }

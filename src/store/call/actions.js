@@ -32,6 +32,7 @@ export const changeCallState = (payload) => ({ type: call.CHANGE_CALL_STATE, pay
 export const onSnapshotCallUpdate = (payload) => ({ type: call.ON_SNAPSHOT_CALL_UPDATE, payload });
 export const changeRemoteVideoSrc = (payload) => ({ type: call.SET_REMOTE_SRC_OBJECT, payload });
 export const changeLocalVideoSrc = (payload) => ({ type: call.SET_LOCAL_SRC_OBJECT, payload });
+export const setNewPeerConnection = (payload) => ({ type: call.SET_NET_PEER_CONNECTION, payload });
 // export const saveOutgoingCall = (payload) => ({ type: call.SAVE_OUTGOING_CALL, payload });
 
 // export const fetchOutgoingCall = (payload) => ({ type: call.FETCH_OUTGOING_CALL, payload });

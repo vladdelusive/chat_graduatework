@@ -10,7 +10,7 @@ import {
     setCamDevice,
     saveIsPlayingSpeaker,
     changeCallState,
-    setIsShowCallModal
+    setIsShowCallModal,
 } from './actions';
 import * as callTypes from './types';
 import { testAudios } from 'audio'
@@ -24,12 +24,11 @@ import { testAudios } from 'audio'
 // export const getMicDeviceLS = () => JSON.parse(window.localStorage.getItem("micDevice"))
 
 import { store } from 'store';
-import { getCallStateIncoming, getCurrentCallDevice } from './selectors';
-import { createAnswer, createOffer, setAnswerToPeer } from 'utils/webrtc';
+import { getCallStateIncoming, getCurrentCallDevice, getPeerConnection } from './selectors';
+import { createAnswer, createOffer, registerPeerConnectionForOffers, setAnswerToPeer } from 'utils/webrtc';
 import { api } from 'services';
-import { getAuthProfileUid, getAuthProfile } from 'store/auth/selectors';
+import { getAuthProfile } from 'store/auth/selectors';
 import { isEmpty } from 'utils/isEmptyObject';
-import { peer } from 'constants/webrtc';
 
 
 const fetchDevices = () => {
@@ -174,7 +173,9 @@ function* cancelCallSaga(action) {
             break;
     }
 
+    const peer = yield select(getPeerConnection)
     peer.close()
+    registerPeerConnectionForOffers()
 
     const callState = {
         type: null,
@@ -242,6 +243,10 @@ function* onSnapshotCallUpdateSaga(action) {
         type = "outgoing";
     } else if (!isEmpty(data.incoming)) {
         type = "incoming";
+    } else {
+        const peer = yield select(getPeerConnection)
+        peer.close()
+        registerPeerConnectionForOffers()
     }
     const callState = {
         outgoing: data.outgoing,

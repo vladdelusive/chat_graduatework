@@ -23,6 +23,7 @@ const initialState = {
     },
     remoteVideo: null,
     localVideo: null,
+    peer: null,
     // history: { items: [], ....}, online: false,
 };
 
@@ -62,6 +63,14 @@ export const callReducer = createReducer(initialState, {
         return {
             ...state,
             localVideo: payload
+        };
+    },
+
+    [call.SET_NET_PEER_CONNECTION](state, action) {
+        const { payload } = action
+        return {
+            ...state,
+            peer: payload
         };
     },
 
