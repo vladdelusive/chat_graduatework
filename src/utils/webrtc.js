@@ -28,8 +28,10 @@ export const registerPeerConnectionForOffers = () => {
     }, (error) => { })
 
     peer.ontrack = (event) => {
-        remoteRef.srcObject = event.streams[0];
-        store.dispatch(changeRemoteVideoSrc(event.streams[0]))
+        if (remoteRef.srcObject !== event.streams[0]) {
+            remoteRef.srcObject = event.streams[0];
+            store.dispatch(changeRemoteVideoSrc(event.streams[0]))
+        }
     };
     let candidates = [];
     peer.onicecandidate = (event) => {
