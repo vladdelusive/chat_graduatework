@@ -35,35 +35,39 @@ const fetchDevices = () => {
     store.dispatch(fetchDevicesList());
 };
 
-export function getAccessToAudio() {
-    if (!navigator.getUserMedia) {
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia;
-        if (navigator.mozGetUserMedia) {
-            noty("error", "Mozilla audio outputs is not supported")
-            return;
-        }
-    }
-    if (navigator.getUserMedia) {
-        navigator.getUserMedia({ audio: true, video: true }, (stream) => {
-            fetchDevices();
-        }, (err) => {
-            noty("error", err?.message)
-            navigator.getUserMedia({ audio: true }, (stream) => fetchDevices(), (err) => {
-                noty("error", err)
-            })
+export async function getAccessToAudio() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
         })
+        fetchDevices();
+        return stream
+    } catch (exception) {
+        noty("error", exception?.message)
+        try {
+            await navigator.mediaDevices.getUserMedia({
+                audio: true
+            })
+            fetchDevices()
+        } catch (err) {
+            noty("error", err)
+        }
     }
 }
 
-export function getStreamWithNewCam(deviceId, webcamRef, isShowNoty) {
-    // without additional check because we did it before
-    if (navigator.getUserMedia && webcamRef) {
-        navigator.getUserMedia({ audio: true, video: deviceId ? ({ deviceId: { exact: deviceId } }) : true }, (stream) => {
+export async function getStreamWithNewCam(deviceId, webcamRef, isShowNoty) {
+    if (webcamRef) {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: true,
+                video: deviceId ? ({ deviceId: { exact: deviceId } }) : true
+            })
             webcamRef.srcObject = stream;
-        }, (error) => {
+        } catch (error) {
             webcamRef.srcObject = null;
             isShowNoty && noty("error", `${error}`)
-        })
+        }
     }
 }
 
@@ -175,7 +179,7 @@ function* cancelCallSaga(action) {
 
     const peer = yield select(getPeerConnection)
     peer.close()
-    registerPeerConnectionForOffers()
+    yield registerPeerConnectionForOffers()
 
     const callState = {
         type: null,
@@ -246,7 +250,7 @@ function* onSnapshotCallUpdateSaga(action) {
     } else {
         const peer = yield select(getPeerConnection)
         peer.close()
-        registerPeerConnectionForOffers()
+        yield registerPeerConnectionForOffers()
     }
     const callState = {
         outgoing: data.outgoing,

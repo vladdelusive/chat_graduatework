@@ -10,22 +10,31 @@ export const localRef = {};
 window.remoteRef = remoteRef;
 window.localRef = localRef;
 
-export const registerPeerConnectionForOffers = () => {
+export const registerPeerConnectionForOffers = async () => {
     const peer = createPeerConnection()
     store.dispatch(setNewPeerConnection(peer))
-    navigator.getUserMedia({ audio: true, video: true }, (stream) => {
-        if (peer.signalingState !== "closed") {
-            stream.getTracks().forEach(
-                function (track) {
-                    peer.addTrack(
-                        track,
-                        stream
-                    );
-                }
-            );
-            store.dispatch(changeLocalVideoSrc(stream))
-        }
-    }, (error) => { })
+
+    // navigator.getUserMedia({ audio: true, video: true }, (stream) => {
+    //     if (peer.signalingState !== "closed") {
+    //         stream.getTracks().forEach(
+    //             function (track) {
+    //                 peer.addTrack(
+    //                     track,
+    //                     stream
+    //                 );
+    //             }
+    //         );
+    //         store.dispatch(changeLocalVideoSrc(stream))
+    //     }
+    // }, (error) => { })
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+
+    if (peer.signalingState !== "closed") {
+        stream.getTracks().forEach(track => peer.addTrack(track, stream));
+        store.dispatch(changeLocalVideoSrc(stream))
+    } else {
+        return;
+    }
 
     peer.ontrack = (event) => {
         if (remoteRef.srcObject !== event.streams[0]) {

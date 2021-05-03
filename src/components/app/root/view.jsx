@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { RoutesSwitch } from 'routes';
 import 'antd/dist/antd.css';
 import 'assets/styles/index.scss';
+import 'webrtc-adapter'
 import { OfflineModal } from 'components/modals';
 // import notification from 'utils/notifications'
 import { useDispatch, useSelector } from 'react-redux';
