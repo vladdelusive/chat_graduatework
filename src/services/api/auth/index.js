@@ -6,6 +6,7 @@ import 'firebase'
 import { noty } from 'utils/noty'
 import { parseChatsList } from '../parse'
 import { generateUid } from 'utils/uid-generator'
+import { errorTranslate } from 'utils/error-translate'
 
 const emptyCallsState = {
 	active: {},
@@ -80,7 +81,7 @@ export const auth = {
 			}
 		}).catch((error) => {
 			if (error.message) {
-				noty('error', error.message);
+				noty('error', errorTranslate(error.message));
 			}
 			return Promise.reject(error)
 		});
@@ -105,7 +106,7 @@ export const auth = {
 			return { profile }
 		} catch (error) {
 			if (error.message) {
-				noty('error', error.message);
+				noty('error', errorTranslate(error.message));
 			}
 			return Promise.reject(error)
 		}
@@ -120,7 +121,7 @@ export const auth = {
 			return data
 		} catch (error) {
 			if (error.message) {
-				noty('error', error.message);
+				noty('error', errorTranslate(error.message));
 			}
 			return Promise.reject(error)
 		}

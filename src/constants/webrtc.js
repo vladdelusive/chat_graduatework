@@ -1,13 +1,17 @@
 export const configuration = {
     iceServers: [
         {
-            urls: [
-                'stun:stun1.l.google.com:19302',
-                'stun:stun2.l.google.com:19302',
+            urls: ["turn:173.194.72.127:19305?transport=udp",
+                "turn:[2404:6800:4008:C01::7F]:19305?transport=udp",
+                "turn:173.194.72.127:443?transport=tcp",
+                "turn:[2404:6800:4008:C01::7F]:443?transport=tcp"
             ],
+            username: "CKjCuLwFEgahxNRjuTAYzc/s6OMT",
+            credential: "u1SQDR/SQsPQIxXNWQT7czc/G4c="
         },
-    ],
-    iceCandidatePoolSize: 10,
+        { urls: ["stun:stun.l.google.com:19302"] }
+        
+    ]
 };
 
 export const createPeerConnection = () => {

@@ -16,7 +16,6 @@ export const registerPeerConnectionForOffers = async () => {
 
     const state = store.getState();
     const { deviceId } = getMicDevice(state);
-    debugger
     const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: deviceId ? ({ deviceId: { exact: deviceId } }) : true
