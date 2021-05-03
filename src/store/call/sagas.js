@@ -204,7 +204,6 @@ function* answerCallSaga(action) {
     // const { name, photo, email, uid } = payload;
     const { name, photo, email, uid } = yield select(getAuthProfile);
     const { candidates, offer } = yield select(getCallStateIncoming);
-
     const answer = yield createAnswer({ candidates: JSON.parse(candidates), offer: JSON.parse(offer) })
 
     let myState = {
@@ -245,7 +244,7 @@ function* onSnapshotCallUpdateSaga(action) {
         }
     } else if (!isEmpty(data.outgoing)) {
         type = "outgoing";
-    } else if (!isEmpty(data.incoming)) {
+    } else if (!isEmpty(data.incoming) && data?.incoming?.candidates && data.incoming?.offer) {
         type = "incoming";
     } else {
         const peer = yield select(getPeerConnection)
