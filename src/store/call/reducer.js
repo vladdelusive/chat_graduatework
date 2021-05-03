@@ -24,6 +24,7 @@ const initialState = {
     remoteVideo: null,
     localVideo: null,
     peer: null,
+    tab: "1",
     // history: { items: [], ....}, online: false,
 };
 
@@ -71,6 +72,14 @@ export const callReducer = createReducer(initialState, {
         return {
             ...state,
             peer: payload
+        };
+    },
+
+    [call.SET_CALL_MODAL_TAB](state, action) {
+        const { payload } = action
+        return {
+            ...state,
+            tab: payload
         };
     },
 

@@ -2,13 +2,13 @@ import { Tabs } from 'antd';
 import { ActiveCall } from 'components/calls/active-call';
 import { CallsHistory } from 'components/calls/calls-history';
 import { SettingsDevices } from 'components/common';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { api } from 'services';
 import { getAccessToAudio } from 'store/call/sagas';
-import { getIsShowCallModal } from 'store/call/selectors';
-import { onSnapshotCallUpdate } from 'store/call/actions';
+import { getCallModalTab, getIsShowCallModal } from 'store/call/selectors';
+import { onSnapshotCallUpdate, setCallModalTab } from 'store/call/actions';
 import { registerPeerConnectionForOffers } from 'utils/webrtc';
 import { getAuthProfileUid } from 'store/auth/selectors';
 
@@ -16,10 +16,10 @@ const CallModal = (props) => {
     const {
         isShow,
         profileUid,
-        onSnapshotCallUpdate
+        onSnapshotCallUpdate,
+        setTab,
+        tab
     } = props;
-
-    const [tab, setTab] = useState('1');
 
     useEffect(() => {
         getAccessToAudio()
@@ -60,11 +60,12 @@ const CallModal = (props) => {
 const mapStateToProps = (state) => {
     return {
         isShow: getIsShowCallModal(state),
-        profileUid: getAuthProfileUid(state)
+        profileUid: getAuthProfileUid(state),
+        tab: getCallModalTab(state),
     }
 };
 
-const mapDispatchToProps = { onSnapshotCallUpdate };
+const mapDispatchToProps = { onSnapshotCallUpdate, setTab: setCallModalTab };
 
 const EnhancedCallModal = compose(
     connect(mapStateToProps, mapDispatchToProps),

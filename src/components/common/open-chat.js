@@ -9,7 +9,7 @@ import { push } from 'connected-react-router';
 import { routes } from 'routes';
 
 const OpenChatBtn = React.memo((props) => {
-    const { text = "Відкрити чат", userId, chatList, createNewChat, push, setActiveChatId } = props;
+    const { text = "Відкрити чат", userId, chatList, createNewChat, push, setActiveChatId, defaultStyle = true } = props;
     const openChat = () => {
         if (userId) {
             const userInFriends = chatList.find(({ userInfo }) => userInfo.uid === userId)
@@ -26,7 +26,11 @@ const OpenChatBtn = React.memo((props) => {
             }
         }
     }
-    return <Button onClick={openChat} className="to-chats-btn" icon={<img src={ToChats} alt={'to-chat'} />}>{text}</Button>
+    if (defaultStyle) {
+        return <Button onClick={openChat} className={"to-chats-btn"} icon={<img src={ToChats} alt={'to-chat'} />}>{text}</Button>
+    } else {
+        return <Button onClick={openChat} type="link">{text}</Button>
+    }
 })
 
 

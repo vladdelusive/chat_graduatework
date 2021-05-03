@@ -1,5 +1,6 @@
 import { db } from 'db'
 import 'firebase'
+import firebase from 'firebase'
 
 window.db = db;
 export const calls = {
@@ -42,5 +43,15 @@ export const calls = {
 
 	updateCallCandidates: ({ userUid, userCandidatesState }) => {
 		db.collection('profiles').doc(`${userUid}/calls/${userUid}`).set({ ...userCandidatesState }, { merge: true });
+	},
+
+	addHistoryCall: ({ myUid, userUid, myState, userState }) => {
+		db.collection('profiles').doc(`${myUid}/calls/${myUid}`).update({
+			history: firebase.firestore.FieldValue.arrayUnion(myState)
+		})
+
+		db.collection('profiles').doc(`${userUid}/calls/${userUid}`).update({
+			history: firebase.firestore.FieldValue.arrayUnion(userState)
+		})
 	},
 };

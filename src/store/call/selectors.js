@@ -123,6 +123,11 @@ export const getCallStateActive = createSelector(
     callState => callState.active
 );
 
+export const getCallStateHistory = createSelector(
+    [_getCallState],
+    callState => callState.history || []
+);
+
 export const getRemoteVideo = createSelector(
     [_getCall],
     call => call.remoteVideo
@@ -136,6 +141,11 @@ export const getLocalVideo = createSelector(
 export const getPeerConnection = createSelector(
     [_getCall],
     call => call.peer
+);
+
+export const getCallModalTab = createSelector(
+    [_getCall],
+    call => call.tab
 );
 
 

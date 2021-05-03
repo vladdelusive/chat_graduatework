@@ -68,7 +68,7 @@ const CurrentCall = (props) => {
                                             shape="round"
                                             icon={<img src={CallCancel} alt={'call-cancel'} />}
                                             onClick={() => {
-                                                onCancelCall({ profile: activeCall, statusCall: "active" })
+                                                onCancelCall({ profile: activeCall, statusCall: "active", duration: duration.format('HH:mm:ss') })
                                             }}
                                         >
                                             <span style={{ marginLeft: 10 }}>Завершити</span>

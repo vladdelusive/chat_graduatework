@@ -11,22 +11,16 @@ import {
     saveIsPlayingSpeaker,
     changeCallState,
     setIsShowCallModal,
+    setCallModalTab,
 } from './actions';
 import * as callTypes from './types';
 import { testAudios } from 'audio'
-
-// const setCallDeviceLS = (speaker) => window.localStorage.setItem("callSpeaker", JSON.stringify(speaker))
-// const setBellDeviceLS = (speaker) => window.localStorage.setItem("bellSpeaker", JSON.stringify(speaker))
-// const setMicDeviceLS = (mic) => window.localStorage.setItem("micDevice", JSON.stringify(mic))
-
-// export const getCallDeviceLS = () => JSON.parse(window.localStorage.getItem("callSpeaker"))
-// export const getBellDeviceLS = () => JSON.parse(window.localStorage.getItem("bellSpeaker"))
-// export const getMicDeviceLS = () => JSON.parse(window.localStorage.getItem("micDevice"))
 
 import { store } from 'store';
 import { getCallStateIncoming, getCurrentCallDevice, getPeerConnection } from './selectors';
 import { createAnswer, createOffer, registerPeerConnectionForOffers, setAnswerToPeer } from 'utils/webrtc';
 import { api } from 'services';
+import { parseNewHistoryCall } from 'services/api/parse/history-call';
 import { getAuthProfile } from 'store/auth/selectors';
 import { isEmpty } from 'utils/isEmptyObject';
 
@@ -98,17 +92,6 @@ function* fetchDevicesListSaga() {
     if (videoinputDevices.length) yield put(setCamDevice(videoinputDevices[0]));
 }
 
-// function* setCallSpeakerSaga(action) {
-//     const { payload } = action
-//     yield setCallDeviceLS(payload)
-// }
-
-// function* setMicDeviceSaga(action) {
-//     const { payload } = action
-//     yield setMicDeviceLS(payload)
-//     yield changeMicDevice()
-// }
-
 function* setCamDeviceSaga(action) {
     const { payload } = action;
     const { deviceId } = payload
@@ -131,9 +114,6 @@ function* checkCurrentSpeakerSaga() {
     yield put(saveIsPlayingSpeaker(false))
 }
 
-// function* fetchOutgoingCallSaga(action) {
-//     // const { payload } = action;
-// }
 
 function* makeCallSaga(action) {
     const { payload } = action;
@@ -147,15 +127,16 @@ function* makeCallSaga(action) {
         {
             myUid: uid,
             userUid: payload.uid,
-            incoming: { name, photo, email, uid, offer },
+            incoming: { name, photo, email, uid, offer, },
             outgoing: { ...payload }
         }
     )
+    yield put(setCallModalTab("1"))
 }
 
 function* cancelCallSaga(action) {
     const { payload } = action;
-    const { profile, statusCall } = payload;
+    const { profile, statusCall, duration } = payload;
 
     let myState = {}
     let userState = {}
@@ -186,7 +167,7 @@ function* cancelCallSaga(action) {
         isActiveCall: false,
     }
 
-    const { uid } = yield select(getAuthProfile);
+    const { uid, email, photo, name } = yield select(getAuthProfile);
     yield call(
         api.calls.cancelCall,
         {
@@ -194,6 +175,31 @@ function* cancelCallSaga(action) {
             userUid: profile.uid,
             myState,
             userState,
+        }
+    )
+    const myCallHistoryState = parseNewHistoryCall({
+        uid: profile.uid,
+        email: profile.email,
+        photo: profile.photo,
+        name: profile.name,
+        duration,
+        callType: statusCall === "active" ? (profile.from === uid ? "outgoing" : "incoming") : statusCall,
+    });
+    const userCallHistoryState = parseNewHistoryCall({
+        uid,
+        email,
+        photo,
+        name,
+        duration: duration,
+        callType: statusCall === "active" ? (profile.from === uid ? "incoming" : "outgoing") : (statusCall === "incoming" ? "outgoing" : "incoming"),
+    });
+    yield call(
+        api.calls.addHistoryCall,
+        {
+            myUid: uid,
+            userUid: profile.uid,
+            myState: myCallHistoryState,
+            userState: userCallHistoryState,
         }
     )
     yield put(changeCallState(callState))
@@ -208,11 +214,11 @@ function* answerCallSaga(action) {
 
     let myState = {
         incoming: {},
-        active: { name: payload.name, photo: payload.photo, email: payload.email, uid: payload.uid }
+        active: { name: payload.name, photo: payload.photo, email: payload.email, uid: payload.uid, from: payload.uid }
     }
     let userState = {
         outgoing: {},
-        active: { name, photo, email, uid, answer }
+        active: { name, photo, email, uid, answer, from: payload.uid }
     }
     yield call(
         api.calls.answerCall,
@@ -244,7 +250,7 @@ function* onSnapshotCallUpdateSaga(action) {
         }
     } else if (!isEmpty(data.outgoing)) {
         type = "outgoing";
-    } else if (!isEmpty(data.incoming) && data?.incoming?.candidates && data.incoming?.offer) {
+    } else if (!isEmpty(data.incoming)) {
         type = "incoming";
     } else {
         const peer = yield select(getPeerConnection)
@@ -266,13 +272,11 @@ export function* callSaga() {
     // call settings state
     yield takeEvery(callTypes.TOGGLE_IS_SHOW_CALL_MODAL, () => { });
     yield takeEvery(callTypes.FETCH_DEVICES_LIST, fetchDevicesListSaga);
-    // yield takeLatest(callTypes.SET_CALL_SPEAKER, setCallSpeakerSaga);
-    // yield takeLatest(callTypes.SET_MIC_DEVICE, setMicDeviceSaga);
+
     yield takeLatest(callTypes.SET_CAM_DEVICE, setCamDeviceSaga);
     yield takeLatest(callTypes.CHECK_CURRENT_SPEAKER, checkCurrentSpeakerSaga);
 
     // outgoing/incoming state
-    // yield takeEvery(callTypes.FETCH_OUTGOING_CALL, fetchOutgoingCallSaga);
     yield takeEvery(callTypes.ON_MAKE_CALL, makeCallSaga);
     yield takeEvery(callTypes.ON_CANCEL_CALL, cancelCallSaga);
     yield takeEvery(callTypes.ON_ANSWER_CALL, answerCallSaga);
