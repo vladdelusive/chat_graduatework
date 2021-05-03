@@ -2,7 +2,7 @@ import { createPeerConnection } from 'constants/webrtc';
 import { api } from 'services';
 import { store } from 'store';
 import { changeRemoteVideoSrc, changeLocalVideoSrc, setNewPeerConnection } from 'store/call/actions';
-import { getCallStateActive, getPeerConnection } from 'store/call/selectors';
+import { getCallStateActive, getMicDevice, getPeerConnection } from 'store/call/selectors';
 
 export const remoteRef = {};
 export const localRef = {};
@@ -14,20 +14,13 @@ export const registerPeerConnectionForOffers = async () => {
     const peer = createPeerConnection()
     store.dispatch(setNewPeerConnection(peer))
 
-    // navigator.getUserMedia({ audio: true, video: true }, (stream) => {
-    //     if (peer.signalingState !== "closed") {
-    //         stream.getTracks().forEach(
-    //             function (track) {
-    //                 peer.addTrack(
-    //                     track,
-    //                     stream
-    //                 );
-    //             }
-    //         );
-    //         store.dispatch(changeLocalVideoSrc(stream))
-    //     }
-    // }, (error) => { })
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    const state = store.getState();
+    const { deviceId } = getMicDevice(state);
+    debugger
+    const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: deviceId ? ({ deviceId: { exact: deviceId } }) : true
+    })
 
     if (peer.signalingState !== "closed") {
         stream.getTracks().forEach(track => peer.addTrack(track, stream));
@@ -58,12 +51,13 @@ export const registerPeerConnectionForOffers = async () => {
 }
 
 export const createOffer = async ({ userUid }) => {
+    const state = store.getState();
+    const { deviceId } = getMicDevice(state);
+    const peer = getPeerConnection(state);
     const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
-        audio: true
+        audio: deviceId ? ({ deviceId: { exact: deviceId } }) : true
     })
-    const state = store.getState();
-    const peer = getPeerConnection(state);
     localRef.srcObject = stream;
     localRef.srcObject.getTracks().forEach(track => peer.addTrack(track, localRef.srcObject));
     store.dispatch(changeLocalVideoSrc(stream))
