@@ -1,3 +1,15 @@
+@keyframes moveIt {
+	0% {
+		background-position: top left;
+	}
+	50% {
+		background-position: bottom left;
+	}
+	100% {
+		background-position: top left;
+	}
+}
+
 .layout {
 	$this: &;
 
@@ -11,7 +23,7 @@
 		height: auto !important;
 		padding: 10px 2vw !important;
 		background-color: #fff !important;
-		box-shadow: 0 0 10px 0 rgba(#333, .33);
+		box-shadow: 0 0 10px 0 rgba(#333, 0.33);
 		line-height: inherit !important;
 		text-align: center;
 
@@ -33,6 +45,8 @@
 		@media (min-width: 768px) {
 			padding: 1.25vw 2.6vw;
 		}
+		animation: moveIt 10s linear infinite;
+		
 	}
 
 	&__footer {
