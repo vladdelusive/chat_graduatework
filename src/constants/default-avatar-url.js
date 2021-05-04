@@ -1,0 +1,1 @@
+export const defaultAvatarUrl = "https://genslerzudansdentistry.com/wp-content/uploads/2015/11/anonymous-user.png";

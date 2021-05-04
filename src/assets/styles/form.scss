@@ -4,4 +4,22 @@
         background-color: #fff;
         box-shadow: 0 5px 5px hsla(0, 0%, 40%, 0.1);
     }
+
+    &-registration {
+        .or-devider {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .ant-upload-list {
+            &-text {
+                position: absolute;
+            }
+            &-item {
+                max-width: 450px;
+            }
+        }
+    }
 }

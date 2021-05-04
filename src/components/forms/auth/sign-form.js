@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row, Spin, Upload, message } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, SmileOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone, FileImageOutlined, LockOutlined, SmileOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
@@ -19,14 +19,16 @@ function SignUpForm(props) {
     } = props
 
     const [file, setFile] = useState([])
+    const [isDefaultImage, setIsDefaultImage] = useState(false)
 
     const logIn = (values) => {
-        if (!file.length) {
-            message.error(`Завантажте картинку для аватарки`);
+        if (!file.length && !isDefaultImage) {
+            message.error(`Завантажте картинку для аватарки або використайте резервне фото`);
         } else {
             const valuesData = {
                 ...values,
                 photo: file[0],
+                isDefaultImage,
             }
             fetchRegisterByMailAndPassword(valuesData)
         }
@@ -35,6 +37,7 @@ function SignUpForm(props) {
     const propsUpload = {
         name: 'file',
         onChange({ file }) {
+            console.log(file);
             if (file.status === 'removed') {
                 return
             }
@@ -59,7 +62,7 @@ function SignUpForm(props) {
         }
     }
 
-    return <Form onSubmitCapture={handleSubmit(logIn)}>
+    return <Form onSubmitCapture={handleSubmit(logIn)} className="form form-registration">
         <Spin spinning={false}>
             <div className={'form__body'}>
                 <Row>
@@ -99,10 +102,36 @@ function SignUpForm(props) {
                         disabled={pending}
                     />
                 </Row>
-                <Row style={{ marginBottom: 20 }}>
-                    <Upload {...propsUpload}>
-                        <Button icon={<UploadOutlined />} loading={pending}>Завантажте аватарку</Button>
-                    </Upload>
+                <Row style={{ marginBottom: file.length ? 50 : 20 }} typeof="flex" justify="space-between">
+                    <Col>
+                        <Upload {...propsUpload}>
+                            <Button
+                                icon={<UploadOutlined />}
+                                loading={pending}
+                                disabled={isDefaultImage}
+                                type={!!file.length ? "dashed" : "default"}
+                                style={!!file.length ? { background: "#ddefff" } : {}}
+                            >Завантажте аватарку</Button>
+                        </Upload>
+                    </Col>
+                    <Col>
+                        <div className="or-devider">- або -</div>
+                    </Col>
+                    <Col>
+                        <Button
+                            icon={<FileImageOutlined />}
+                            loading={pending}
+                            disabled={!!file.length}
+                            type={isDefaultImage ? "dashed" : "default"}
+                            onClick={() => {
+                                setIsDefaultImage(!isDefaultImage)
+                            }}
+                            style={isDefaultImage ? { background: "#ddefff" } : {}}
+                        >
+                            Використати резервну
+                        </Button>
+                    </Col>
+
                 </Row>
             </div>
         </Spin>

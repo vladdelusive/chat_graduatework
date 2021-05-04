@@ -16,10 +16,17 @@ export const registerPeerConnectionForOffers = async () => {
 
     const state = store.getState();
     const { deviceId } = getMicDevice(state);
-    const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: deviceId ? ({ deviceId: { exact: deviceId } }) : true
-    })
+    let stream;
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: deviceId ? ({ deviceId: { exact: deviceId } }) : true
+        })
+    } catch (error) {
+        stream = await navigator.mediaDevices.getUserMedia({
+            audio: deviceId ? ({ deviceId: { exact: deviceId } }) : true
+        })
+    }
 
     if (peer.signalingState !== "closed") {
         stream.getTracks().forEach(track => peer.addTrack(track, stream));
@@ -53,10 +60,17 @@ export const createOffer = async ({ userUid }) => {
     const state = store.getState();
     const { deviceId } = getMicDevice(state);
     const peer = getPeerConnection(state);
-    const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: deviceId ? ({ deviceId: { exact: deviceId } }) : true
-    })
+    let stream;
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: deviceId ? ({ deviceId: { exact: deviceId } }) : true
+        })
+    } catch (error) {
+        stream = await navigator.mediaDevices.getUserMedia({
+            audio: deviceId ? ({ deviceId: { exact: deviceId } }) : true
+        })
+    }
     localRef.srcObject = stream;
     localRef.srcObject.getTracks().forEach(track => peer.addTrack(track, localRef.srcObject));
     store.dispatch(changeLocalVideoSrc(stream))

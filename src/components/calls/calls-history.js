@@ -15,8 +15,8 @@ const CallsHistoryContainer = (props) => {
     const { history, onMakeCall } = props;
     return (
         <>
-            <Typography.Title level={2} style={{ textAlign: "center" }}>Історія дзвінків</Typography.Title>
-            <Row className="history-calls" style={history.length > 5 ? { overflowY: "scroll" } : {}}>
+            <Typography.Title level={2} style={{ textAlign: "center" }}>Історія дзвінків {history.length ? "" : "порожня"}</Typography.Title>
+            {history.length ? <Row className="history-calls" style={history.length > 5 ? { overflowY: "scroll" } : {}}>
                 <List
                     className="history-list"
                     loading={false}
@@ -72,10 +72,9 @@ const CallsHistoryContainer = (props) => {
                                 </Skeleton>
                             </List.Item>
                         )
-                    }
-                    }
+                    }}
                 />
-            </Row>
+            </Row> : null}
         </>
     )
 }

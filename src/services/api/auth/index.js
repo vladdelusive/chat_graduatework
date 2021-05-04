@@ -7,6 +7,7 @@ import { noty } from 'utils/noty'
 import { parseChatsList } from '../parse'
 import { generateUid } from 'utils/uid-generator'
 import { errorTranslate } from 'utils/error-translate'
+import { defaultAvatarUrl } from 'constants/default-avatar-url'
 
 const emptyCallsState = {
 	active: {},
@@ -88,11 +89,16 @@ export const auth = {
 	},
 
 	registerByMailAndPassword: async (payload) => {
-		const { email, password, photo, name } = payload;
+		const { email, password, photo, name, isDefaultImage } = payload;
 		try {
 			const { user } = await firebase.auth().createUserWithEmailAndPassword(email, password);
-			const fileNamePath = generateUid() + photo.name;
-			const photoUrl = await createStorageRef(photo, fileNamePath);
+			let photoUrl;
+			if (isDefaultImage) {
+				photoUrl = defaultAvatarUrl;
+			} else {
+				const fileNamePath = generateUid() + photo.name;
+				photoUrl = await createStorageRef(photo, fileNamePath);
+			}
 			const profile = {
 				name,
 				email,

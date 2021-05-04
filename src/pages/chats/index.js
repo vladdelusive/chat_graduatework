@@ -118,6 +118,7 @@ function Chats(props) {
                                         <InputChats
                                             messageValue={messageValue}
                                             setMessageValue={setMessageValue}
+                                            activeChat={activeChat}
                                         />
                                     </div>
                                 </>
