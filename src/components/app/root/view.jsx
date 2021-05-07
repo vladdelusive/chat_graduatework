@@ -9,26 +9,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getNotificationOnlineStatus } from 'store/notifications/selectors';
 import { changeOnlineStatus } from 'store/notifications/actions';
 import { CallModal } from 'components/modals';
-import { getAuthIsAuthenticated } from 'store/auth/selectors';
+import { getAuthIsAuthenticated, getAuthProfileUid } from 'store/auth/selectors';
+import { clearAuth } from 'store/auth/actions';
 
 const View = React.memo(() => {
 	const statusOnline = useSelector(getNotificationOnlineStatus)
 	const isAuth = useSelector(getAuthIsAuthenticated)
+	const uid = useSelector(getAuthProfileUid)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
 		const changeStatus = () => {
 			dispatch(changeOnlineStatus(window.navigator.onLine))
 		}
+		const changeToOffline = () => {
+			if (uid) {
+				dispatch(clearAuth(uid))
+			}
+		}
 
 		window.addEventListener("offline", changeStatus)
 		window.addEventListener("online", changeStatus)
+		window.addEventListener("beforeunload", changeToOffline)
 		// notification.init()
 		return () => {
 			window.removeEventListener("offline", changeStatus)
 			window.removeEventListener("online", changeStatus)
+			window.removeEventListener("beforeunload", changeToOffline)
 		}
-	}, [dispatch])
+	}, [dispatch, uid])
 
 	return (
 		<>

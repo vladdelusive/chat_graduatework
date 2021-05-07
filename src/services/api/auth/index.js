@@ -8,6 +8,7 @@ import { parseChatsList } from '../parse'
 import { generateUid } from 'utils/uid-generator'
 import { errorTranslate } from 'utils/error-translate'
 import { defaultAvatarUrl } from 'constants/default-avatar-url'
+import { createTimestamp } from 'utils/time'
 
 const emptyCallsState = {
 	active: {},
@@ -71,13 +72,13 @@ export const auth = {
 			profile.photo = result.additionalUserInfo.profile.picture;
 			profile.uid = result.user.uid;
 			if (result.additionalUserInfo.isNewUser) {
-				await createUserProfile({ ...profile, chats: [] })
+				await createUserProfile({ ...profile, chats: [], status: { online: true } })
 				await createUserCalls(profile)
-				// return { profile, chats: [], calls: emptyCallsState }
 				return { profile, chats: [] }
 			} else {
 				const existedProfile = (await db.doc(`profiles/${profile.uid}`).get()).data();
 				const data = await auth.preparedUpdatedProfileData(existedProfile)
+				await auth.setOnlineProfile(profile.uid)
 				return data
 			}
 		}).catch((error) => {
@@ -104,11 +105,12 @@ export const auth = {
 				email,
 				photo: photoUrl,
 				uid: user.uid,
-				chats: []
+				chats: [],
+				status: { online: true } // instead -> await auth.setOnlineProfile(profile.uid)
 			}
 			await createUserProfile(profile)
 			await createUserCalls(profile)
-			// return { profile, calls: emptyCallsState }
+
 			return { profile }
 		} catch (error) {
 			if (error.message) {
@@ -124,6 +126,7 @@ export const auth = {
 			const { user: { uid } } = await firebase.auth().signInWithEmailAndPassword(email, password);
 			const existedProfile = (await db.doc(`profiles/${uid}`).get()).data()
 			const data = await auth.preparedUpdatedProfileData(existedProfile)
+			await auth.setOnlineProfile(uid)
 			return data
 		} catch (error) {
 			if (error.message) {
@@ -131,5 +134,22 @@ export const auth = {
 			}
 			return Promise.reject(error)
 		}
+	},
+
+	setOfflineProfile: async (uid) => {
+		return await db.collection('profiles').doc(uid).update({
+			status: {
+				lastTime: createTimestamp(),
+				online: false
+			}
+		})
+	},
+
+	setOnlineProfile: async (uid) => {
+		return await db.collection('profiles').doc(uid).update({
+			status: {
+				online: true
+			}
+		})
 	}
 };

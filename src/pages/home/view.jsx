@@ -10,7 +10,7 @@ const View = () => {
 		<div className={'page page--home'}>
 			<img className={'react-logo'} src={CollegeLogo} alt="React Logo" />
 			<Title>Дипломний проект - <Text code>Мессенджер</Text></Title>
-			<Title level={2}>Розробив: <Text bold={"true"} style={{ fontWeight: 800 }}>Товсточуб Владислав</Text> - 481 група</Title>
+			<Title level={2} className="breathing">Розробив:&nbsp;<Text bold={"true"} style={{ fontWeight: 800 }} >Товсточуб Владислав</Text>&nbsp;- 481 група</Title>
 			<Title level={3}>Технології, що використовуються (бібліотеки):</Title>
 			<Title level={4}>
 				<Tag color="magenta">ELECTRON</Tag>

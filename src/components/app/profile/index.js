@@ -13,13 +13,13 @@ function ProfileContainer(props) {
     const {
         name,
         img,
-        // email,
+        uid,
         clearAuth,
         push
     } = props;
 
     const onClickLogout = () => {
-        clearAuth()
+        clearAuth(uid)
         push(routes.home.link())
     }
 
@@ -54,6 +54,7 @@ const mapStateToProps = (state) => {
         img: profile.photo,
         name: profile.name,
         email: profile.email,
+        uid: profile.uid,
     };
 };
 

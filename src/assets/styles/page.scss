@@ -1,3 +1,28 @@
+@keyframes breathing {
+	0% {
+		-webkit-transform: scale(0.9);
+		-ms-transform: scale(0.9);
+		transform: scale(0.9);
+	}
+
+	25% {
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		transform: scale(1);
+	}
+
+	60% {
+		-webkit-transform: scale(0.9);
+		-ms-transform: scale(0.9);
+		transform: scale(0.9);
+	}
+
+	100% {
+		-webkit-transform: scale(0.9);
+		-ms-transform: scale(0.9);
+		transform: scale(0.9);
+	}
+}
 .page {
 	$this: &;
 
@@ -46,6 +71,18 @@
 				animation: react-logo-spin infinite 20s linear;
 			}
 			margin-bottom: 50px;
+		}
+		.breathing {
+			-webkit-animation: breathing 3s ease-out infinite normal;
+			animation: breathing 3s ease-out infinite normal;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		.ant-tag {
+			cursor: pointer;
+			&:hover {
+				transform: scale(1.1);
+			}
 		}
 	}
 }

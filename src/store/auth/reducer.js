@@ -26,9 +26,7 @@ export const authReducer = createReducer(initialState, {
     },
 
     [auth.FAIL_LOGIN_AUTH](state) {
-        return {
-            ...state,
-        };
+        return initialState
     },
 
     [auth.CLEAR_AUTH]() {

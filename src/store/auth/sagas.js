@@ -18,7 +18,7 @@ function* fetchLogInByGoogleSaga() {
         if (!response) return;
         // const { chats, profile, calls } = response;
         const { chats, profile } = response;
-        
+
         yield put(saveLogInAuth(profile))
         yield put(saveChats(chats))
 
@@ -83,7 +83,9 @@ function* setUpdateProfileAndChatsSaga(action) {
     }
 }
 
-function* clearAuthSaga() {
+function* clearAuthSaga(action) {
+    const { payload } = action;
+    yield call(api.auth.setOfflineProfile, payload)
     yield put(setIsShowCallModal(false));
     // yield removeProfileToLocalStorage();
 }
