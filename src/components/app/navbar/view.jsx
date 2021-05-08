@@ -13,7 +13,7 @@ const View = ({ isAuth }) => {
 	navbarRoutes.forEach((route) => {
 		if (route.inAuth === isAuth || !route.inAuth) {
 			bars.push(<li key={route.key} className={'navbar__item'}>
-				<NavLink to={routes[route.key].link()} className={'navbar__link'}>{route.name}</NavLink>
+				<NavLink exact to={routes[route.key].link()} className={'navbar__link'} activeClassName="selected-nav">{route.name}</NavLink>
 			</li>)
 		}
 	})

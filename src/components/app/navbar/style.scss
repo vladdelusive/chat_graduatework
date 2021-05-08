@@ -17,6 +17,12 @@
 	&__item {
 		padding: 0 8px;
 	}
+	.selected-nav {
+		font-weight: 600;
+		color: #007cee;
+		font-size: 20px;
+	}
 
-	&__link {}
+	&__link {
+	}
 }

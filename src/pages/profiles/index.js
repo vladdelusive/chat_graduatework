@@ -13,13 +13,14 @@ function PageProfileContainer(props) {
         isDataExist,
         fetchProfileId,
         id,
+        onlineInfo,
     } = props
 
     useEffect(() => {
-        if (!isDataExist && id) {
+        if (id) {
             fetchProfileId(id)
         }
-    }, [isDataExist, fetchProfileId, id])
+    }, [fetchProfileId, id])
 
     return (
         <ProfileCard
@@ -31,6 +32,7 @@ function PageProfileContainer(props) {
             returnBtn={true}
             isToChat={true}
             id={id}
+            onlineInfo={onlineInfo}
         />
     )
 }
@@ -42,6 +44,7 @@ const mapStateToProps = (state, props) => {
         img: profile?.photo,
         name: profile?.name,
         email: profile?.email,
+        onlineInfo: profile?.status || {},
         isDataExist: profile,
         id,
     }

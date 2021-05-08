@@ -2,7 +2,8 @@ import { DoubleLeftOutlined } from '@ant-design/icons';
 import { Button, Col, Divider, Row, Typography } from 'antd'
 import { OpenChatButton, Spin } from 'components/common';
 import { VideoCallButton } from 'components/common/video-call';
-import React from 'react'
+import moment from 'moment';
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
 const { Title, Paragraph } = Typography;
@@ -17,7 +18,21 @@ export const ProfileCard = React.memo((props) => {
         isDataExist,
         isToChat,
         id,
-    } = props
+        onlineInfo,
+    } = props;
+
+    const [, setRerender] = useState()
+
+    useEffect(() => {
+        let interval;
+        if (onlineInfo?.lastTime) {
+            interval = setInterval(() => {
+                setRerender(Date.now())
+            }, 60000);
+        }
+        return () => clearInterval(interval);
+        // eslint-disable-next-line
+    }, [onlineInfo?.lastTime])
 
     return (
         <div className="page--profile">
@@ -40,14 +55,35 @@ export const ProfileCard = React.memo((props) => {
                         </Row>
                         {isToChat &&
                             (
-                                <Row typeof="flex" gutter={4}>
-                                    <Divider dashed />
-                                    <OpenChatButton userId={id} />
-                                    {/* isDataExist -> profile user info (TS, I need you) */}
-                                    <div style={{ marginLeft: 10 }}>
-                                        <VideoCallButton profile={isDataExist} />
-                                    </div>
-                                </Row>
+                                <>
+                                    <Row typeof="flex" gutter={4}>
+                                        <Divider dashed />
+                                        <OpenChatButton userId={id} />
+                                        {/* isDataExist -> profile user info (TS, I need you) */}
+                                        <div style={{ marginLeft: 10 }}>
+                                            <VideoCallButton profile={isDataExist} />
+                                        </div>
+                                    </Row>
+                                    <Row typeof="flex" gutter={4}>
+                                        <Divider dashed />
+                                        {
+                                            onlineInfo.online
+                                                ?
+                                                (
+                                                    <div className="status status-online">
+                                                        <div className="status__text status-online__text">В мережі</div>
+                                                        <div className="status__icon status-online__icon"></div>
+                                                    </div>
+                                                )
+                                                : (
+                                                    <div className="status status-offline">
+                                                        <div className="status__text status-offline__text">Був в мережі {moment(+onlineInfo.lastTime).fromNow()}</div>
+                                                        <div className="status__icon status-offline__icon"></div>
+                                                    </div>
+                                                )
+                                        }
+                                    </Row>
+                                </>
                             )
                         }
                         <Divider dashed />
