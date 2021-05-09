@@ -14,12 +14,13 @@ function SiderListChats(props) {
         activeChatId,
         toggleCollapseSiderChat,
         isCollapsed,
-
         searchValue
     } = props;
+
     const filteredChats = (searchValue?.toString().trim().length && chats.filter(({ userInfo }) => {
         return userInfo.name?.toString().toLowerCase().trim().includes(searchValue.toString().toLowerCase().trim())
     })) || chats;
+
     return (
         <Sider
             width={300}
@@ -31,12 +32,17 @@ function SiderListChats(props) {
             <Menu mode="inline" selectedKeys={[activeChatId]}>
                 {filteredChats.map((chat) => {
                     const { userInfo, id } = chat;
-                    const { name, photo } = userInfo;
+                    const { name, photo, status } = userInfo;
                     return (
                         <Menu.Item
                             key={id}
                             onClick={() => setActiveChatId(id)}
-                            icon={<Icon component={() => (<img src={photo} alt="logo" />)} />}>
+                            icon={<Icon component={() => (
+                                <>
+                                    <img src={photo} alt="logo" />
+                                    <div className={status.online ? `indicator indicator-online` : `indicator indicator-offline`}></div>
+                                </>
+                            )} />}>
                             {name}
                         </Menu.Item>
                     )

@@ -41,6 +41,25 @@
         }
     }
     .chats-list {
+        .ant-menu-item {
+            .anticon {
+                position: relative;
+                .indicator {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 100%;
+                    position: absolute;
+                    top: 0;
+                    right: -5px;
+                    &-online {
+                        background: #27c205;
+                    }
+                    &-offline {
+                        background: #8d8d8d;
+                    }
+                }
+            }
+        }
     }
     .ant-layout-sider-trigger {
         position: absolute;

@@ -7,8 +7,9 @@ import 'moment/locale/uk'
 import { HeaderChats, MessagesChats, SiderListChats, InputChats } from 'components/chats';
 import { setUpdateProfile } from 'store/auth/actions';
 import { getAuthProfile } from 'store/auth/selectors';
-import { setActiveChatId, setUpdatedChatMessages } from 'store/chats/actions';
+import { onSnapshotUpdatedChatProfile, setActiveChatId, setUpdatedChatMessages } from 'store/chats/actions';
 import { getActiveChatId, getChatsList, getIsCollapsedSider } from 'store/chats/selectors';
+import { getChatProfilesUidsList } from 'store/profiles/selectors';
 
 const { Content } = Layout;
 
@@ -22,6 +23,8 @@ function Chats(props) {
         profileUid,
         profileChats,
         setUpdatedChatMessages,
+        onSnapshotUpdatedChatProfile,
+        chatProfilesUids,
     } = props;
 
     const [searchValue, setSearchValue] = useState("")
@@ -42,6 +45,19 @@ function Chats(props) {
             }
         }
     }, [profileUid, setUpdateProfile])
+
+    useEffect(() => {
+        let unsubscribeToProfiles;
+        if (chatProfilesUids) {
+            unsubscribeToProfiles = chatProfilesUids.map((uid) => api.profiles.subscribeToProfile(uid, onSnapshotUpdatedChatProfile))
+        }
+        return () => {
+            if (typeof unsubscribeToProfiles === "object") {
+                unsubscribeToProfiles.forEach(unsub => unsub())
+            }
+        }
+    }, [chatProfilesUids, onSnapshotUpdatedChatProfile])
+
 
     useEffect(() => {
         let unsubscribeChatsMessagesArray;
@@ -145,11 +161,12 @@ const mapStateToProps = (state) => {
         profileUid: profile && profile.uid ? profile.uid : null,
         profileChats: profile && profile.chats?.length ? profile.chats : null,
         isCollapsed: getIsCollapsedSider(state),
+        chatProfilesUids: getChatProfilesUidsList(state)
     };
 };
 
 const mapDispatchToProps = {
-    setActiveChatId, setUpdateProfile, setUpdatedChatMessages
+    setActiveChatId, setUpdateProfile, setUpdatedChatMessages, onSnapshotUpdatedChatProfile
 };
 
 const PageChats = compose(

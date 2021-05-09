@@ -48,16 +48,24 @@ export const auth = {
 			// remove promise -> e.data() is not async
 			const usersInfo = usersInfoRefs.map(e => e.data())
 
+			const profilesChatUids = []
 			const preparedChats = chats.reduce((acc, chat, index) => {
 				const userValues = usersInfo[index];
 				const chatId = profile.chats[index];
-				return [...acc, { userInfo: { name: userValues.name, photo: userValues.photo, email: userValues.email, uid: userValues.uid }, id: chatId, ...chat }]
+				profilesChatUids.push(userValues.uid)
+				return [
+					...acc,
+					{
+						userInfo: { name: userValues.name, photo: userValues.photo, email: userValues.email, uid: userValues.uid, status: userValues.status },
+						id: chatId,
+						...chat
+					}]
 			}, [])
 
 			// const profileCalls = (await db.doc(`profiles/${profile.uid}/calls/${profile.uid}`).get()).data();
 
 			// return { profile: profile, chats: parseChatsList(preparedChats, profile.uid), calls: profileCalls }
-			return { profile: profile, chats: parseChatsList(preparedChats, profile.uid) }
+			return { profile: profile, chats: parseChatsList(preparedChats, profile.uid), profilesChatUids }
 		} catch (e) {
 			return Promise.reject(e)
 		}

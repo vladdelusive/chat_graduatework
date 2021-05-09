@@ -47,7 +47,7 @@ export const MessagesChats = React.memo((props) => {
                 visible={showImage.show}
                 title={"Перегляд картинки"}
                 footer={null}
-                width={800}
+                width={700}
                 onCancel={() => onShowImage({ src: null, show: false })}
             >
                 <img alt="Sent img" style={{ width: '100%' }} src={showImage.src} />
