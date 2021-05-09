@@ -17,4 +17,14 @@ export const profilesReducer = createReducer(initialState, {
         };
     },
 
+    [profiles.SAVE_UPDATE_PROFILE_ID](state, action) {
+        const { payload } = action;
+        return {
+            ...state,
+            profilesList: {
+                ...state.profilesList,
+                [payload.uid]: payload,
+            }
+        };
+    },
 });

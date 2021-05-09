@@ -3,7 +3,8 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getProfileId } from 'store/profiles/selectors';
-import { fetchProfileId } from 'store/profiles/actions';
+import { fetchProfileId, onSnapshotFetchUpdateProfileId } from 'store/profiles/actions';
+import { api } from 'services';
 
 function PageProfileContainer(props) {
     const {
@@ -14,13 +15,23 @@ function PageProfileContainer(props) {
         fetchProfileId,
         id,
         onlineInfo,
+        onSnapshotFetchUpdateProfileId,
     } = props
 
     useEffect(() => {
         if (id) {
             fetchProfileId(id)
         }
-    }, [fetchProfileId, id])
+        let unsubscribeToProfile;
+        if (id) {
+            unsubscribeToProfile = api.profiles.subscribeToProfile(id, onSnapshotFetchUpdateProfileId)
+        }
+        return () => {
+            if (typeof unsubscribeToProfile === "function" && id) {
+                unsubscribeToProfile()
+            }
+        }
+    }, [fetchProfileId, id, onSnapshotFetchUpdateProfileId])
 
     return (
         <ProfileCard
@@ -50,7 +61,7 @@ const mapStateToProps = (state, props) => {
     }
 };
 
-const mapDispatchToProps = { fetchProfileId };
+const mapDispatchToProps = { fetchProfileId, onSnapshotFetchUpdateProfileId };
 
 const PageProfiles = compose(
     connect(mapStateToProps, mapDispatchToProps),

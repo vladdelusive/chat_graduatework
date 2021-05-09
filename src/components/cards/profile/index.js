@@ -49,7 +49,7 @@ export const ProfileCard = React.memo((props) => {
                     <Col>
                         <Title level={3}>{nameTitle}&nbsp;</Title>
                         <Divider dashed />
-                        <Row typeof="flex" gutter={4}>
+                        <Row typeof="flex" gutter={4} style={{ height: 16 }}>
                             <Col><Paragraph copyable={{ text: email }} /></Col>
                             <Col><a href={`mailto:${email}`}>{email}</a></Col>
                         </Row>
