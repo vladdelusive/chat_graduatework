@@ -11,17 +11,19 @@ import { routes } from 'routes';
 import { saveChats } from 'store/chats/actions';
 import { workerMiddleware } from 'store/worker-middleware';
 import { setIsShowCallModal } from 'store/call/actions';
+import { setProfilesChatsUids } from 'store/profiles/actions';
 
 function* fetchLogInByGoogleSaga() {
     try {
         const response = yield call(api.auth.googleLogin);
         if (!response) return;
         // const { chats, profile, calls } = response;
-        const { chats, profile } = response;
+        const { chats, profile, profilesChatUids } = response;
 
         yield put(saveLogInAuth(profile))
         yield put(saveChats(chats))
 
+        yield put(setProfilesChatsUids(profilesChatUids))
         // yield put(changeCallState(calls))
         yield put(push(routes.profile.link()))
     } catch (error) {
@@ -57,9 +59,10 @@ function* logInByMailAndPasswordSaga(action) {
         const response = yield call(api.auth.logInByMailAndPassword, payload);
         if (!response) return;
         // const { chats, profile, calls } = response;
-        const { chats, profile } = response;
+        const { chats, profile, profilesChatUids } = response;
         yield put(saveLogInAuth(profile))
         yield put(saveChats(chats))
+        yield put(setProfilesChatsUids(profilesChatUids))
 
         // yield put(changeCallState(calls))
         yield put(push(routes.profile.link()))
@@ -74,9 +77,10 @@ function* setUpdateProfileAndChatsSaga(action) {
         const { payload } = action;
         const response = yield call(api.auth.preparedUpdatedProfileData, payload);
         // const { chats, profile, calls } = response;
-        const { chats, profile } = response;
+        const { chats, profile, profilesChatUids } = response;
         yield put(saveUpdateProfile(profile))
         yield put(saveChats(chats))
+        yield put(setProfilesChatsUids(profilesChatUids))
         // yield put(changeCallState(calls))
     } catch (error) {
         console.log(error);

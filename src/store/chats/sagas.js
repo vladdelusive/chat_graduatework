@@ -84,9 +84,27 @@ function* sendMessageSaga(action) {
     }
 }
 
+
+function* onSnapshotUpdateChatProfileSaga({ payload }) {
+    const { data } = payload;
+    try {
+        const chatsList = yield select(getChatsList)
+        const updatedUserIndex = chatsList.findIndex(({ userInfo }) => userInfo.uid === data.uid);
+        if (updatedUserIndex > -1) {
+            const updatedChat = { ...chatsList[updatedUserIndex], userInfo: data };
+            const copyChatsList = [...chatsList]
+            copyChatsList.splice(updatedUserIndex, 1, updatedChat)
+            yield put(saveChats(copyChatsList))
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export function* chatsSaga() {
     yield takeEvery(chats.CREATE_NEW_CHAT, createNewChatSaga);
     yield takeEvery(chats.FETCH_USERS_FOR_CHAT, fetchUsersForChatSaga);
     yield takeEvery(chats.SET_UPDATED_CHAT_MESSAGES, setUpdateChatMessageSaga);
     yield takeEvery(chats.SEND_MESSAGE, sendMessageSaga);
+    yield takeEvery(chats.ON_SNAPSHOT_UPDATED_CHAT_PROFILE, onSnapshotUpdateChatProfileSaga);
 }

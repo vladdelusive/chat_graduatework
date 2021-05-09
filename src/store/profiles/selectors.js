@@ -20,6 +20,11 @@ export const getProfilesIdList = createSelector(
     (profiles) => profiles.profilesList
 );
 
+export const getChatProfilesUidsList = createSelector(
+    [_getProfiles],
+    (profiles) => profiles.profilesFromChatUids
+);
+
 export const getProfileId = createSelector(
     [getProfilesIdList, _getPathname],
     (profilesList, path) => {

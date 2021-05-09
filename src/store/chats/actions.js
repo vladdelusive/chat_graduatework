@@ -15,5 +15,7 @@ export const sendNewMessage = (payload) => ({ type: chats.SEND_MESSAGE, payload 
 
 export const toggleCollapseSiderChat = () => ({ type: chats.TOGGLE_COLLAPSE_SIDER_CHAT });
 
+export const onSnapshotUpdatedChatProfile = (payload) => ({ type: chats.ON_SNAPSHOT_UPDATED_CHAT_PROFILE, payload });
+
 
 

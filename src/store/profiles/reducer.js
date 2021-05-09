@@ -3,6 +3,7 @@ import * as profiles from './types';
 
 const initialState = {
     profilesList: {},
+    profilesFromChatUids: []
 };
 
 export const profilesReducer = createReducer(initialState, {
@@ -25,6 +26,14 @@ export const profilesReducer = createReducer(initialState, {
                 ...state.profilesList,
                 [payload.uid]: payload,
             }
+        };
+    },
+    
+    [profiles.SET_PROFILES_CHATS_UIDS](state, action) {
+        const { payload } = action;
+        return {
+            ...state,
+            profilesFromChatUids: payload
         };
     },
 });
