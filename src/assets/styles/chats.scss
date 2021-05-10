@@ -38,6 +38,47 @@
         }
         .chat-information {
             width: 100%;
+            &--container {
+                display: flex;
+                height: 100%;
+                .box {
+                    margin: 5px;
+                    &--video-call {
+                        flex: 1 1 auto;
+                        display: flex;
+                        justify-content: flex-end;
+                        align-items: center;
+                        padding: 0px 15px 1px 0px;
+                    }
+                }
+            }
+            .status {
+                position: absolute;
+                line-height: 16px;
+                &-online {
+                    &__icon {
+                        background: #3cbb00;
+                    }
+                }
+                &-offline {
+                    &__icon {
+                        background: #acacac;
+                        top: 1px;
+                    }
+                }
+                &__text {
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                &__icon {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 100%;
+                    position: absolute;
+                    top: 0;
+                    right: -15px;
+                }
+            }
         }
     }
     .chats-list {
