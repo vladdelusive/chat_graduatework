@@ -44,7 +44,7 @@
 .layout {
     position: relative;
     .layout__header {
-        background: linear-gradient(302deg, #fefeff 0%, #63cd91 13%, #ffffff 100%) !important;
+        background: linear-gradient(302deg, #d2b5ff 0%, #dbd2ff 13%, #f7d5af 100%) !important;
         min-height: 80px;
         .header {
             font-size: 16px;
@@ -54,12 +54,7 @@
         font-family: cursive;
         font-size: 16px;
         min-height: 70px;
-        background: linear-gradient(
-            302deg,
-            rgb(156, 216, 253) 0%,
-            rgb(210, 246, 251) 13%,
-            rgba(0, 121, 138, 0.88) 100%
-        ) !important;
+        background: linear-gradient(302deg, #febd77 0%, #d4bbff 13%, rgb(153, 255, 224) 100%) !important;
         display: flex;
         justify-content: center;
         align-items: center;

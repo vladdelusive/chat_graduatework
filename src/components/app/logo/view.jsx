@@ -2,7 +2,7 @@ import './style.scss';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { routes } from 'routes';
-import Logo from 'assets/images/logo.png';
+import Logo from 'assets/images/college-logo.png'; 
 
 const View = React.memo(() => {
 	return (

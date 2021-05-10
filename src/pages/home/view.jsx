@@ -1,5 +1,4 @@
 import React from 'react';
-// import ReactLogo from 'assets/images/react-logo.svg';
 import CollegeLogo from 'assets/images/college-logo.png';
 import { Tag, Typography } from 'antd';
 

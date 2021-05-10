@@ -32,6 +32,7 @@ function SearchChatModal(props) {
             visible={isShow}
             title="Почніть чат з новим користувачем"
             onCancel={clodeModal}
+            footer={null}
         >
             <Row typeof="flex" justify="center" style={{ marginBottom: 10 }} >
                 <Col span={24}>

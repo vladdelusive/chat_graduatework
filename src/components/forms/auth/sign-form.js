@@ -37,7 +37,6 @@ function SignUpForm(props) {
     const propsUpload = {
         name: 'file',
         onChange({ file }) {
-            console.log(file);
             if (file.status === 'removed') {
                 return
             }
