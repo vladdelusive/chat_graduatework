@@ -8,9 +8,10 @@ import { compose } from 'redux';
 import { api } from 'services';
 import { getAccessToAudio } from 'store/call/sagas';
 import { getCallModalTab, getIsShowCallModal } from 'store/call/selectors';
-import { onSnapshotCallUpdate, setCallModalTab } from 'store/call/actions';
+import { onSnapshotCallUpdate, setCallModalTab, toggleIsShowCallModal } from 'store/call/actions';
 import { registerPeerConnectionForOffers } from 'utils/webrtc';
 import { getAuthProfileUid } from 'store/auth/selectors';
+import { CloseSquareOutlined } from '@ant-design/icons';
 
 const CallModal = (props) => {
     const {
@@ -18,7 +19,8 @@ const CallModal = (props) => {
         profileUid,
         onSnapshotCallUpdate,
         setTab,
-        tab
+        tab,
+        toggleIsShowCallModal,
     } = props;
 
     useEffect(() => {
@@ -53,6 +55,7 @@ const CallModal = (props) => {
                     </Tabs.TabPane>
                 </Tabs>
             </div>
+            <div className="close-x-call-modal" onClick={() => toggleIsShowCallModal()}><CloseSquareOutlined /></div>
         </div>
     )
 }
@@ -65,7 +68,7 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = { onSnapshotCallUpdate, setTab: setCallModalTab };
+const mapDispatchToProps = { onSnapshotCallUpdate, setTab: setCallModalTab, toggleIsShowCallModal };
 
 const EnhancedCallModal = compose(
     connect(mapStateToProps, mapDispatchToProps),

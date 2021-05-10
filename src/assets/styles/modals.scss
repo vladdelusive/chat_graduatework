@@ -31,9 +31,9 @@
     z-index: 10;
     background-color: #ffffff;
     box-shadow: 3px 3px 20px 0 #868686;
-    transition: -webkit-transform 0.5s;
-    transition: transform 0.5s;
-    transition: transform 0.5s, -webkit-transform 0.5s;
+    transition: -webkit-transform 0.4s;
+    transition: transform 0.4s;
+    transition: transform 0.4s, -webkit-transform 0.4s;
     -webkit-transform: translateX(110%);
     transform: translateX(110%);
     &--transform {
@@ -83,6 +83,26 @@
             background: #606060;
             border-radius: 10px;
             margin: 8px;
+        }
+    }
+    .close-x-call-modal {
+        position: absolute;
+        top: -35px;
+        left: 2px;
+        height: 28px;
+        cursor: pointer;
+        transition: transform 0.1s ease-in-out;
+        &:active {
+            transition: transform 0.1s ease-in-out;
+            transform: scale(1.25) !important;
+        }
+        &:hover {
+            transition: transform 0.25s ease-in-out;
+            transform: scale(1.2);
+        }
+        svg {
+            font-size: 30px;
+            color: #025cae;
         }
     }
 }
