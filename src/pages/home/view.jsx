@@ -8,7 +8,8 @@ const View = () => {
 	return (
 		<div className={'page page--home'}>
 			<img className={'react-logo'} src={CollegeLogo} alt="React Logo" />
-			<Title>Дипломний проект - <Text code>Мессенджер</Text></Title>
+			<Title>Дипломний проєкт: </Title>
+			<Title style={{ marginTop: 10, fontWeight: 800, textAlign: "center" }}>Система організації повідомлень з можливістю відеодзвінка в мережі</Title>
 			<Title level={2} className="breathing">Розробив:&nbsp;<Text bold={"true"} style={{ fontWeight: 800 }} >Товсточуб Владислав</Text>&nbsp;- 481 група</Title>
 			<Title level={3}>Технології, що використовуються (бібліотеки):</Title>
 			<Title level={4}>
